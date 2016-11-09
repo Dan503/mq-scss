@@ -1,0 +1,130 @@
+$mediaQuery: ();
+
+@function calculateMQ ($range, $setting1: null, $setting2: 0){
+
+	$setting2: if($setting2 == null, 0, $setting2);
+
+	$mediaString: '';
+
+	$errorMessage: '"#{$range}" range requires the first width setting (#{$setting1}) to be higher than the second width setting (#{$setting2})';
+	$errorMessage--ratios: '"#{$range}" range requires the settings (#{$setting1} #{$setting2}) to be strings in this format "4/3" (width ratio / height ratio).';
+
+	@if (str-index($range, 'ratio') == null){
+		//if a standard media query
+		@if (($setting2 != 0) and ($setting1 < $setting2)){
+			//if setting 2 is higher than setting 1
+			@error $errorMessage;
+		}
+	} @else {
+		//else if it's a ratio...
+		@if ((type-of($setting1) != string) or (($setting2 != 0) and (type-of($setting2) != string))){
+			@error $errorMessage--ratios;
+		}
+	}
+
+
+	$mediaString: map-get((
+	//*1 value given*/
+		min : 'screen and (min-width: #{$setting1 + 1})',
+		max : 'screen and (max-width: #{$setting1})',
+
+		min-height : 'screen and (min-height: #{$setting1 + 1})',
+		max-height : 'screen and (max-height: #{$setting1})',
+
+		ratio : 'screen and (aspect-ratio: #{$setting1})',
+		min-ratio : 'screen and (min-aspect-ratio: #{$setting1})',
+		max-ratio : 'screen and (max-aspect-ratio: #{$setting1})',
+
+		device-ratio : 'screen and (device-aspect-ratio: #{$setting1})',
+		min-device-ratio : 'screen and (min-device-aspect-ratio: #{$setting1})',
+		max-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting1})',
+
+		orientation : 'screen and (orientation: #{$setting1})',
+
+	//*2 values given*/
+		inside : 'screen and (max-width: #{$setting1}) and (min-width: #{$setting2 + 1})',
+		outside : 'not screen and (max-width: #{$setting1}) and (min-width: #{$setting2 + 1})',
+
+		inside-height : 'screen and (max-height: #{$setting1}) and (min-height: #{$setting2 + 1})',
+		outside-height : 'not screen and (max-height: #{$setting1}) and (min-height: #{$setting2 + 1})',
+
+		inside-ratio : 'screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
+		outside-ratio : 'not screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
+
+		inside-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
+		outside-device-ratio : 'not screen and (max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
+	), $range);
+
+	@return $mediaString;
+}
+
+@mixin MG-mq($range, $setting1: null, $setting2: null) {
+
+	@if (length($range) > 1) {
+
+		//Uses this functionality if using a single level MQ variable
+		//eg:
+		//$MQ-example--single: inside, bp('large'), bp('tablet'));
+		//@include MG-mq($MQ-example--single){}
+		@if (type-of(nth($range,1)) == string){
+
+			$newRange: nth($range,1);
+			$newWidth1: nth($range,2);
+			$newWidth2: null;
+			@if (length($range) == 3){
+				$newWidth2: nth($range,3);
+			}
+
+
+			@media #{calculateMQ($newRange, $newWidth1, $newWidth2)} {
+				@content;
+			}
+
+
+		//Uses this functionality if using a multi level MQ variable
+		//eg:
+		//$MQ-example--multiple:
+		//	(inside, bp('large'), bp('tablet')),
+		//	(min, bp('page'))
+		//;
+		//@include MG-mq($MQ-example--multiple){}
+		} @else {
+			$mediaQuery: ();
+
+			@each $mqSet in $range {
+
+				$newRange: nth($mqSet,1);
+				$newWidth1: nth($mqSet,2);
+				$newWidth2: null;
+				@if (length($mqSet) == 3){
+					$newWidth2: nth($mqSet,3);
+				}
+
+				$mediaQuery: append($mediaQuery, calculateMQ($newRange, $newWidth1, $newWidth2), 'comma');
+
+			}//end @each
+
+			@media #{$mediaQuery} {
+				@content;
+			}
+		}
+
+	//Uses this functionality if placing MQ data inline
+	//eg:
+	//@include MG-mq(inside, bp('large'), bp('tablet'));
+	} @else {
+
+		@media #{calculateMQ($range, $setting1, $setting2)} {
+			@content;
+		}
+	}
+}
+
+@mixin retina($density: 2) {
+  	@media
+		only screen and (min-device-pixel-ratio: $density),
+		only screen and (min-resolution: $density * 96ppi),
+		only screen and (min-resolution: $density * 1dppx) {
+			@content;
+	}
+}
