@@ -153,36 +153,36 @@ outputted CSS:
 
 ####Single value ranges
 
-- **min** : 'screen and (min-width: XXX)',
-- **max** : 'screen and (max-width: XXX)',
+- **min** : `screen and (min-width: XXX)`
+- **max** : `screen and (max-width: XXX)`
 
-- **min-height** : 'screen and (min-height: XXX)',
-- **max-height** : 'screen and (max-height: XXX)',
+- **min-height** : `screen and (min-height: XXX)`
+- **max-height** : `screen and (max-height: XXX)`
 
-- **ratio** : 'screen and (aspect-ratio: XXX)',
-- **min-ratio** : 'screen and (min-aspect-ratio: XXX)',
-- **max-ratio** : 'screen and (max-aspect-ratio: XXX)',
+- **ratio** : `screen and (aspect-ratio: XXX)`
+- **min-ratio** : `screen and (min-aspect-ratio: XXX)`
+- **max-ratio** : `screen and (max-aspect-ratio: XXX)`
 
-- **device-ratio** : 'screen and (device-aspect-ratio: XXX)',
-- **min-device-ratio** : 'screen and (min-device-aspect-ratio: XXX)',
-- **max-device-ratio** : 'screen and (max-device-aspect-ratio: XXX)',
+- **device-ratio** : `screen and (device-aspect-ratio: XXX)`
+- **min-device-ratio** : `screen and (min-device-aspect-ratio: XXX)`
+- **max-device-ratio** : `screen and (max-device-aspect-ratio: XXX)`
 
-- **orientation** : 'screen and (orientation: XXX)',
+- **orientation** : `screen and (orientation: XXX)`
 
 
 ####Double value ranges
 
-- **inside** : 'screen and (max-width: XXX) and (min-width: YYY)',
-- **outside** : 'not screen and (max-width: XXX) and (min-width: YYY)',
+- **inside** : `screen and (max-width: XXX) and (min-width: YYY)`
+- **outside** : `not screen and (max-width: XXX) and (min-width: YYY)`
 
-- **inside-height** : 'screen and (max-height: XXX) and (min-height: YYY)',
-- **outside-height** : 'not screen and (max-height: XXX) and (min-height: YYY)',
+- **inside-height** : `screen and (max-height: XXX) and (min-height: YYY)`
+- **outside-height** : `not screen and (max-height: XXX) and (min-height: YYY)`
 
-- **inside-ratio** : 'screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
-- **outside-ratio** : 'not screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
+- **inside-ratio** : `screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)`
+- **outside-ratio** : `not screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)`
 
-- **inside-device-ratio** : 'screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
-- **outside-device-ratio** : 'not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
+- **inside-device-ratio** : `screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
+- **outside-device-ratio** : `not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
 
 ##MQ variables
 
