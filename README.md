@@ -149,9 +149,7 @@ outputted CSS:
 
 ###Full list of media query ranges
 
-``````
-@include M-mq([range], XXX, YYY){ /*styles*/ }
-`````
+    @include M-mq([range], XXX, YYY){ /*styles*/ }
 
 ####Single value ranges
 
