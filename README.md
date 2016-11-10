@@ -151,6 +151,12 @@ outputted CSS:
 
     @include mq([range], XXX, YYY){ /*styles*/ }
 
+Note that orientation and ratio ranges do **not** accept pixel values.
+
+Ratio ranges must be a division in the form of a sting like `'1 / 2'`.
+
+`orientation` only accepts the strings `'portrait'` and `'landscape'`.
+
 ####Single value ranges
 
 - **min** : `screen and (min-width: XXX)`
@@ -168,7 +174,6 @@ outputted CSS:
 - **max-device-ratio** : `screen and (max-device-aspect-ratio: XXX)`
 
 - **orientation** : `screen and (orientation: XXX)`
-
 
 ####Double value ranges
 
