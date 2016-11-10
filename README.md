@@ -22,73 +22,74 @@ This media query mixin is a powerful tool that lets you easily create far more c
     * [Media Query "and" statments](#media-query-and-statements)
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
+* [Bonus retina display mixin](#bonus-retina-display-mixin)
 
 ##Instalation
 
-    ```````````
-    npm install mq-scss --save-dev
-    ```````````
+```````````
+npm install mq-scss --save-dev
+```````````
 
-Import mq-sass at the top of your main Sass file.
+Import mq-sass at the top of your main Sass file (note that the exact path will differ depending on your folder structure)
 
-    ``````SCSS
-    @import "../node_modules/mq-scss/mq";
-    ``````
+``````SCSS
+@import "../node_modules/mq-scss/mq";
+``````
 
 ##Basic usage
 
-    ````````SCSS
-    @include M-mq($range, $larger-breakpoint[, $smaller-breakpoint]){ @content }
-    ````````
+````````SCSS
+@include M-mq($range, $larger-breakpoint[, $smaller-breakpoint]){ @content }
+````````
 
 ###Min/Max width
 
 In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than 600px wide
 
-    `````````````SCSS
-    SASS:
+`````````````SCSS
+SASS:
 
-    .element {
-        background: red;
+.element {
+    background: red;
 
-        @include M-mq(max, 600px){
-            background: blue;
-        }
+    @include M-mq(max, 600px){
+        background: blue;
     }
-    `````````````
+}
+`````````````
 
-    `````````````CSS
-    outputted CSS:
+`````````````CSS
+outputted CSS:
 
-    .element { background: red; }
-    @media screen and (max-width: 600px) {
-        .element { background: blue; }
-    }
-    `````````````
+.element { background: red; }
+@media screen and (max-width: 600px) {
+    .element { background: blue; }
+}
+`````````````
 
 
 It's just as easy to state a minimum width:
 
-    `````````````SCSS
-    SASS:
+`````````````SCSS
+SASS:
 
-    .element {
-        background: red;
+.element {
+    background: red;
 
-        @include M-mq(min, 600px){
-            background: blue;
-        }
+    @include M-mq(min, 600px){
+        background: blue;
     }
-    `````````````
+}
+`````````````
 
-    `````````````CSS
-    outputted CSS:
+`````````````CSS
+outputted CSS:
 
-    .element { background: red; }
-    @media screen and (min-width: 601px) {
-        .element { background: blue; }
-    }
-    `````````````
+.element { background: red; }
+@media screen and (min-width: 601px) {
+    .element { background: blue; }
+}
+`````````````
 
 Note that in the sass, we state that the width is 600px but it gets outputted as 601px in the CSS. This makes the mixin more intuitive to use and it means you'll never have to worry about that ugly 1px cross over point where `min` and `max` ranges set to the same width display at the same time.
 
@@ -97,94 +98,94 @@ Note that in the sass, we state that the width is 600px but it gets outputted as
 
 What about those times when you only want a style to be effective within a given range? Perhaps you only want something to be blue if it's a tablet sized screen but not appear on mobile. That is when the `inside` range type comes in handy.
 
-    `````````````SCSS
-    SASS:
+`````````````SCSS
+SASS:
 
-    .element {
-        background: red;
+.element {
+    background: red;
 
-        @include M-mq(inside, 1024px, 600px){
-            background: blue;
-        }
+    @include M-mq(inside, 1024px, 600px){
+        background: blue;
     }
-    `````````````
+}
+`````````````
 
-    `````````````CSS
-    outputted CSS:
+`````````````CSS
+outputted CSS:
 
-    .element { background: red; }
-    @media screen and (max-width: 1024px) and (min-width: 601px) {
-        .element { background: blue; }
-    }
-    `````````````
+.element { background: red; }
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+    .element { background: blue; }
+}
+`````````````
 
 Again notice how min-width gets outputted as +1 the value given to avoid potential conflicts.
 
 If you want something to be styled a certain way on mobiles and desktops but **not** tablets, we can use the `outside` range type:
 
-    `````````````SCSS
-    SASS:
+`````````````SCSS
+SASS:
 
-    .element {
-        background: red;
+.element {
+    background: red;
 
-        @include M-mq(outside, 1024px, 600px){
-            background: blue;
-        }
+    @include M-mq(outside, 1024px, 600px){
+        background: blue;
     }
-    `````````````
+}
+`````````````
 
-    `````````````CSS
-    outputted CSS:
+`````````````CSS
+outputted CSS:
 
-    .element { background: red; }
-    @media not screen and (max-width: 1024px) and (min-width: 601px) {
-        .element { background: blue; }
-    }
-    `````````````
+.element { background: red; }
+@media not screen and (max-width: 1024px) and (min-width: 601px) {
+    .element { background: blue; }
+}
+`````````````
 
 
 ###Full list of media query ranges
 
-    ``````
-    @include M-mq([range], XXX, YYY){ /*styles*/ }
-    `````
+``````
+@include M-mq([range], XXX, YYY){ /*styles*/ }
+`````
 
 Single value ranges
 
-    ``````````````````
-    min : 'screen and (min-width: XXX)',
-    max : 'screen and (max-width: XXX)',
+``````````````````
+min : 'screen and (min-width: XXX)',
+max : 'screen and (max-width: XXX)',
 
-    min-height : 'screen and (min-height: XXX)',
-    max-height : 'screen and (max-height: XXX)',
+min-height : 'screen and (min-height: XXX)',
+max-height : 'screen and (max-height: XXX)',
 
-    ratio : 'screen and (aspect-ratio: XXX)',
-    min-ratio : 'screen and (min-aspect-ratio: XXX)',
-    max-ratio : 'screen and (max-aspect-ratio: XXX)',
+ratio : 'screen and (aspect-ratio: XXX)',
+min-ratio : 'screen and (min-aspect-ratio: XXX)',
+max-ratio : 'screen and (max-aspect-ratio: XXX)',
 
-    device-ratio : 'screen and (device-aspect-ratio: XXX)',
-    min-device-ratio : 'screen and (min-device-aspect-ratio: XXX)',
-    max-device-ratio : 'screen and (max-device-aspect-ratio: XXX)',
+device-ratio : 'screen and (device-aspect-ratio: XXX)',
+min-device-ratio : 'screen and (min-device-aspect-ratio: XXX)',
+max-device-ratio : 'screen and (max-device-aspect-ratio: XXX)',
 
-    orientation : 'screen and (orientation: XXX)',
-    `````````````````
+orientation : 'screen and (orientation: XXX)',
+`````````````````
 
 Double value ranges
 
-    ````````````````
-    inside : 'screen and (max-width: XXX) and (min-width: YYY)',
-    outside : 'not screen and (max-width: XXX) and (min-width: YYY)',
+````````````````
+inside : 'screen and (max-width: XXX) and (min-width: YYY)',
+outside : 'not screen and (max-width: XXX) and (min-width: YYY)',
 
-    inside-height : 'screen and (max-height: XXX) and (min-height: YYY)',
-    outside-height : 'not screen and (max-height: XXX) and (min-height: YYY)',
+inside-height : 'screen and (max-height: XXX) and (min-height: YYY)',
+outside-height : 'not screen and (max-height: XXX) and (min-height: YYY)',
 
-    inside-ratio : 'screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
-    outside-ratio : 'not screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
+inside-ratio : 'screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
+outside-ratio : 'not screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
 
-    inside-device-ratio : 'screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
-    outside-device-ratio : 'not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
-    ``````````````
+inside-device-ratio : 'screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
+outside-device-ratio : 'not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
+``````````````
 
 ##MQ variables
 
@@ -208,9 +209,9 @@ You state the media query once at the top of your SASS file and then you can re-
 
 I've come up with a bit of a naming convention for them based on BEM. This is how I write a Media Query variable:
 
-    `````````````SCSS
-    $MQ-[element]--[is/not]-[objective]: ([range], [larger-width], [smaller-width]);
-    `````````````
+`````````````SCSS
+$MQ-[element]--[is/not]-[objective]: ([range], [larger-width], [smaller-width]);
+`````````````
 
 Here is the breakdown of what each part means
 
@@ -228,48 +229,48 @@ Here is the breakdown of what each part means
 
 Here is an example of how to use it (the "not" examples are a little unecessary but I've added them for demonstration):
 
-    `````````````SCSS
-    SASS:
+`````````````SCSS
+SASS:
 
-    $MQ-module--is-altColor: (inside, 1024px, 600px);
-    $MQ-module--not-altColor: (outside, 1024px, 600px);
+$MQ-module--is-altColor: (inside, 1024px, 600px);
+$MQ-module--not-altColor: (outside, 1024px, 600px);
 
-    .module {
+.module {
+    @include M-mq($MQ-module--not-altColor){
+        background: red;
+    }
+
+    @include M-mq($MQ-module--is-altColor){
+        background: blue;
+    }
+
+    &--green {
         @include M-mq($MQ-module--not-altColor){
-            background: red;
+            background: green;
         }
 
         @include M-mq($MQ-module--is-altColor){
-            background: blue;
-        }
-
-        &--green {
-            @include M-mq($MQ-module--not-altColor){
-                background: green;
-            }
-
-            @include M-mq($MQ-module--is-altColor){
-                background: grey;
-            }
+            background: grey;
         }
     }
-    `````````````
-    `````````````CSS
-    outputted CSS:
+}
+`````````````
+`````````````CSS
+outputted CSS:
 
-    @media not screen and (max-width: 1024px) and (min-width: 601px) {
-        .module { background: red; }
-    }
-    @media screen and (max-width: 1024px) and (min-width: 601px) {
-        .module { background: blue; }
-    }
-    @media not screen and (max-width: 1024px) and (min-width: 601px) {
-        .module--green { background: green; }
-    }
-    @media screen and (max-width: 1024px) and (min-width: 601px) {
-        .module { background: grey; }
-    }
-    `````````````
+@media not screen and (max-width: 1024px) and (min-width: 601px) {
+    .module { background: red; }
+}
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+    .module { background: blue; }
+}
+@media not screen and (max-width: 1024px) and (min-width: 601px) {
+    .module--green { background: green; }
+}
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+    .module { background: grey; }
+}
+`````````````
 
 Ahhhhh!!! It's doubling up on Media queries!!! Think of all that extra weight you're adding!!!
 
@@ -281,113 +282,113 @@ Well actually after gzipping, all the repetative media query declarations [becom
 
 Media Query "or" statements are only possible using an MQ variable.
 
-    `````````````SCSS
-    SASS:
+`````````````SCSS
+SASS:
 
-    $MQ-element--is-blue:
-        (inside, 1024px, 980px),
-        (max, 600px)
-    ;
+$MQ-element--is-blue:
+    (inside, 1024px, 980px),
+    (max, 600px)
+;
 
-    .element {
-        background: red;
+.element {
+    background: red;
 
-        @include M-mq($MQ-element--is-blue){
-            background: blue;
-        }
+    @include M-mq($MQ-element--is-blue){
+        background: blue;
     }
-    `````````````
+}
+`````````````
 
-    `````````````CSS
-    outputted CSS:
+`````````````CSS
+outputted CSS:
 
-    .element { background: red; }
-    @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
-        .element { background: blue; }
-    }
-    `````````````
+.element { background: red; }
+@media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
+    .element { background: blue; }
+}
+`````````````
 
 This technique is most useful when you are targeting a module that is inside a container that is changing in width quite frequently. It's a bit harder to make a counter media query for these though since as long as just a single rule in the or statement is true, the styles will take effect. To effectively create a counter media query for one of these multi queries, you need to carefully target all the gaps in the original statement.
 
-    `````````````SCSS
-    SASS:
+`````````````SCSS
+SASS:
 
-    $MQ-element--is-blue:
-        (inside, 1024px, 980px),
-        (max, 600px)
-    ;
+$MQ-element--is-blue:
+    (inside, 1024px, 980px),
+    (max, 600px)
+;
 
-    $MQ-element--not-blue:
-        (min, 1024px),/*$MQ-element--is-blue doesn't go any higher than 1024px*/
-        (inside, 980px, 600px)/*$MQ-element--is-blue doesn't target screen sizes between 980px and 600px.*/
-        /*$MQ-element--is-blue covers all screen sizes below 600px so no further queries are needed for the counter query*/
-    ;
+$MQ-element--not-blue:
+    (min, 1024px),/*$MQ-element--is-blue doesn't go any higher than 1024px*/
+    (inside, 980px, 600px)/*$MQ-element--is-blue doesn't target screen sizes between 980px and 600px.*/
+    /*$MQ-element--is-blue covers all screen sizes below 600px so no further queries are needed for the counter query*/
+;
 
-    .element {
-        @include M-mq($MQ-element--is-blue){
-            background: blue;
-        }
-        @include M-mq($MQ-element--not-blue){
-            background: red;
-        }
+.element {
+    @include M-mq($MQ-element--is-blue){
+        background: blue;
     }
-    `````````````
-
-    `````````````CSS
-    outputted CSS:
-
-    @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
-        .element { background: blue; }
+    @include M-mq($MQ-element--not-blue){
+        background: red;
     }
-    @media screen and (min-width: 1025px), screen and (max-width: 980px) and (min-width: 601px) {
-        .element { background: red; }
-    }
-    `````````````
+}
+`````````````
+
+`````````````CSS
+outputted CSS:
+
+@media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
+    .element { background: blue; }
+}
+@media screen and (min-width: 1025px), screen and (max-width: 980px) and (min-width: 601px) {
+    .element { background: red; }
+}
+`````````````
 
 ###Media Query "and" statments
 
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
 
-    `````````````SCSS
-    $MQ-sideBar--is-fullWidth: (max, 600px);
-    $MQ-subHeading--is-hidden: (inside, 800px, 400px);
+`````````````SCSS
+$MQ-sideBar--is-fullWidth: (max, 600px);
+$MQ-subHeading--is-hidden: (inside, 800px, 400px);
 
-    .module {
-        &__sideBar {
-            width: 33.33%;
-            @include M-mq($MQ-sideBar--is-fullWidth){
-                width: 100%;
-            }
+.module {
+    &__sideBar {
+        width: 33.33%;
+        @include M-mq($MQ-sideBar--is-fullWidth){
+            width: 100%;
         }
-        &__subHeading {
+    }
+    &__subHeading {
+        @include M-mq($MQ-subHeading--is-hidden){
+            display: none;
+        }
+    }
+    &__mainHeading {
+        @include M-mq($MQ-sideBar--is-fullWidth){
             @include M-mq($MQ-subHeading--is-hidden){
-                display: none;
-            }
-        }
-        &__mainHeading {
-            @include M-mq($MQ-sideBar--is-fullWidth){
-                @include M-mq($MQ-subHeading--is-hidden){
-                    background: red;
-                }
+                background: red;
             }
         }
     }
-    `````````````
+}
+`````````````
 
-    `````````````CSS
-    outputted CSS:
+`````````````CSS
+outputted CSS:
 
-    .module__sideBar { width: 33.33%; }
-    @media screen and (max-width: 600px) {
-        .module__sideBar { width: 100%; }
-    }
-    @media screen and (max-width: 800px) and (min-width: 401px) {
-        .module__subHeading { display: none; }
-    }
-    @media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
-        .module__mainHeading { background: red; }
-    }
-    `````````````
+.module__sideBar { width: 33.33%; }
+@media screen and (max-width: 600px) {
+    .module__sideBar { width: 100%; }
+}
+@media screen and (max-width: 800px) and (min-width: 401px) {
+    .module__subHeading { display: none; }
+}
+@media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
+    .module__mainHeading { background: red; }
+}
+`````````````
 
 I'm looking into a more streamlined way of incorporating media query "and" statements without having to nest them inside one another like this but currently this is the best available method.
 
@@ -401,11 +402,11 @@ Pixel based media queries can actually appear incorrectly when zooming on some b
 
 There are 2 setting variables used to control the em conversion functionality. These settings are defined before the import statment.
 
-    ````````````SCSS
-    $mq-ems: true; /*default: false*/
-    $mq-em-base: 10px; /*default: 16px*/
-    @import '../node_modules/mq-scss/_mq'
-    ````````````
+````````````SCSS
+$mq-ems: true; /*default: false*/
+$mq-em-base: 10px; /*default: 16px*/
+@import '../node_modules/mq-scss/mq'
+````````````
 
 `$mq-ems` defines if the media query mixin should bother doing conversions or not
 
@@ -417,29 +418,50 @@ This mixin does not contain any string to pixel value functionality. This is to 
 
 It is very easy to create a breakpoint function though. This is what I use in combination with the mq mixin to make writing media queries a breeze.
 
-    `````````SCSS
-    $breakPoints: (
-        'minimum': 300px, //*The smallest width that the site is able to shrink to */
-        'tiny': 350px, //*essentially iphones in portrait view only*/
-        'small': 480px,
-        'mobile': 600px, ///*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
-        'mid': 770px, //*essentially the maximum for iPads in portrait*/
-        'tablet': 960px, ///*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
-        'large': 1024px, //*maximum for iPads in landscape*/
-        'page': 1200px, ///*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
-    );
+`````````SCSS
+$breakPoints: (
+    'minimum': 300px, //*The smallest width that the site is able to shrink to */
+    'tiny': 350px, //*essentially iphones in portrait view only*/
+    'small': 480px,
+    'mobile': 600px, ///*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
+    'mid': 770px, //*essentially the maximum for iPads in portrait*/
+    'tablet': 960px, ///*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
+    'large': 1024px, //*maximum for iPads in landscape*/
+    'page': 1200px, ///*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
+);
 
-    @function bp($value){
-        @return map-get($breakPoints, $value);
-    }
-    `````````
+@function bp($value){
+    @return map-get($breakPoints, $value);
+}
+`````````
 
 You can then use it in combination with the mq mixin like this:
 
-    ````````SCSS
-    .element {
-        @include mq(max, bp('mobile')){
-            //styles go here
-        }
+````````SCSS
+.element {
+    @include mq(max, bp('mobile')){
+        //styles go here
     }
-    ````````
+}
+````````
+
+##Bonus retina display mixin
+
+I've also added a retina display mixin for detecting retina display devices
+
+````````SCSS
+@include retina($density: 2)
+````````
+
+It can be used like this
+
+````````SCSS
+.element {
+    @include retina {
+        //styles that will only appear on retina screen devices (minimum of 2dppx)
+    }
+    @include retina(3) {
+        //styles that will only appear on retina screen devices that are a minimum of 3dppx
+    }
+}
+````````
