@@ -11,6 +11,8 @@ This media query mixin is a powerful tool that lets you easily create far more c
     * [Min/Max width](#minmax-width)
     * [Inside/Outside](#insideoutside)
     * [Full list of media query ranges](#full-list-of-media-query-ranges)
+        * [Single value ranges](#single-value-ranges)
+        * [Double value ranges](#double-value-ranges)
 * [MQ variables](#mq-variables)
     * [Why name your media queries?](#why-name-your-media-queries)
     * [Enhanced maintainability](#enhanced-maintainability)
@@ -151,41 +153,38 @@ outputted CSS:
 @include M-mq([range], XXX, YYY){ /*styles*/ }
 `````
 
-Single value ranges
+####Single value ranges
 
-``````````````````
-min : 'screen and (min-width: XXX)',
-max : 'screen and (max-width: XXX)',
+- **min** : 'screen and (min-width: XXX)',
+- **max** : 'screen and (max-width: XXX)',
 
-min-height : 'screen and (min-height: XXX)',
-max-height : 'screen and (max-height: XXX)',
+- **min-height** : 'screen and (min-height: XXX)',
+- **max-height** : 'screen and (max-height: XXX)',
 
-ratio : 'screen and (aspect-ratio: XXX)',
-min-ratio : 'screen and (min-aspect-ratio: XXX)',
-max-ratio : 'screen and (max-aspect-ratio: XXX)',
+- **ratio** : 'screen and (aspect-ratio: XXX)',
+- **min-ratio** : 'screen and (min-aspect-ratio: XXX)',
+- **max-ratio** : 'screen and (max-aspect-ratio: XXX)',
 
-device-ratio : 'screen and (device-aspect-ratio: XXX)',
-min-device-ratio : 'screen and (min-device-aspect-ratio: XXX)',
-max-device-ratio : 'screen and (max-device-aspect-ratio: XXX)',
+- **device-ratio** : 'screen and (device-aspect-ratio: XXX)',
+- **min-device-ratio** : 'screen and (min-device-aspect-ratio: XXX)',
+- **max-device-ratio** : 'screen and (max-device-aspect-ratio: XXX)',
 
-orientation : 'screen and (orientation: XXX)',
-`````````````````
+- **orientation** : 'screen and (orientation: XXX)',
 
-Double value ranges
 
-````````````````
-inside : 'screen and (max-width: XXX) and (min-width: YYY)',
-outside : 'not screen and (max-width: XXX) and (min-width: YYY)',
+####Double value ranges
 
-inside-height : 'screen and (max-height: XXX) and (min-height: YYY)',
-outside-height : 'not screen and (max-height: XXX) and (min-height: YYY)',
+- **inside** : 'screen and (max-width: XXX) and (min-width: YYY)',
+- **outside** : 'not screen and (max-width: XXX) and (min-width: YYY)',
 
-inside-ratio : 'screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
-outside-ratio : 'not screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
+- **inside-height** : 'screen and (max-height: XXX) and (min-height: YYY)',
+- **outside-height** : 'not screen and (max-height: XXX) and (min-height: YYY)',
 
-inside-device-ratio : 'screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
-outside-device-ratio : 'not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
-``````````````
+- **inside-ratio** : 'screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
+- **outside-ratio** : 'not screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)',
+
+- **inside-device-ratio** : 'screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
+- **outside-device-ratio** : 'not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)',
 
 ##MQ variables
 
