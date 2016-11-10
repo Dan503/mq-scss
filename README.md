@@ -41,7 +41,7 @@ Import mq-sass at the top of your main Sass file (note that the exact path will 
 ##Basic usage
 
 ````````SCSS
-@include M-mq($range, $larger-breakpoint[, $smaller-breakpoint]){ @content }
+@include mq($range, $larger-breakpoint[, $smaller-breakpoint]){ @content }
 ````````
 
 ###Min/Max width
@@ -54,7 +54,7 @@ SASS:
 .element {
     background: red;
 
-    @include M-mq(max, 600px){
+    @include mq(max, 600px){
         background: blue;
     }
 }
@@ -78,7 +78,7 @@ SASS:
 .element {
     background: red;
 
-    @include M-mq(min, 600px){
+    @include mq(min, 600px){
         background: blue;
     }
 }
@@ -106,7 +106,7 @@ SASS:
 .element {
     background: red;
 
-    @include M-mq(inside, 1024px, 600px){
+    @include mq(inside, 1024px, 600px){
         background: blue;
     }
 }
@@ -131,7 +131,7 @@ SASS:
 .element {
     background: red;
 
-    @include M-mq(outside, 1024px, 600px){
+    @include mq(outside, 1024px, 600px){
         background: blue;
     }
 }
@@ -149,7 +149,7 @@ outputted CSS:
 
 ###Full list of media query ranges
 
-    @include M-mq([range], XXX, YYY){ /*styles*/ }
+    @include mq([range], XXX, YYY){ /*styles*/ }
 
 ####Single value ranges
 
@@ -233,20 +233,20 @@ $MQ-module--is-altColor: (inside, 1024px, 600px);
 $MQ-module--not-altColor: (outside, 1024px, 600px);
 
 .module {
-    @include M-mq($MQ-module--not-altColor){
+    @include mq($MQ-module--not-altColor){
         background: red;
     }
 
-    @include M-mq($MQ-module--is-altColor){
+    @include mq($MQ-module--is-altColor){
         background: blue;
     }
 
     &--green {
-        @include M-mq($MQ-module--not-altColor){
+        @include mq($MQ-module--not-altColor){
             background: green;
         }
 
-        @include M-mq($MQ-module--is-altColor){
+        @include mq($MQ-module--is-altColor){
             background: grey;
         }
     }
@@ -290,7 +290,7 @@ $MQ-element--is-blue:
 .element {
     background: red;
 
-    @include M-mq($MQ-element--is-blue){
+    @include mq($MQ-element--is-blue){
         background: blue;
     }
 }
@@ -322,10 +322,10 @@ $MQ-element--not-blue:
 ;
 
 .element {
-    @include M-mq($MQ-element--is-blue){
+    @include mq($MQ-element--is-blue){
         background: blue;
     }
-    @include M-mq($MQ-element--not-blue){
+    @include mq($MQ-element--not-blue){
         background: red;
     }
 }
@@ -353,18 +353,18 @@ $MQ-subHeading--is-hidden: (inside, 800px, 400px);
 .module {
     &__sideBar {
         width: 33.33%;
-        @include M-mq($MQ-sideBar--is-fullWidth){
+        @include mq($MQ-sideBar--is-fullWidth){
             width: 100%;
         }
     }
     &__subHeading {
-        @include M-mq($MQ-subHeading--is-hidden){
+        @include mq($MQ-subHeading--is-hidden){
             display: none;
         }
     }
     &__mainHeading {
-        @include M-mq($MQ-sideBar--is-fullWidth){
-            @include M-mq($MQ-subHeading--is-hidden){
+        @include mq($MQ-sideBar--is-fullWidth){
+            @include mq($MQ-subHeading--is-hidden){
                 background: red;
             }
         }
