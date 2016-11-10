@@ -1,0 +1,25 @@
+{
+  "name": "mq-scss",
+  "version": "1.0.0",
+  "description": "An extreamly powerful but easy to use Sass media query mixin",
+  "main": "_mq.scss",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dan503/mq-scss.git"
+  },
+  "keywords": [
+    "breakpoints",
+    "css",
+    "sass",
+    "scss",
+    "media query",
+    "media queries",
+    "responsive"
+  ],
+  "author": "Daniel Tonon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dan503/mq-scss/issues"
+  },
+  "homepage": "https://github.com/Dan503/mq-scss#readme"
+}
