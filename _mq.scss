@@ -7,6 +7,8 @@ $mq-em-base: 16px !default;
 
 @function calculateMQ ($range, $setting1: null, $setting2: 0){
 
+	$setting2: if($setting2 == null, 0, $setting2);
+
 	$mediaString: '';
 
 	$errorMessage: '"#{$range}" range requires the first width setting (#{$setting1}) to be higher than the second width setting (#{$setting2})';
@@ -70,7 +72,7 @@ $mq-em-base: 16px !default;
 	@return $mediaString;
 }
 
-@mixin MG-mq($range, $setting1: null, $setting2: null) {
+@mixin mq($range, $setting1: null, $setting2: null) {
 
 	@if (length($range) > 1) {
 
