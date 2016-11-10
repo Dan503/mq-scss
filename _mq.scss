@@ -1,8 +1,11 @@
 $mediaQuery: ();
 
-@function calculateMQ ($range, $setting1: null, $setting2: 0){
+$mq-ems: false !default;
+$mq-em-base: 16px !default;
 
-	$setting2: if($setting2 == null, 0, $setting2);
+@import '_functions';
+
+@function calculateMQ ($range, $setting1: null, $setting2: 0){
 
 	$mediaString: '';
 
@@ -22,13 +25,22 @@ $mediaQuery: ();
 		}
 	}
 
+	$setting1Plus: $setting1 + 1;
+	$setting2Plus: $setting2 + 1;
+
+	@if ($mq-ems) {
+		$setting1: _mq-em($setting1);
+		$setting2: _mq-em($setting2);
+		$setting1Plus: _mq-em($setting1Plus);
+		$setting2Plus: _mq-em($setting2Plus);
+	}
 
 	$mediaString: map-get((
 	//*1 value given*/
-		min : 'screen and (min-width: #{$setting1 + 1})',
+		min : 'screen and (min-width: #{$setting1Plus})',
 		max : 'screen and (max-width: #{$setting1})',
 
-		min-height : 'screen and (min-height: #{$setting1 + 1})',
+		min-height : 'screen and (min-height: #{$setting1Plus})',
 		max-height : 'screen and (max-height: #{$setting1})',
 
 		ratio : 'screen and (aspect-ratio: #{$setting1})',
@@ -42,11 +54,11 @@ $mediaQuery: ();
 		orientation : 'screen and (orientation: #{$setting1})',
 
 	//*2 values given*/
-		inside : 'screen and (max-width: #{$setting1}) and (min-width: #{$setting2 + 1})',
-		outside : 'not screen and (max-width: #{$setting1}) and (min-width: #{$setting2 + 1})',
+		inside : 'screen and (max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
+		outside : 'not screen and (max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
 
-		inside-height : 'screen and (max-height: #{$setting1}) and (min-height: #{$setting2 + 1})',
-		outside-height : 'not screen and (max-height: #{$setting1}) and (min-height: #{$setting2 + 1})',
+		inside-height : 'screen and (max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
+		outside-height : 'not screen and (max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
 
 		inside-ratio : 'screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
 		outside-ratio : 'not screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
@@ -64,7 +76,7 @@ $mediaQuery: ();
 
 		//Uses this functionality if using a single level MQ variable
 		//eg:
-		//$MQ-example--single: inside, bp('large'), bp('tablet'));
+		//$MQ-example--single: inside, 1000px, 500px;
 		//@include MG-mq($MQ-example--single){}
 		@if (type-of(nth($range,1)) == string){
 
@@ -84,8 +96,8 @@ $mediaQuery: ();
 		//Uses this functionality if using a multi level MQ variable
 		//eg:
 		//$MQ-example--multiple:
-		//	(inside, bp('large'), bp('tablet')),
-		//	(min, bp('page'))
+		//	(inside, 1000px, 500px),
+		//	(min, 1200px)
 		//;
 		//@include MG-mq($MQ-example--multiple){}
 		} @else {
@@ -111,7 +123,7 @@ $mediaQuery: ();
 
 	//Uses this functionality if placing MQ data inline
 	//eg:
-	//@include MG-mq(inside, bp('large'), bp('tablet'));
+	//@include MG-mq(inside, 1000px, 500px);
 	} @else {
 
 		@media #{calculateMQ($range, $setting1, $setting2)} {

@@ -1,0 +1,22 @@
+//File taken from mq-sass
+//https://github.com/jonsuh/mq-sass/blob/master/stylesheets/mq-sass/_functions.scss
+
+// Strip units
+// ==================================================
+// Derived from Bourbon by thoughtbot (http://bourbon.io)
+@function _mq-strip-units($val) {
+  @return ($val / ($val * 0 + 1));
+}
+
+// Pixels to Ems
+// ==================================================
+// Derived from Bourbon by thoughtbot (http://bourbon.io)
+@function _mq-em($pxval, $base: $mq-em-base) {
+  @if not unitless($pxval) {
+      $pxval: _mq-strip-units($pxval);
+  }
+  @if not unitless($base) {
+      $base: _mq-strip-units($base);
+  }
+  @return ($pxval / $base) * 1em;
+}
