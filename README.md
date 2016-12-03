@@ -29,7 +29,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
 ##Instalation
 
 ```````````
-npm install mq-scss --save-dev
+npm install mq-scss --save
 ```````````
 
 Import mq-sass at the top of your main Sass file (note that the exact path will differ depending on your folder structure)
