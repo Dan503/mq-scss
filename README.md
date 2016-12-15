@@ -6,7 +6,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
 
 ##Contents
 
-* [Instalation](#instalation)
+* [Installation](#installation)
 * [Basic usage](#basic-usage)
     * [Min/Max width](#minmax-width)
     * [Inside/Outside](#insideoutside)
@@ -26,7 +26,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
 * [Defining breakpoints](#defining-breakpoints)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
 
-##Instalation
+##Installation
 
 ```````````
 npm install mq-scss --save
