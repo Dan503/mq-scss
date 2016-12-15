@@ -32,7 +32,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
 npm install mq-scss --save
 ```````````
 
-Import mq-sass at the top of your main Sass file (note that the exact path will differ depending on your folder structure)
+Import mq-scss at the top of your main Sass file (note that the exact path will differ depending on your folder structure)
 
 ``````SCSS
 @import "../node_modules/mq-scss/mq";
