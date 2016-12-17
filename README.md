@@ -410,9 +410,9 @@ $mq-em-base: 10px; /*default: 16px*/
 @import '../node_modules/mq-scss/mq';
 ````````````
 
-`$mq-ems` defines if the media query mixin should bother doing conversions or not
+**$mq-ems** defines if the media query mixin should bother doing conversions or not.
 
-`$mq-em-base` defines the base value that the media query uses for doing it's em conversion calculations.
+**$mq-em-base** defines the base value that the media query uses for doing it's em conversion calculations.
 
 ##Defining breakpoints
 
