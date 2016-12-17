@@ -270,7 +270,7 @@ outputted CSS:
     .module--green { background: green; }
 }
 @media screen and (max-width: 1024px) and (min-width: 601px) {
-    .module { background: grey; }
+    .module--green { background: grey; }
 }
 `````````````
 
