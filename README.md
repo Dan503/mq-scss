@@ -423,10 +423,10 @@ It is very easy to create a breakpoint function though. This is what I use in co
 `````````SCSS
 $breakPoints: (
     'minimum': 300px, //*The smallest width that the site is able to shrink to */
-    'tiny': 350px, //*essentially iphones in portrait view only*/
+    'tiny': 350px, //*essentially iPhones in portrait view only*/
     'small': 480px,
     'mobile': 600px, ///*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
-    'mid': 770px, //*essentially the maximum for iPads in portrait*/
+    'phablet': 770px, //*essentially the maximum for iPads in portrait*/
     'tablet': 960px, ///*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
     'large': 1024px, //*maximum for iPads in landscape*/
     'page': 1200px, ///*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
