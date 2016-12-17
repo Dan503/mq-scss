@@ -452,10 +452,10 @@ You can then use it in combination with the mq mixin like this:
 I've also added a retina display mixin for detecting retina display devices
 
 ````````SCSS
-@include retina($density: 2)
+@include retina($density: 2) { @content; }
 ````````
 
-It can be used like this
+It can be used like this:
 
 ````````SCSS
 .element {
