@@ -407,7 +407,7 @@ There are 2 setting variables used to control the em conversion functionality. T
 ````````````SCSS
 $mq-ems: true; /*default: false*/
 $mq-em-base: 10px; /*default: 16px*/
-@import '../node_modules/mq-scss/mq'
+@import '../node_modules/mq-scss/mq';
 ````````````
 
 `$mq-ems` defines if the media query mixin should bother doing conversions or not
