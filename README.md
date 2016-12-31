@@ -13,6 +13,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
     * [Full list of media query ranges](#full-list-of-media-query-ranges)
         * [Single value ranges](#single-value-ranges)
         * [Double value ranges](#double-value-ranges)
+    * [Changing which value comes first](#changing-which-value-comes-first)
 * [MQ variables](#mq-variables)
     * [Why name your media queries?](#why-name-your-media-queries)
     * [Enhanced maintainability](#enhanced-maintainability)
@@ -34,21 +35,21 @@ npm install mq-scss --save
 
 Import mq-scss at the top of your main Sass file (note that the exact path will differ depending on your folder structure)
 
-``````SCSS
+``````scss
 @import "../node_modules/mq-scss/mq";
 ``````
 
 ##Basic usage
 
-````````SCSS
-@include mq($range, $larger-breakpoint[, $smaller-breakpoint]){ @content }
-````````
+``````scss
+@include mq($range, $larger-breakpoint[, $smaller-breakpoint]){@content}
+``````
 
 ###Min/Max width
 
 In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than 600px wide
 
-`````````````SCSS
+`````````````scss
 SASS:
 
 .element {
@@ -60,8 +61,8 @@ SASS:
 }
 `````````````
 
-`````````````CSS
-outputted CSS:
+`````````````css
+outputted css:
 
 .element { background: red; }
 @media screen and (max-width: 600px) {
@@ -72,7 +73,7 @@ outputted CSS:
 
 It's just as easy to state a minimum width:
 
-`````````````SCSS
+`````````````scss
 SASS:
 
 .element {
@@ -84,8 +85,8 @@ SASS:
 }
 `````````````
 
-`````````````CSS
-outputted CSS:
+`````````````css
+outputted css:
 
 .element { background: red; }
 @media screen and (min-width: 601px) {
@@ -93,14 +94,14 @@ outputted CSS:
 }
 `````````````
 
-Note that in the sass, we state that the width is 600px but it gets outputted as 601px in the CSS. This makes the mixin more intuitive to use and it means you'll never have to worry about that ugly 1px cross over point where `min` and `max` ranges set to the same width display at the same time.
+Note that in the sass, we state that the width is 600px but it gets outputted as 601px in the css. This makes the mixin more intuitive to use and it means you'll never have to worry about that ugly 1px cross over point where `min` and `max` ranges set to the same width display at the same time.
 
 
 ###Inside/Outside
 
 What about those times when you only want a style to be effective within a given range? Perhaps you only want something to be blue if it's a tablet sized screen but not appear on mobile. That is when the `inside` range type comes in handy.
 
-`````````````SCSS
+`````````````scss
 SASS:
 
 .element {
@@ -112,8 +113,8 @@ SASS:
 }
 `````````````
 
-`````````````CSS
-outputted CSS:
+`````````````css
+outputted css:
 
 .element { background: red; }
 @media screen and (max-width: 1024px) and (min-width: 601px) {
@@ -125,7 +126,7 @@ Again notice how min-width gets outputted as +1 the value given to avoid potenti
 
 If you want something to be styled a certain way on mobiles and desktops but **not** tablets, we can use the `outside` range type:
 
-`````````````SCSS
+`````````````scss
 SASS:
 
 .element {
@@ -137,8 +138,8 @@ SASS:
 }
 `````````````
 
-`````````````CSS
-outputted CSS:
+`````````````css
+outputted css:
 
 .element { background: red; }
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
@@ -189,6 +190,43 @@ Ratio ranges must be a division in the form of a sting like `'1 / 2'`.
 - **inside-device-ratio** : `screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
 - **outside-device-ratio** : `not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
 
+
+###Changing which value comes first
+
+If your mind works in more of a smallest screen up to largest screen sort of way, then placing the largest value in the first slot is probably a bit counterintuative for you.
+
+If this is the case, you can change it so that the smallest value is what comes first by altering the `$mq-largest-first` variable. To change it, define the setting before the mq-scss import statement.
+
+````````scss
+$mq-largest-first: false; /*defaults to true*/
+@import '../node_modules/mq-scss/mq';
+````````
+
+Setting `$mq-largest-first` to `false` will mean that all media queries that are made using the mq-scss mixin that have 2 values in them must have the _smaller_ value come first instead of the larger value.
+
+This will not alter the final output, it will only alter how you input the information.
+
+`````````````scss
+//Using the "inside" range with the $mq-largest-first variable set to "false"
+
+.element {
+    background: red;
+
+    @include mq(inside, 600px, 1024px){
+        background: blue;
+    }
+}
+`````````````
+
+`````````````css
+outputted css:
+
+.element { background: red; }
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+    .element { background: blue; }
+}
+`````````````
+
 ##MQ variables
 
 There are two very strong reasons for using an MQ variable over writing the media query inline like I've been doing so far.
@@ -211,7 +249,7 @@ You state the media query once at the top of your SASS file and then you can re-
 
 I've come up with a bit of a naming convention for them based on BEM. This is how I write a Media Query variable:
 
-`````````````SCSS
+`````````````scss
 $MQ-[element]--[is/not]-[objective]: ([range], [larger-width], [smaller-width]);
 `````````````
 
@@ -231,7 +269,7 @@ Here is the breakdown of what each part means
 
 Here is an example of how to use it (the "not" examples are a little unecessary but I've added them for demonstration):
 
-`````````````SCSS
+`````````````scss
 SASS:
 
 $MQ-module--is-altColor: (inside, 1024px, 600px);
@@ -257,8 +295,9 @@ $MQ-module--not-altColor: (outside, 1024px, 600px);
     }
 }
 `````````````
-`````````````CSS
-outputted CSS:
+
+`````````````css
+outputted css:
 
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
     .module { background: red; }
@@ -284,7 +323,7 @@ Well actually after gzipping, all the repetative media query declarations [becom
 
 Media Query "or" statements are only possible using an MQ variable.
 
-`````````````SCSS
+`````````````scss
 SASS:
 
 $MQ-element--is-blue:
@@ -301,8 +340,8 @@ $MQ-element--is-blue:
 }
 `````````````
 
-`````````````CSS
-outputted CSS:
+`````````````css
+outputted css:
 
 .element { background: red; }
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
@@ -312,7 +351,7 @@ outputted CSS:
 
 This technique is most useful when you are targeting a module that is inside a container that is changing in width quite frequently. It's a bit harder to make a counter media query for these though since as long as just a single rule in the or statement is true, the styles will take effect. To effectively create a counter media query for one of these multi queries, you need to carefully target all the gaps in the original statement.
 
-`````````````SCSS
+`````````````scss
 SASS:
 
 $MQ-element--is-blue:
@@ -336,8 +375,8 @@ $MQ-element--not-blue:
 }
 `````````````
 
-`````````````CSS
-outputted CSS:
+`````````````css
+outputted css:
 
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
     .element { background: blue; }
@@ -351,7 +390,7 @@ outputted CSS:
 
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
 
-`````````````SCSS
+`````````````scss
 $MQ-sideBar--is-fullWidth: (max, 600px);
 $MQ-subHeading--is-hidden: (inside, 800px, 400px);
 
@@ -377,8 +416,8 @@ $MQ-subHeading--is-hidden: (inside, 800px, 400px);
 }
 `````````````
 
-`````````````CSS
-outputted CSS:
+`````````````css
+outputted css:
 
 .module__sideBar { width: 33.33%; }
 @media screen and (max-width: 600px) {
@@ -404,7 +443,7 @@ Pixel based media queries can actually appear incorrectly when zooming on some b
 
 There are 2 setting variables used to control the em conversion functionality. These settings are defined before the import statment.
 
-````````````SCSS
+````````````scss
 $mq-ems: true; /*default: false*/
 $mq-em-base: 10px; /*default: 16px*/
 @import '../node_modules/mq-scss/mq';
@@ -420,7 +459,7 @@ This mixin does not contain any string to pixel value functionality. This is to 
 
 It is very easy to create a breakpoint function though. This is what I use in combination with the mq mixin to make writing media queries a breeze.
 
-`````````SCSS
+`````````scss
 $breakPoints: (
     'minimum': 300px, //*The smallest width that the site is able to shrink to */
     'tiny': 350px, //*essentially iPhones in portrait view only*/
@@ -439,7 +478,7 @@ $breakPoints: (
 
 You can then use it in combination with the mq mixin like this:
 
-````````SCSS
+````````scss
 .element {
     @include mq(max, bp('mobile')){
         //styles go here
@@ -451,13 +490,13 @@ You can then use it in combination with the mq mixin like this:
 
 I've also added a retina display mixin for detecting retina display devices
 
-````````SCSS
+````````scss
 @include retina($density: 2) { @content; }
 ````````
 
 It can be used like this:
 
-````````SCSS
+````````scss
 .element {
     @include retina {
         //styles that will only appear on retina screen devices (minimum of 2dppx)
