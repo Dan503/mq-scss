@@ -3,16 +3,33 @@ $mediaQuery: ();
 $mq-ems: false !default;
 $mq-em-base: 16px !default;
 
+$mq-largest-first: true !default;
+
 @import '_functions';
 
 @function calculateMQ ($range, $setting1: null, $setting2: 0){
+
+	//swaps the settings around if largest-first is set to false
+	@if ($setting2 != null and not $mq-largest-first){
+		$temp: $setting1;
+		$setting1: $setting2;
+		$setting2: $temp;
+	}
 
 	$setting2: if($setting2 == null, 0, $setting2);
 
 	$mediaString: '';
 
-	$errorMessage: '"#{$range}" range requires the first width setting (#{$setting1}) to be higher than the second width setting (#{$setting2})';
-	$errorMessage--ratios: '"#{$range}" range requires the settings (#{$setting1} #{$setting2}) to be strings in this format "4/3" (width ratio / height ratio).';
+	$first: 'first';
+	$second: 'second';
+
+	@if (not $mq-largest-first){
+		$first: 'second';
+		$second: 'first';
+	}
+
+	$errorMessage: '"#{$range}" range requires the #{$first} width setting (#{$setting1}) to be higher than the #{$second} width setting (#{$setting2})';
+	$errorMessage--ratios: '"#{$range}" range requires the settings (#{$setting1} #{$setting2}) to be strings in this format "4 / 3" (width ratio / height ratio).';
 
 	@if (str-index($range, 'ratio') == null){
 		//if a standard media query
@@ -79,7 +96,7 @@ $mq-em-base: 16px !default;
 		//Uses this functionality if using a single level MQ variable
 		//eg:
 		//$MQ-example--single: inside, 1000px, 500px;
-		//@include MG-mq($MQ-example--single){}
+		//@include mq($MQ-example--single){}
 		@if (type-of(nth($range,1)) == string){
 
 			$newRange: nth($range,1);
@@ -88,7 +105,6 @@ $mq-em-base: 16px !default;
 			@if (length($range) == 3){
 				$newWidth2: nth($range,3);
 			}
-
 
 			@media #{calculateMQ($newRange, $newWidth1, $newWidth2)} {
 				@content;
@@ -101,7 +117,7 @@ $mq-em-base: 16px !default;
 		//	(inside, 1000px, 500px),
 		//	(min, 1200px)
 		//;
-		//@include MG-mq($MQ-example--multiple){}
+		//@include mq($MQ-example--multiple){}
 		} @else {
 			$mediaQuery: ();
 
@@ -125,7 +141,7 @@ $mq-em-base: 16px !default;
 
 	//Uses this functionality if placing MQ data inline
 	//eg:
-	//@include MG-mq(inside, 1000px, 500px);
+	//@include mq(inside, 1000px, 500px);
 	} @else {
 
 		@media #{calculateMQ($range, $setting1, $setting2)} {
