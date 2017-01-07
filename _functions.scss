@@ -5,23 +5,23 @@
 // ==================================================
 // Derived from Bourbon by thoughtbot (http://bourbon.io)
 @function _mq-strip-units($val) {
-  @return ($val / ($val * 0 + 1));
+	@return ($val / ($val * 0 + 1));
 }
 
 // Pixels to Ems
 // ==================================================
 // Derived from Bourbon by thoughtbot (http://bourbon.io)
 @function _mq-em($pxval, $base: $mq-em-base) {
-  //alteration to prevent strings from causing an error
-  @if (type-of($pxval) == 'string'){
-    @return $pxval;
-  }
+	//alteration to prevent strings from causing an error
+	@if (type-of($pxval) == 'string'){
+		@return $pxval;
+	}
 
-  @if not unitless($pxval) {
-      $pxval: _mq-strip-units($pxval);
-  }
-  @if not unitless($base) {
-      $base: _mq-strip-units($base);
-  }
-  @return ($pxval / $base) * 1em;
+	@if not unitless($pxval) {
+		$pxval: _mq-strip-units($pxval);
+	}
+	@if not unitless($base) {
+		$base: _mq-strip-units($base);
+	}
+	@return ($pxval / $base) * 1em;
 }
