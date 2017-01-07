@@ -28,19 +28,41 @@ $mq-largest-first: true !default;
 		$second: 'first';
 	}
 
-	$errorMessage: '"#{$range}" range requires the #{$first} width setting (#{$setting1}) to be higher than the #{$second} width setting (#{$setting2})';
-	$errorMessage--ratios: '"#{$range}" range requires the settings (#{$setting1} #{$setting2}) to be strings in this format "4 / 3" (width ratio / height ratio).';
+	@if ($range == 'orientation'){
+		@if ($setting1 != 'landscape' and $setting1 != 'portrait'){
+			@error '"orientation" range only accepts the values "landscape" and "portrait". Currently providing the value "#{$setting1}".';
+		}
+	}
+
+	@if (str-index($range, 'inside') != null or str-index($range, 'outside') != null){
+		@if ($setting2 == 0) {
+			@error '"#{$range}" range requires a second value. Currently only providing "#{$setting1}" as a value.';
+		}
+	} @else {
+		@if ($setting2 != 0) {
+			@error '"#{$range}" range can only take one value. Currently providing both "#{$setting1}" and "#{$setting2}" values.';
+		}
+	}
 
 	@if (str-index($range, 'ratio') == null){
 		//if a standard media query
+		@if (type-of($setting1) != number and $range != 'orientation'){
+			@if ($setting2 != 0) {
+				@error '"#{$range}" range requires the settings ("#{$setting1}" and "#{$setting2}") to be pixel values';
+			} @else {
+				@error '"#{$range}" range requires the setting "#{$setting1}" to be a pixel value';
+			}
+		}
 		@if (($setting2 != 0) and ($setting1 < $setting2)){
 			//if setting 2 is higher than setting 1
-			@error $errorMessage;
+			@error '"#{$range}" range requires the #{$first} width setting (#{$setting1}) to be higher than the #{$second} width setting (#{$setting2})';
 		}
 	} @else {
 		//else if it's a ratio...
-		@if ((type-of($setting1) != string) or (($setting2 != 0) and (type-of($setting2) != string))){
-			@error $errorMessage--ratios;
+		@if ((($setting2 != 0) and (type-of($setting2) != string))){
+			@error '"#{$range}" range requires the settings ("#{$setting1}" and "#{$setting2}") to both be strings in this format "4 / 3" (width ratio / height ratio).';
+		} @else if (type-of($setting1) != string) {
+			@error '"#{$range}" range requires the setting "#{$setting1}" to be a string in this format "4 / 3" (width ratio / height ratio).';
 		}
 	}
 
