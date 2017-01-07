@@ -10,6 +10,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
 * [Basic usage](#basic-usage)
     * [Min/Max width](#minmax-width)
     * [Inside/Outside](#insideoutside)
+    * [Ratio based media queries](#ratio-based-media-queries)
     * [Full list of media query ranges](#full-list-of-media-query-ranges)
         * [Single value ranges](#single-value-ranges)
         * [Double value ranges](#double-value-ranges)
@@ -147,6 +148,36 @@ outputted css:
 }
 `````````````
 
+### Ratio based media queries
+
+Ratio ranges must be a division in the form of a sting like `'2 / 1'` (width / height). That example meaning that the screen width is 2 times the size of the screen height. Ratio ranges do not accept pixel values.
+
+`````````````scss
+SASS:
+
+.element {
+    background: red;
+
+    @include mq(min-ratio, '2 / 1'){
+        background: blue;
+    }
+}
+`````````````
+
+`````````````css
+outputted css:
+
+.element { background: red; }
+@media screen and (min-aspect-ratio: 2 / 1) {
+    .element { background: blue; }
+}
+`````````````
+
+It is easiest to think of ratio based media queries as always being based more on the width than the height. For example, `mq('min-ratio', '2 / 1')` will be active at a ratio of `3 / 1` but not at a ratio of `1 / 1` or `2 / 3`. `min-ratio` acts a little bit like `min-width` in this sense. Since `3 / 1` is wider than `2 / 1` it will be active but both `1 / 1` and `2 / 3` are thinner than `2 / 1` so those are not active.
+
+There are 2 types of ratio based media queries, "aspect-ratio" (shortened to just `ratio` in the mq mixin) and "device-aspect-ratio" (shortened to `device-ratio` in the mq mixin). It is generally best to stick with "aspect-ratio" rather than "device-aspect-ratio" since "aspect-ratio" is determined by the users browser window size. "device-aspect-ratio" is based on the physical screen size of the users device. With "aspect-ratio" you can see the effects by just resizing the browser window. With "device-aspect-ratio" you will physically have to look at the site on a different screen in order to see the effect... or look at the site with the Chrome dev tools screen emulator open (Chromes screen emulator obeys "device-aspect-ratio" media queries).
+
+Ratio based media queries are mostly useful for when you have sites that have displays that take up the full screen. Displays like this tend to need media queries that understand both the users screen height and width at the same time. You may need to combine the ratio based media query with a more traditional pixel based media query for it to have the greatest effect. Read the [Media Query "and" statements](#media-query-and-statements) section for more details on how to do that.
 
 ###Full list of media query ranges
 
@@ -154,9 +185,7 @@ outputted css:
 
 Note that orientation and ratio ranges do **not** accept pixel values.
 
-Ratio ranges must be a division in the form of a sting like `'1 / 2'`.
-
-`orientation` only accepts the strings `'portrait'` and `'landscape'`.
+Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
 ####Single value ranges
 
