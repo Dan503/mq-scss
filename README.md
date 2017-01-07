@@ -1,6 +1,6 @@
 # mq-scss
 
-An extreamly powerful but easy to use Sass media query mixin
+An extremely powerful but easy to use Sass media query mixin
 
 This media query mixin is a powerful tool that lets you easily create far more complex media queries than you would have ever attempted to do with plain css. It also makes your code far easier to maintain through it's ability to take simple media query variables.
 
@@ -23,7 +23,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
         * [Creating your MQ variables](#creating-your-mq-variables)
 * [Combining media queries](#combining-media-queries)
     * [Media query "or" statements](#media-query-or-statements)
-    * [Media Query "and" statments](#media-query-and-statements)
+    * [Media Query "and" statements](#media-query-and-statements)
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
@@ -222,7 +222,7 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
 ###Changing which value comes first
 
-If your mind works in more of a smallest screen up to largest screen sort of way, then placing the largest value in the first slot is probably a bit counterintuative for you.
+If your mind works in more of a smallest screen up to largest screen sort of way, then placing the largest value in the first slot is probably a bit counterintuitive for you.
 
 If this is the case, you can change it so that the smallest value is what comes first by altering the `$mq-largest-first` variable. To change it, define the setting before the mq-scss import statement.
 
@@ -296,7 +296,7 @@ Here is the breakdown of what each part means
 
 ####Creating your MQ variables
 
-Here is an example of how to use it (the "not" examples are a little unecessary but I've added them for demonstration):
+Here is an example of how to use it (the "not" examples are a little unnecessary but I've added them for demonstration):
 
 `````````````scss
 SASS:
@@ -344,7 +344,7 @@ outputted css:
 
 Ahhhhh!!! It's doubling up on Media queries!!! Think of all that extra weight you're adding!!!
 
-Well actually after gzipping, all the repetative media query declarations [become quite negligable](https://benfrain.com/inline-or-combined-media-queries-in-sass-fight/).
+Well actually after gzipping, all the repetitive media query declarations [become quite negligible](https://benfrain.com/inline-or-combined-media-queries-in-sass-fight/).
 
 ##Combining media queries
 
@@ -415,7 +415,7 @@ outputted css:
 }
 `````````````
 
-###Media Query "and" statments
+###Media Query "and" statements
 
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
 
@@ -470,7 +470,7 @@ Any of the range types that contain `outside` in their name do not support this 
 
 Pixel based media queries can actually appear incorrectly when zooming on some browsers (it's particularly infamous in Safari on Mac).
 
-There are 2 setting variables used to control the em conversion functionality. These settings are defined before the import statment.
+There are 2 setting variables used to control the em conversion functionality. These settings are defined before the import statement.
 
 ````````````scss
 $mq-ems: true; /*default: false*/
