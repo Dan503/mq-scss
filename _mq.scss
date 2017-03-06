@@ -3,30 +3,23 @@ $mediaQuery: ();
 $mq-ems: false !default;
 $mq-em-base: 16px !default;
 
-$mq-largest-first: true !default;
-
 @import '_functions';
 
-@function calculateMQ ($range, $setting1: null, $setting2: 0){
+@function calculateMQ ($range, $setting1: null, $setting2: null){
 
-	//swaps the settings around if largest-first is set to false
-	@if ($setting2 != null and not $mq-largest-first){
-		$temp: $setting1;
-		$setting1: $setting2;
-		$setting2: $temp;
+	@if ($setting2 != null){
+
+		//swaps the settings around if the smaller number is first
+		@if ($setting1 < $setting2){
+			$temp: $setting1;
+			$setting1: $setting2;
+			$setting2: $temp;
+		}
+	} @else {
+		$setting2: 0;
 	}
-
-	$setting2: if($setting2 == null, 0, $setting2);
 
 	$mediaString: '';
-
-	$first: 'first';
-	$second: 'second';
-
-	@if (not $mq-largest-first){
-		$first: 'second';
-		$second: 'first';
-	}
 
 	@if ($range == 'orientation'){
 		@if ($setting1 != 'landscape' and $setting1 != 'portrait'){
@@ -52,10 +45,6 @@ $mq-largest-first: true !default;
 			} @else {
 				@error '"#{$range}" range requires the setting "#{$setting1}" to be a pixel value';
 			}
-		}
-		@if (($setting2 != 0) and ($setting1 < $setting2)){
-			//if setting 2 is higher than setting 1
-			@error '"#{$range}" range requires the #{$first} width setting (#{$setting1}) to be higher than the #{$second} width setting (#{$setting2})';
 		}
 	} @else {
 		//else if it's a ratio...
