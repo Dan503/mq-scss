@@ -242,7 +242,7 @@ What if you decide later on that you actually want the sidebar to go full width 
 
 ###Enhanced maintainability
 
-You state the media query once at the top of your SASS file and then you can re-use it as many times as you like. If you need to change it later on, you change it once and it updates across the entire style sheet. In combination with the ability to name the variables based on the objective that they are trying to achieve, MQ variables make working with media queries far easier to maintain.
+You state the media query once at the top of your Sass file and then you can re-use it as many times as you like. If you need to change it later on, you change it once and it updates across the entire style sheet. In combination with the ability to name the variables based on the objective that they are trying to achieve, MQ variables make working with media queries far easier to maintain.
 
 ###How to use an MQ variable
 
