@@ -7,14 +7,32 @@ $mq-em-base: 16px !default;
 
 @function calculateMQ ($range, $setting1: null, $setting2: null){
 
+	$swap-values: false;
+
 	@if ($setting2 != null){
 
-		//swaps the settings around if the smaller number is first
-		@if ($setting1 < $setting2){
+		@if (type-of($setting1) == 'string'){
+
+			$setting1_1: get-start($setting1);
+			$setting1_2: get-end($setting1);
+
+			$setting2_1: get-start($setting2);
+			$setting2_2: get-end($setting2);
+
+			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
+		} @else {
+			//swaps the settings around if the smaller number is first
+			@if ($setting1 < $setting2){
+				$swap-values: true;
+			}
+		}
+
+		@if ($swap-values){
 			$temp: $setting1;
 			$setting1: $setting2;
 			$setting2: $temp;
 		}
+
 	} @else {
 		$setting2: 0;
 	}
@@ -162,7 +180,7 @@ $mq-em-base: 16px !default;
 }
 
 @mixin retina($density: 2) {
-  	@media
+		@media
 		only screen and (min-device-pixel-ratio: $density),
 		only screen and (min-resolution: $density * 96ppi),
 		only screen and (min-resolution: $density * 1dppx) {

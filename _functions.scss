@@ -25,3 +25,38 @@
 	}
 	@return ($pxval / $base) * 1em;
 }
+
+//Turn string into a number
+//http://hugogiraudel.com/2014/01/15/sass-string-to-number/
+@function number($string) {
+	// Matrices
+	$strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+	$numbers:  0   1   2   3   4   5   6   7   8   9;
+
+	// Result
+	$result: 0;
+
+	// Looping through all characters
+	@for $i from 1 through str-length($string) {
+		$character: str-slice($string, $i, $i);
+		$index: index($strings, $character);
+		@if not $index {
+			@warn "Unknown character `#{$character}`.";
+			@return false;
+		}
+		$number: nth($numbers, $index);
+		$result: $result * 10 + $number;
+	}
+
+	@return $result;
+}
+
+//For getting the number values in ratio based ranges
+@function get-start($string){
+	$string: unquote($string);
+	@return number( str-slice($string, 1, 1) );
+}
+@function get-end($string){
+	$string: unquote($string);
+	@return number( str-slice($string, str-length($string), str-length($string)) );
+}
