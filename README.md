@@ -29,6 +29,7 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
+* [Change Log](#change-log)
 
 ##Installation
 
@@ -537,3 +538,15 @@ It can be used like this:
     }
 }
 ````````
+
+## Change log
+
+### v1.2.0
+
+- Removed the need for the `$mq-largest-first` variable. You can now state double value breakpoint values in any order.
+- Outside range types can now be safely nested and take advantage of the Sass nested media queries functionality.
+- Updated the MQ variable syntax to what I currently use.
+
+### v1.1.0
+
+- Added the ability to state the smaller value first by setting an `$mq-largest-first` variable to `false`.
