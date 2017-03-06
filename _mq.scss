@@ -85,16 +85,16 @@ $mq-em-base: 16px !default;
 
 	//*2 values given*/
 		inside : 'screen and (max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
-		outside : 'not screen and (max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
+		outside : 'screen and (max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})',
 
 		inside-height : 'screen and (max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
-		outside-height : 'not screen and (max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
+		outside-height : 'screen and (max-height: #{$setting2}), screen and (min-height: #{$setting1Plus})',
 
 		inside-ratio : 'screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
-		outside-ratio : 'not screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
+		outside-ratio : 'screen and (max-aspect-ratio: #{$setting2}), screen and (min-aspect-ratio: #{$setting1})',
 
 		inside-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
-		outside-device-ratio : 'not screen and (max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
+		outside-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting2}), screen and (min-device-aspect-ratio: #{$setting1})',
 	), $range);
 
 	@return $mediaString;
