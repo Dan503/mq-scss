@@ -361,8 +361,8 @@ $MQ-element__color--main:
 ;
 
 $MQ-element__color--alt:
-    (min, 1024px),//*$MQ-element__color--main doesn't go any higher than 1024px*/
-    (inside, 980px, 600px)//*$MQ-element__color--main doesn't target screen sizes between 980px and 600px.*/
+    (min, 1024px),//*$MQ-element__color--main does not go any higher than 1024px*/
+    (inside, 980px, 600px)//*$MQ-element__color--main does not target screen sizes between 980px and 600px.*/
     //*$MQ-element__color--main covers all screen sizes below 600px so no further queries are needed for the counter query*/
 ;
 
