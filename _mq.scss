@@ -21,12 +21,12 @@ $mq-em-base: 16px !default;
 
 			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
 		} @else {
-			//swaps the settings around if the smaller number is first
 			@if ($setting1 < $setting2){
 				$swap-values: true;
 			}
 		}
 
+		//Swaps the settings around
 		@if ($swap-values){
 			$temp: $setting1;
 			$setting1: $setting2;
