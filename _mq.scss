@@ -3,30 +3,41 @@ $mediaQuery: ();
 $mq-ems: false !default;
 $mq-em-base: 16px !default;
 
-$mq-largest-first: true !default;
-
 @import '_functions';
 
-@function calculateMQ ($range, $setting1: null, $setting2: 0){
+@function calculateMQ ($range, $setting1: null, $setting2: null){
 
-	//swaps the settings around if largest-first is set to false
-	@if ($setting2 != null and not $mq-largest-first){
-		$temp: $setting1;
-		$setting1: $setting2;
-		$setting2: $temp;
+	$swap-values: false;
+
+	@if ($setting2 != null){
+
+		@if (type-of($setting1) == 'string'){
+
+			$setting1_1: get-start($setting1);
+			$setting1_2: get-end($setting1);
+
+			$setting2_1: get-start($setting2);
+			$setting2_2: get-end($setting2);
+
+			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
+		} @else {
+			@if ($setting1 < $setting2){
+				$swap-values: true;
+			}
+		}
+
+		//Swaps the settings around
+		@if ($swap-values){
+			$temp: $setting1;
+			$setting1: $setting2;
+			$setting2: $temp;
+		}
+
+	} @else {
+		$setting2: 0;
 	}
-
-	$setting2: if($setting2 == null, 0, $setting2);
 
 	$mediaString: '';
-
-	$first: 'first';
-	$second: 'second';
-
-	@if (not $mq-largest-first){
-		$first: 'second';
-		$second: 'first';
-	}
 
 	@if ($range == 'orientation'){
 		@if ($setting1 != 'landscape' and $setting1 != 'portrait'){
@@ -52,10 +63,6 @@ $mq-largest-first: true !default;
 			} @else {
 				@error '"#{$range}" range requires the setting "#{$setting1}" to be a pixel value';
 			}
-		}
-		@if (($setting2 != 0) and ($setting1 < $setting2)){
-			//if setting 2 is higher than setting 1
-			@error '"#{$range}" range requires the #{$first} width setting (#{$setting1}) to be higher than the #{$second} width setting (#{$setting2})';
 		}
 	} @else {
 		//else if it's a ratio...
@@ -96,16 +103,16 @@ $mq-largest-first: true !default;
 
 	//*2 values given*/
 		inside : 'screen and (max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
-		outside : 'not screen and (max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
+		outside : 'screen and (max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})',
 
 		inside-height : 'screen and (max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
-		outside-height : 'not screen and (max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
+		outside-height : 'screen and (max-height: #{$setting2}), screen and (min-height: #{$setting1Plus})',
 
 		inside-ratio : 'screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
-		outside-ratio : 'not screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
+		outside-ratio : 'screen and (max-aspect-ratio: #{$setting2}), screen and (min-aspect-ratio: #{$setting1})',
 
 		inside-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
-		outside-device-ratio : 'not screen and (max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
+		outside-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting2}), screen and (min-device-aspect-ratio: #{$setting1})',
 	), $range);
 
 	@return $mediaString;
@@ -173,7 +180,7 @@ $mq-largest-first: true !default;
 }
 
 @mixin retina($density: 2) {
-  	@media
+		@media
 		only screen and (min-device-pixel-ratio: $density),
 		only screen and (min-resolution: $density * 96ppi),
 		only screen and (min-resolution: $density * 1dppx) {
