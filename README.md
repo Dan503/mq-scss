@@ -4,6 +4,8 @@ An extremely powerful but easy to use Sass media query mixin
 
 This media query mixin is a powerful tool that lets you easily create far more complex media queries than you would have ever attempted to do with plain css. It also makes your code far easier to maintain through it's ability to take simple media query variables.
 
+If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-js) npm module. This allows you to use mq-scss style media queries inside your JavaScript files.
+
 ##Contents
 
 * [Installation](#installation)
