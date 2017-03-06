@@ -282,18 +282,18 @@ You state the media query once at the top of your SASS file and then you can re-
 I've come up with a bit of a naming convention for them based on BEM. This is how I write a Media Query variable:
 
 `````````````scss
-$MQ-[element]--[is/not]-[objective]: ([range], [larger-width], [smaller-width]);
+$MQ-[element]__[property]--[objective]: ([range], [larger-width], [smaller-width]);
 `````````````
 
-Here is the breakdown of what each part means
+Here is the breakdown of what each part means. I tend to use camelCase for each group to keep the grouping clear.
 
 **$MQ** - MQ at the start tells us it's a media query variable (helps when scanning through the code)
 
-**[element]** - The current element name. So for `.car__door` [element] would be `door`
+**[element]** - The current element name. So for `.car__door` [element] would be `door`.
 
-**[is/not]** - A binary true or false declaration. It can be something like "has" or "no" if that makes more sense grammatically. It just has to have an obvious true/false meaning to it. (Most of the time it will be "is")
+**[property]** - This one is optional. It represents the main css property that you are catering for in the media query.
 
-**[objective]** - a name for the objective you are trying to achieve. Try to keep it short as possible but still clear. I tend to use camelCase for this to keep the grouping clear.
+**[objective]** - a name for the objective you are trying to achieve. Try to keep it as short as possible but still clear.
 
 **([range], [larger-width], [smaller-width])** - the exact same as what you would put between the brackets of the media query mixin if you were doing it inline.
 
@@ -304,24 +304,24 @@ Here is an example of how to use it (the "not" examples are a little unnecessary
 `````````````scss
 SASS:
 
-$MQ-module--is-altColor: (inside, 1024px, 600px);
-$MQ-module--not-altColor: (outside, 1024px, 600px);
+$MQ-module__color--main: (inside, 1024px, 600px);
+$MQ-module__color--alt: (outside, 1024px, 600px);
 
 .module {
-    @include mq($MQ-module--not-altColor){
+    @include mq($MQ-module__color--main){
         background: red;
     }
 
-    @include mq($MQ-module--is-altColor){
+    @include mq($MQ-module__color--alt){
         background: blue;
     }
 
     &--green {
-        @include mq($MQ-module--not-altColor){
+        @include mq($MQ-module__color--main){
             background: green;
         }
 
-        @include mq($MQ-module--is-altColor){
+        @include mq($MQ-module__color--alt){
             background: grey;
         }
     }
@@ -358,7 +358,7 @@ Media Query "or" statements are only possible using an MQ variable.
 `````````````scss
 SASS:
 
-$MQ-element--is-blue:
+$MQ-element__color--alt:
     (inside, 1024px, 980px),
     (max, 600px)
 ;
@@ -366,7 +366,7 @@ $MQ-element--is-blue:
 .element {
     background: red;
 
-    @include mq($MQ-element--is-blue){
+    @include mq($MQ-element__color--alt){
         background: blue;
     }
 }
@@ -386,23 +386,23 @@ This technique is most useful when you are targeting a module that is inside a c
 `````````````scss
 SASS:
 
-$MQ-element--is-blue:
+$MQ-element__color--main:
     (inside, 1024px, 980px),
     (max, 600px)
 ;
 
-$MQ-element--not-blue:
-    (min, 1024px),/*$MQ-element--is-blue doesn't go any higher than 1024px*/
-    (inside, 980px, 600px)/*$MQ-element--is-blue doesn't target screen sizes between 980px and 600px.*/
-    /*$MQ-element--is-blue covers all screen sizes below 600px so no further queries are needed for the counter query*/
+$MQ-element__color--alt:
+    (min, 1024px),//*$MQ-element__color--blue doesn't go any higher than 1024px*/
+    (inside, 980px, 600px)//*$MQ-element__color--blue doesn't target screen sizes between 980px and 600px.*/
+    //*$MQ-element__color--blue covers all screen sizes below 600px so no further queries are needed for the counter query*/
 ;
 
 .element {
-    @include mq($MQ-element--is-blue){
-        background: blue;
-    }
-    @include mq($MQ-element--not-blue){
+    @include mq($MQ-element__color--main){
         background: red;
+    }
+    @include mq($MQ-element__color--alt){
+        background: blue;
     }
 }
 `````````````
@@ -423,24 +423,24 @@ outputted css:
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
 
 `````````````scss
-$MQ-sideBar--is-fullWidth: (max, 600px);
-$MQ-subHeading--is-hidden: (inside, 800px, 400px);
+$MQ-sideBar__width--full: (max, 600px);
+$MQ-subHeading--hidden: (inside, 800px, 400px);
 
 .module {
     &__sideBar {
         width: 33.33%;
-        @include mq($MQ-sideBar--is-fullWidth){
+        @include mq($MQ-sideBar__width--full){
             width: 100%;
         }
     }
     &__subHeading {
-        @include mq($MQ-subHeading--is-hidden){
+        @include mq($MQ-subHeading--hidden){
             display: none;
         }
     }
     &__mainHeading {
-        @include mq($MQ-sideBar--is-fullWidth){
-            @include mq($MQ-subHeading--is-hidden){
+        @include mq($MQ-sideBar__width--full){
+            @include mq($MQ-subHeading--hidden){
                 background: red;
             }
         }
