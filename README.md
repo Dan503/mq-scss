@@ -225,39 +225,8 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
 ###Changing which value comes first
 
-If your mind works in more of a smallest screen up to largest screen sort of way, then placing the largest value in the first slot is probably a bit counterintuitive for you.
+As of version 1.2.0, you no longer need to worry about which value you use first. Place the breakpoint values in any order and the mixin will figure it out from there. No need to use the `$mq-largest-first` setting any more.
 
-If this is the case, you can change it so that the smallest value is what comes first by altering the `$mq-largest-first` variable. To change it, define the setting before the mq-scss import statement.
-
-````````scss
-$mq-largest-first: false; /*defaults to true*/
-@import '../node_modules/mq-scss/mq';
-````````
-
-Setting `$mq-largest-first` to `false` will mean that all media queries that are made using the mq-scss mixin that have 2 values in them must have the _smaller_ value come first instead of the larger value.
-
-This will not alter the final output, it will only alter how you input the information.
-
-`````````````scss
-//Using the "inside" range with the $mq-largest-first variable set to "false"
-
-.element {
-    background: red;
-
-    @include mq(inside, 600px, 1024px){
-        background: blue;
-    }
-}
-`````````````
-
-`````````````css
-outputted css:
-
-.element { background: red; }
-@media screen and (max-width: 1024px) and (min-width: 601px) {
-    .element { background: blue; }
-}
-`````````````
 
 ##MQ variables
 
@@ -465,9 +434,7 @@ outputted css:
 
 I'm looking into a more streamlined way of incorporating media query "and" statements without having to nest them inside one another like this but currently this is the best available method.
 
-**Warning:**
-
-Any of the range types that contain `outside` in their name do not support this media query nesting technique.
+As of version 1.2.0 the `outside` range types also support this feature.
 
 ##em conversion
 
