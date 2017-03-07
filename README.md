@@ -12,11 +12,11 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
 * [Basic usage](#basic-usage)
     * [Min/Max width](#minmax-width)
     * [Inside/Outside](#insideoutside)
+        * [Changing which value comes first](#changing-which-value-comes-first)
     * [Ratio based media queries](#ratio-based-media-queries)
     * [Full list of media query ranges](#full-list-of-media-query-ranges)
         * [Single value ranges](#single-value-ranges)
         * [Double value ranges](#double-value-ranges)
-    * [Changing which value comes first](#changing-which-value-comes-first)
 * [MQ variables](#mq-variables)
     * [Why name your media queries?](#why-name-your-media-queries)
     * [Enhanced maintainability](#enhanced-maintainability)
@@ -46,12 +46,12 @@ Import mq-scss at the top of your main Sass file (note that the exact path will 
 ##Basic usage
 
 ``````scss
-@include mq($range, $larger-breakpoint[, $smaller-breakpoint]){@content}
+@include mq($range, $breakpoint-1 [, $breakpoint-2]){ @content }
 ``````
 
 ###Min/Max width
 
-In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than 600px wide
+In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than or equal to 600px wide
 
 `````````````scss
 SASS:
@@ -128,7 +128,7 @@ outputted css:
 
 Again notice how min-width gets outputted as +1 the value given to avoid potential conflicts.
 
-If you want something to be styled a certain way on mobiles and desktops but **not** tablets, we can use the `outside` range type:
+If you want something to be styled a certain way on mobiles and desktops but **not** tablets, we can use the `outside` range type instead:
 
 `````````````scss
 SASS:
@@ -146,10 +146,18 @@ SASS:
 outputted css:
 
 .element { background: red; }
-@media not screen and (max-width: 1024px) and (min-width: 601px) {
+
+@media screen and (max-width: 600px), screen and (min-width: 1025px) {
     .element { background: blue; }
 }
 `````````````
+
+#### Changing which value comes first
+
+As of version 1.2.0, you no longer need to worry about which value you use first. Place the breakpoint values in any order and the mixin will figure it out from there. 
+
+Prior to v1.2.0 You needed to set an `$mq-largest-first` global setting variable to `false` if you wanted to place the smaller breakpoint before the larger breakpoint. That is no longer necessary.
+
 
 ### Ratio based media queries
 
@@ -186,6 +194,8 @@ Ratio based media queries are mostly useful for when you have sites that have di
 
     @include mq([range], XXX, YYY){ /*styles*/ }
 
+These examples are based on XXX being a larger value than YYY.
+
 Note that orientation and ratio ranges do **not** accept pixel values.
 
 Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
@@ -211,21 +221,16 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 ####Double value ranges
 
 - **inside** : `screen and (max-width: XXX) and (min-width: YYY)`
-- **outside** : `not screen and (max-width: XXX) and (min-width: YYY)`
+- **outside** : `screen and (max-width: YYY), screen and (min-width: XXX)`
 
 - **inside-height** : `screen and (max-height: XXX) and (min-height: YYY)`
-- **outside-height** : `not screen and (max-height: XXX) and (min-height: YYY)`
+- **outside-height** : `screen and (max-height: YYY), screen and (min-height: XXX)`
 
 - **inside-ratio** : `screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)`
-- **outside-ratio** : `not screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)`
+- **outside-ratio** : `screen and (max-aspect-ratio: YYY), screen and (min-aspect-ratio: XXX)`
 
 - **inside-device-ratio** : `screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
-- **outside-device-ratio** : `not screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
-
-
-###Changing which value comes first
-
-As of version 1.2.0, you no longer need to worry about which value you use first. Place the breakpoint values in any order and the mixin will figure it out from there. No need to use the `$mq-largest-first` setting any more.
+- **outside-device-ratio** : `screen and (max-device-aspect-ratio: YYY), screen and (min-device-aspect-ratio: XXX)`
 
 
 ##MQ variables
@@ -238,7 +243,7 @@ Have you ever opened up a style sheet, seen a wall of media queries and not have
 
 Styles in Media queries are always written with a certain objective in mind. Objectives like making the sidebar full width or making the text smaller. Most of the time, these individual objectives are all lumped under the same media query. To make things even more confusing, each of those little objectives may need to affect multiple elements to achieve the desired result. For example, making the sidebar full width might mean having to making other elements on the page wider as well.
 
-What if you decide later on that you actually want the sidebar to go full width at a larger screen size? You don't want the text shrinking at that larger screen size though, that's good as it is. Well generally you would need to create a new media query and then scour the styles looking for the side bar related stuff, then cherry pick that stuff out. Often that leads to styles being missed and then you being left all dazed and confused about why your site is looking broken. Wouldn't it be easier if the styles were already broken down into the individual objectives that the styling was trying to achieve to begin with?
+What if you decide later on that you actually want the sidebar to go full width at a larger screen size? You don't want the text shrinking at that larger screen size though, that's good as it is. Well generally you would need to create a new media query and then scour the styles looking for the side bar related stuff, then cherry pick that stuff out. Often that leads to styles being missed and then you being left all dazed and confused about why your site is looking broken. Wouldn't it be easier if the styles were already broken down into the individual objectives that the styling was trying to achieve in the first place?
 
 ###Enhanced maintainability
 
@@ -268,7 +273,7 @@ Here is the breakdown of what each part means. I tend to use camelCase for each 
 
 ####Creating your MQ variables
 
-Here is an example of how to use it (the "not" examples are a little unnecessary but I've added them for demonstration):
+Here is an example of how to use it:
 
 `````````````scss
 SASS:
@@ -443,8 +448,8 @@ Pixel based media queries can actually appear incorrectly when zooming on some b
 There are 2 setting variables used to control the em conversion functionality. These settings are defined before the import statement.
 
 ````````````scss
-$mq-ems: true; /*default: false*/
-$mq-em-base: 10px; /*default: 16px*/
+$mq-ems: true; //*default: false*/
+$mq-em-base: 10px; //*default: 16px*/
 @import '../node_modules/mq-scss/mq';
 ````````````
 
@@ -454,7 +459,7 @@ $mq-em-base: 10px; /*default: 16px*/
 
 ##Defining breakpoints
 
-This mixin does not contain any string to pixel value functionality. This is to  keep the mixin modular allowing you to use your own code for defining what the breakpoints should be.
+This mixin does not contain any string to pixel value functionality. This is to keep the mixin modular allowing you to use your own code for defining what the breakpoints should be.
 
 It is very easy to create a breakpoint function though. This is what I use in combination with the mq mixin to make writing media queries a breeze.
 
@@ -498,13 +503,36 @@ It can be used like this:
 ````````scss
 .element {
     @include retina {
-        //styles that will only appear on retina screen devices (minimum of 2dppx)
+        /* styles that will only appear on retina screen devices (minimum of 2dppx) */
     }
     @include retina(3) {
         //styles that will only appear on retina screen devices that are a minimum of 3dppx
     }
 }
 ````````
+
+To create this css:
+
+````````scss
+@media  only screen and (min-device-pixel-ratio: 2),
+        only screen and (min-resolution: 192ppi),
+        only screen and (min-resolution: 2dppx) {
+
+    .element {
+        /* styles that will only appear on retina screen devices (minimum of 2dppx) */
+    }
+}
+
+@media  only screen and (min-device-pixel-ratio: 3),
+        only screen and (min-resolution: 288ppi),
+        only screen and (min-resolution: 3dppx) {
+
+    .element {
+        /* styles that will only appear on retina screen devices that are a minimum of 3dppx */
+    }
+}
+````````
+
 
 ## Change log
 
