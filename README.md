@@ -6,7 +6,7 @@ This media query mixin is a powerful tool that lets you easily create far more c
 
 If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-js) npm module. This allows you to use mq-scss style media queries inside your JavaScript files.
 
-##Contents
+## Contents
 
 * [Installation](#installation)
 * [Basic usage](#basic-usage)
@@ -31,7 +31,7 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
 * [Change Log](#change-log)
 
-##Installation
+## Installation
 
 ```````````
 npm install mq-scss --save
@@ -43,13 +43,13 @@ Import mq-scss at the top of your main Sass file (note that the exact path will 
 @import "../node_modules/mq-scss/mq";
 ``````
 
-##Basic usage
+## Basic usage
 
 ``````scss
 @include mq($range, $breakpoint-1 [, $breakpoint-2]){ @content }
 ``````
 
-###Min/Max width
+### Min/Max width
 
 In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than or equal to 600px wide
 
@@ -190,7 +190,7 @@ There are 2 types of ratio based media queries, "aspect-ratio" (shortened to jus
 
 Ratio based media queries are mostly useful for when you have sites that have displays that take up the full screen. Displays like this tend to need media queries that understand both the users screen height and width at the same time. You may need to combine the ratio based media query with a more traditional pixel based media query for it to have the greatest effect. Read the [Media Query "and" statements](#media-query-and-statements) section for more details on how to do that.
 
-###Full list of media query ranges
+### Full list of media query ranges
 
     @include mq([range], XXX, YYY){ /*styles*/ }
 
@@ -200,7 +200,7 @@ Note that orientation and ratio ranges do **not** accept pixel values.
 
 Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
-####Single value ranges
+#### Single value ranges
 
 - **min** : `screen and (min-width: XXX)`
 - **max** : `screen and (max-width: XXX)`
@@ -218,7 +218,7 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
 - **orientation** : `screen and (orientation: XXX)`
 
-####Double value ranges
+#### Double value ranges
 
 - **inside** : `screen and (max-width: XXX) and (min-width: YYY)`
 - **outside** : `screen and (max-width: YYY), screen and (min-width: XXX)`
@@ -233,11 +233,11 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 - **outside-device-ratio** : `screen and (max-device-aspect-ratio: YYY), screen and (min-device-aspect-ratio: XXX)`
 
 
-##MQ variables
+## MQ variables
 
 There are two very strong reasons for using an MQ variable over writing the media query inline like I've been doing so far.
 
-###Why name your media queries?
+### Why name your media queries?
 
 Have you ever opened up a style sheet, seen a wall of media queries and not have a clue what any of them are for? Ok you probably understood that a certain block of styles was to make the site look good on mobile, but I'm not talking about that. I mean just from looking at the code, were you able to understand _why_ the developer wrote those styles?
 
@@ -245,13 +245,13 @@ Styles in Media queries are always written with a certain objective in mind. Obj
 
 What if you decide later on that you actually want the sidebar to go full width at a larger screen size? You don't want the text shrinking at that larger screen size though, that's good as it is. Well generally you would need to create a new media query and then scour the styles looking for the side bar related stuff, then cherry pick that stuff out. Often that leads to styles being missed and then you being left all dazed and confused about why your site is looking broken. Wouldn't it be easier if the styles were already broken down into the individual objectives that the styling was trying to achieve in the first place?
 
-###Enhanced maintainability
+### Enhanced maintainability
 
 You state the media query once at the top of your Sass file and then you can re-use it as many times as you like. If you need to change it later on, you change it once and it updates across the entire style sheet. In combination with the ability to name the variables based on the objective that they are trying to achieve, MQ variables make working with media queries far easier to maintain.
 
-###How to use an MQ variable
+### How to use an MQ variable
 
-####Naming your MQ variables
+#### Naming your MQ variables
 
 I've come up with a bit of a naming convention for them based on BEM. This is how I write a Media Query variable:
 
@@ -271,7 +271,7 @@ Here is the breakdown of what each part means. I tend to use camelCase for each 
 
 **([range], [larger-width], [smaller-width])** - the exact same as what you would put between the brackets of the media query mixin if you were doing it inline.
 
-####Creating your MQ variables
+#### Creating your MQ variables
 
 Here is an example of how to use it:
 
@@ -323,9 +323,9 @@ Ahhhhh!!! It's doubling up on Media queries!!! Think of all that extra weight yo
 
 Well actually after gzipping, all the repetitive media query declarations [become quite negligible](https://benfrain.com/inline-or-combined-media-queries-in-sass-fight/).
 
-##Combining media queries
+## Combining media queries
 
-###Media query "or" statements
+### Media query "or" statements
 
 Media Query "or" statements are only possible using an MQ variable.
 
@@ -392,7 +392,7 @@ outputted css:
 }
 `````````````
 
-###Media Query "and" statements
+### Media Query "and" statements
 
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
 
@@ -441,7 +441,7 @@ I'm looking into a more streamlined way of incorporating media query "and" state
 
 As of version 1.2.0 the `outside` range types also support this feature.
 
-##em conversion
+## em conversion
 
 Pixel based media queries can actually appear incorrectly when zooming on some browsers (it's particularly infamous in Safari on Mac).
 
@@ -457,7 +457,7 @@ $mq-em-base: 10px; //*default: 16px*/
 
 **$mq-em-base** defines the base value that the media query uses for doing it's em conversion calculations.
 
-##Defining breakpoints
+## Defining breakpoints
 
 This mixin does not contain any string to pixel value functionality. This is to keep the mixin modular allowing you to use your own code for defining what the breakpoints should be.
 
@@ -490,7 +490,7 @@ You can then use it in combination with the mq mixin like this:
 }
 ````````
 
-##Bonus retina display mixin
+## Bonus retina display mixin
 
 I've also added a retina display mixin for detecting retina display devices
 
