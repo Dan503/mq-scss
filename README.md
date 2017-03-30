@@ -253,23 +253,25 @@ You state the media query once at the top of your Sass file and then you can re-
 
 #### Naming your MQ variables
 
-I've come up with a bit of a naming convention for them based on BEM. This is how I write a Media Query variable:
+I've come up with a bit of a naming convention for them based on BEM. If you don't agree with the naming convention, feel free not to use it. It's just a variable name and has no effect on the mixin itself.
+
+This is how I write an Media Query variable:
 
 `````````````scss
-$MQ-[element]__[property]--[objective]: ([range], [larger-width], [smaller-width]);
+$MQ-[element]__[property]--[state]: ([range], [breakpoint-1], [breakpoint-2]);
 `````````````
 
 Here is the breakdown of what each part means. I tend to use camelCase for each group to keep the grouping clear.
 
-**$MQ** - MQ at the start tells us it's a media query variable (helps when scanning through the code)
+**$MQ** - MQ at the start tells us that it's a media query variable (helps when scanning through the code)
 
-**[element]** - The current element name. So for `.car__door` [element] would be `door`.
+**[element]** - The target element name. So for `.car__door` [element] would be `door`.
 
 **[property]** - This one is optional. It represents the main css property that you are catering for in the media query.
 
-**[objective]** - a name for the objective you are trying to achieve. Try to keep it as short as possible but still clear.
+**[state]** - A name for the state that the element is in when the media query is true. Try to keep it as short as possible but still clear.
 
-**([range], [larger-width], [smaller-width])** - the exact same as what you would put between the brackets of the media query mixin if you were doing it inline.
+**([range], [breakpoint-1], [breakpoint-2])** - the exact same as what you would put between the brackets of the media query mixin if you were doing it inline.
 
 #### Creating your MQ variables
 
@@ -278,25 +280,27 @@ Here is an example of how to use it:
 `````````````scss
 SASS:
 
-$MQ-module__color--main: (inside, 1024px, 600px);
-$MQ-module__color--alt: (outside, 1024px, 600px);
+$MQ-element__color--main: (inside, 1024px, 600px);
+$MQ-element__color--alt: (outside, 1024px, 600px);
 
 .module {
-    @include mq($MQ-module__color--main){
-        background: red;
-    }
-
-    @include mq($MQ-module__color--alt){
-        background: blue;
-    }
-
-    &--green {
-        @include mq($MQ-module__color--main){
-            background: green;
+    &__element {
+        @include mq($MQ-element__color--main){
+            background: red;
         }
 
-        @include mq($MQ-module__color--alt){
-            background: grey;
+        @include mq($MQ-element__color--alt){
+            background: blue;
+        }
+
+        &--green {
+            @include mq($MQ-element__color--main){
+                background: green;
+            }
+
+            @include mq($MQ-element__color--alt){
+                background: grey;
+            }
         }
     }
 }
@@ -306,16 +310,16 @@ $MQ-module__color--alt: (outside, 1024px, 600px);
 outputted css:
 
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
-    .module { background: red; }
+    .module__element { background: red; }
 }
 @media screen and (max-width: 1024px) and (min-width: 601px) {
-    .module { background: blue; }
+    .module__element { background: blue; }
 }
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
-    .module--green { background: green; }
+    .module__element--green { background: green; }
 }
 @media screen and (max-width: 1024px) and (min-width: 601px) {
-    .module--green { background: grey; }
+    .module__element--green { background: grey; }
 }
 `````````````
 
@@ -415,6 +419,7 @@ $MQ-subHeading--hidden: (inside, 800px, 400px);
     &__mainHeading {
         @include mq($MQ-sideBar__width--full){
             @include mq($MQ-subHeading--hidden){
+                //Styles that only apply when both the sidebar is full width and the subheading is hidden
                 background: red;
             }
         }
@@ -465,14 +470,14 @@ It is very easy to create a breakpoint function though. This is what I use in co
 
 `````````scss
 $breakPoints: (
-    'minimum': 300px, //*The smallest width that the site is able to shrink to */
-    'tiny': 350px, //*essentially iPhones in portrait view only*/
+    'minimum': 320px, //*The smallest width that the site is able to shrink to */
+    'tiny': 350px,
     'small': 480px,
-    'mobile': 600px, ///*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
+    'mobile': 600px, //*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
     'phablet': 770px, //*essentially the maximum for iPads in portrait*/
-    'tablet': 960px, ///*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
+    'tablet': 960px, //*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
     'large': 1024px, //*maximum for iPads in landscape*/
-    'page': 1200px, ///*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
+    'page': 1200px, //*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
 );
 
 @function bp($value){
