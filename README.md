@@ -101,7 +101,7 @@ outputted css:
 Note that in the sass, we state that the width is 600px but it gets outputted as 601px in the css. This makes the mixin more intuitive to use and it means you'll never have to worry about that ugly 1px cross over point where `min` and `max` ranges set to the same width display at the same time.
 
 
-###Inside/Outside
+### Inside/Outside
 
 What about those times when you only want a style to be effective within a given range? Perhaps you only want something to be blue if it's a tablet sized screen but not appear on mobile. That is when the `inside` range type comes in handy.
 
