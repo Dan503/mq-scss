@@ -8,12 +8,13 @@
     "url": "git+https://github.com/Dan503/mq-scss.git"
   },
   "keywords": [
+    "media",
+    "query",
+    "mixin",
     "breakpoints",
     "css",
     "sass",
     "scss",
-    "media query",
-    "media queries",
     "responsive"
   ],
   "author": "Daniel Tonon",
