@@ -466,30 +466,20 @@ $mq-em-base: 10px; //*default: 16px*/
 
 This mixin does not contain any string to pixel value functionality. This is to keep the mixin modular allowing you to use your own code for defining what the breakpoints should be.
 
-It is very easy to create a breakpoint function though. This is what I use in combination with the mq mixin to make writing media queries a breeze.
+The easiest way to set up a batch of breakpoints is to save them all as Sass variables, then call on them when using the mixin.
 
 `````````scss
-$breakPoints: (
-    'minimum': 320px, //*The smallest width that the site is able to shrink to */
-    'tiny': 350px,
-    'small': 480px,
-    'mobile': 600px, //*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
-    'phablet': 770px, //*essentially the maximum for iPads in portrait*/
-    'tablet': 960px, //*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
-    'large': 1024px, //*maximum for iPads in landscape*/
-    'page': 1200px, //*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
-);
+$BP-minimum: 320px;
+$BP-tiny: 350px;
+$BP-small: 480px;
+$BP-mobile: 600px;
+$BP-phablet: 770px;
+$BP-tablet: 960px;
+$BP-large: 1024px;
+$BP-page: 1200px;
 
-@function bp($value){
-    @return map-get($breakPoints, $value);
-}
-`````````
-
-You can then use it in combination with the mq mixin like this:
-
-````````scss
 .element {
-    @include mq(max, bp('mobile')){
+    @include mq(max, $BP-mobile){
         //styles go here
     }
 }
