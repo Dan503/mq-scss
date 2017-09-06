@@ -153,10 +153,10 @@ $mq-em-base: 16px !default;
 	//@include mq($MQ-example--multiple){}
 	} @else {
 
-		$queryString: '';
+		$queryString: ();
 
 		@each $mqSet in $range {
-			// @debug ('mqSet:' $mqSet);
+			@debug ('mqSet:', $mqSet);
 
 			@if ($mqSet  != 'plus') {
 				@if (isBasicQuery($mqSet)){
@@ -168,9 +168,11 @@ $mq-em-base: 16px !default;
 							$queryString: $newQuery;
 						} @else {
 							$queryString: $queryString + ' and ' + $newQuery;
+							@debug ('and method' $queryString);
 						}
 					} @else {
 						$queryString: append($queryString, $newQuery, 'comma');
+						@debug ('or method' $queryString);
 					}
 
 				} @else {
@@ -186,8 +188,6 @@ $mq-em-base: 16px !default;
 }
 
 @mixin mq($range, $setting1: null, $setting2: null) {
-
-	@debug $range;
 
 	@if (length($range) > 1) {
 
