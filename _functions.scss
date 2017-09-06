@@ -51,11 +51,6 @@
 	@return $result;
 }
 
-// https://github.com/sass/sass/issues/543
-@function contains($list, $var) {
-	@return (null == index($list, $var));
-}
-
 //For getting the number values in ratio based ranges
 @function get-start($string){
 	$string: unquote($string);
