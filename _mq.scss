@@ -143,8 +143,6 @@ $mq-em-base: 16px !default;
 		}
 	}
 
-	@debug $isAndStatment;
-
 	//Uses this functionality if using a single level MQ variable
 	//eg:
 	//$MQ-example--single: inside, 1000px, 500px;
@@ -165,7 +163,6 @@ $mq-em-base: 16px !default;
 		$queryString: ();
 
 		@each $mqSet in $range {
-			@debug ('mqSet:', $mqSet);
 
 			@if ($mqSet  != 'plus') {
 				@if (isBasicQuery($mqSet)){
@@ -177,11 +174,9 @@ $mq-em-base: 16px !default;
 							$queryString: 'screen and ' + $newQuery;
 						} @else {
 							$queryString: $queryString + ' and ' + $newQuery;
-							@debug ('and method' $queryString);
 						}
 					} @else {
 						$queryString: append($queryString, 'screen and ' + $newQuery, 'comma');
-						@debug ('or method' $queryString);
 					}
 
 				} @else {
@@ -189,8 +184,6 @@ $mq-em-base: 16px !default;
 				}
 			}
 		}
-
-		@debug $queryString;
 
 		@return $queryString;
 	}
