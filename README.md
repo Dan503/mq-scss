@@ -66,7 +66,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (max-width: 600px) {
@@ -90,7 +90,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (min-width: 601px) {
@@ -118,7 +118,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (max-width: 1024px) and (min-width: 601px) {
@@ -143,7 +143,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 
@@ -176,7 +176,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (min-aspect-ratio: 2 / 1) {
@@ -307,7 +307,7 @@ $MQ-element__color--alt: (outside, 1024px, 600px);
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
     .module__element { background: red; }
@@ -351,7 +351,7 @@ $MQ-element__color--alt:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
@@ -386,7 +386,7 @@ $MQ-element__color--alt:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
     .element { background: blue; }
@@ -399,6 +399,51 @@ outputted css:
 ### Media Query "and" statements
 
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
+
+`````````````scss
+$MQ-sideBar__width--full: (max, 600px);
+$MQ-subHeading--hidden: (inside, 800px, 400px);
+$MQ-mainHeading--red: ($MQ-sideBar__width--full plus $MQ-subHeading--hidden);
+
+.module {
+    &__sideBar {
+        width: 33.33%;
+        @include mq($MQ-sideBar__width--full){
+            width: 100%;
+        }
+    }
+    &__subHeading {
+        @include mq($MQ-subHeading--hidden){
+            display: none;
+        }
+    }
+    &__mainHeading {
+        @include mq($MQ-mainHeading--red){
+            //Styles that only apply when both the sidebar is full width and the subheading is hidden
+            background: red;
+        }
+    }
+}
+`````````````
+
+`````````````css
+/* outputted css: */
+
+.module__sideBar { width: 33.33%; }
+@media screen and (max-width: 600px) {
+    .module__sideBar { width: 100%; }
+}
+@media screen and (max-width: 800px) and (min-width: 401px) {
+    .module__subHeading { display: none; }
+}
+@media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
+    .module__mainHeading { background: red; }
+}
+`````````````
+
+This technique utilises the `plus` keyword (introduced in version 1.3.0) to glue the two media queries together into a single, more easily transportable, combined MQ variable.
+
+This can also be done inline as a one off like this:
 
 `````````````scss
 $MQ-sideBar__width--full: (max, 600px);
@@ -417,34 +462,225 @@ $MQ-subHeading--hidden: (inside, 800px, 400px);
         }
     }
     &__mainHeading {
+        @include mq($MQ-sideBar__width--full plus $MQ-subHeading--hidden){
+            //Styles that only apply when both the sidebar is full width and the subheading is hidden
+            background: red;
+        }
+    }
+}
+`````````````
+
+It will even work as part of an "or" statement:
+
+`````````````scss
+$MQ-subHeading--hidden: (inside, 800px, 400px);
+$MQ-sideBar__width--full: (max, 600px);
+
+$MQ-mainHeading--red: (
+    (min-ratio, '2 / 1') plus $MQ-subHeading--hidden,
+    $MQ-sideBar__width--full
+);
+
+.module {
+    &__sideBar {
+        width: 33.33%;
         @include mq($MQ-sideBar__width--full){
-            @include mq($MQ-subHeading--hidden){
-                //Styles that only apply when both the sidebar is full width and the subheading is hidden
-                background: red;
-            }
+            width: 100%;
+        }
+    }
+    &__subHeading {
+        @include mq($MQ-subHeading--hidden){
+            display: none;
+        }
+    }
+    &__mainHeading {
+        @include mq($MQ-mainHeading--red){
+            background: red;
         }
     }
 }
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
-.module__sideBar { width: 33.33%; }
+.module__sideBar {
+  width: 33.33%;
+}
 @media screen and (max-width: 600px) {
-    .module__sideBar { width: 100%; }
+  .module__sideBar {
+    width: 100%;
+  }
 }
 @media screen and (max-width: 800px) and (min-width: 401px) {
-    .module__subHeading { display: none; }
+  .module__subHeading {
+    display: none;
+  }
 }
-@media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
-    .module__mainHeading { background: red; }
+@media screen and (min-aspect-ratio: 2 / 1) and (max-width: 800px) and (min-width: 401px), screen and (max-width: 600px) {
+  .module__mainHeading {
+    background: red;
+  }
 }
 `````````````
 
-I'm looking into a more streamlined way of incorporating media query "and" statements without having to nest them inside one another like this but currently this is the best available method.
+You can also string multiple `plus` statements together:
 
-As of version 1.2.0 the `outside` range types also support this feature.
+`````````````scss
+$MQ-test1: (inside, 800px, 400px);
+$MQ-test2: (max, 600px);
+
+$MQ-test3: ($MQ-test1 plus $MQ-test2 plus (min-ratio, '2 / 1'));
+
+.module {
+    @include mq($MQ-test3){
+        background: red;
+    }
+}
+`````````````
+
+`````````````css
+/* outputted css: */
+@media screen and (max-width: 800px) and (min-width: 401px) and (max-width: 600px) and (min-aspect-ratio: 2 / 1) {
+  .module {
+    background: red;
+  }
+}
+`````````````
+
+### !IMPORTANT! `plus` does not work in all situations
+
+There are some restrictions around using the `plus` keyword that you should be aware of. I haven't been able to write error messages for these edge cases warning users not to do these things. I didn't want the lack of error messages to hold back the feature though.
+
+#### It can not be used in conjunction with any `outside` range type
+
+The following code **will not work** (at least not as expected)
+
+`````````````scss
+$MQ-test1: (outside, 800px, 400px);
+$MQ-test2: (max, 600px);
+
+$MQ-test3: ($MQ-test1 plus $MQ-test2);
+
+.module {
+    @include mq($MQ-test3){
+        background: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css: */
+/* (max-width: 400px) is on it's own, not affected by the (max-width: 600px) rule */
+@media screen and (max-width: 400px), screen and (min-width: 801px) and (max-width: 600px) {
+  .module {
+    background: red;
+  }
+}
+`````````````
+
+This issue occurs across all `outside` range types (`outside`, `outside-height`, `outside-ratio`, `outside-device-ratio`).
+
+#### `plus` statements can not contain any `or` statements
+
+`Or` statements can contain `plus` statements however `plus` statements can not contain `or` statements.
+
+The following code **will not work** (at least not as expected)
+
+`````````````scss
+$MQ-test1: (
+    (inside, 1200px, 800px),
+    (max, 400px)
+);
+$MQ-test2: (max, 600px);
+
+$MQ-test3: ($MQ-test1 plus $MQ-test2);
+
+.module {
+    @include mq($MQ-test3){
+        background: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css: */
+/* (max-width: 600px) rule is completely ignored */
+@media screen and (max-width: 1200px) and (min-width: 801px) {
+  .module {
+    background: red;
+  }
+}
+`````````````
+
+#### Work arounds
+
+You can generally get around these issues by placing the `plus` statement inside `or` statements.
+
+So instead of this:
+
+`````````````scss
+$MQ-test1: (outside, 800px, 400px);
+$MQ-test2: (max, 600px);
+
+$MQ-test3: ($MQ-test1 plus $MQ-test2);
+
+.module {
+    @include mq($MQ-test3){
+        background: red;
+    }
+}
+`````````````
+
+Do this:
+
+`````````````scss
+$MQ-test1: (outside, 800px, 400px);
+$MQ-test2: (max, 600px);
+
+/////////////////////////////////////////////////// Test is not working
+
+$MQ-test3: (
+    ((min, 800px) plus $MQ-test2),
+    ((max, 400px) plus $MQ-test2)
+);
+
+.module {
+    @include mq($MQ-test3){
+        background: red;
+    }
+}
+`````````````
+`````````````css
+/* Test is not working, should be outputting something different */
+
+@media screen and (min-width: 801px) and (max-width: 600px) {
+  .module {
+    background: red;
+  }
+}
+`````````````
+
+Also, as of version 1.2.0, you can utilise the native media query merging feature in Sass to sort out the media queries for you (as long as you don't mind them being outside of variables)
+
+`````````````scss
+$MQ-test1: (outside, 800px, 400px);
+$MQ-test2: (max, 600px);
+
+.module {
+    @include mq($MQ-test1){
+        @include mq($MQ-test2){
+            background: red;
+        }
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+@media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
+  .module {
+    background: red;
+  }
+}
+`````````````
 
 ## em conversion
 
@@ -530,6 +766,10 @@ To create this css:
 
 
 ## Change log
+
+### v1.3.0
+
+- Added the `plus` keyword for improved handling of "and" statements
 
 ### v1.2.0
 
