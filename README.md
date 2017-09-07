@@ -24,8 +24,9 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
         * [Naming your MQ variables](#naming-your-mq-variables)
         * [Creating your MQ variables](#creating-your-mq-variables)
 * [Combining media queries](#combining-media-queries)
-    * [Media query "or" statements](#media-query-or-statements)
-    * [Media Query "and" statements](#media-query-and-statements)
+    * [Media query `or` statements](#media-query-or-statements)
+    * [Media Query `plus` statements](#media-query-plus-statements)
+        * [**!IMPORTANT!** limitations of `plus`](#important-limitations-of-plus)
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
@@ -188,7 +189,7 @@ It is easiest to think of ratio based media queries as always being based more o
 
 There are 2 types of ratio based media queries, "aspect-ratio" (shortened to just `ratio` in the mq mixin) and "device-aspect-ratio" (shortened to `device-ratio` in the mq mixin). It is generally best to stick with "aspect-ratio" rather than "device-aspect-ratio" since "aspect-ratio" is determined by the users browser window size. "device-aspect-ratio" is based on the physical screen size of the users device. With "aspect-ratio" you can see the effects by just resizing the browser window. With "device-aspect-ratio" you will physically have to look at the site on a different screen in order to see the effect... or look at the site with the Chrome dev tools screen emulator open (Chromes screen emulator obeys "device-aspect-ratio" media queries).
 
-Ratio based media queries are mostly useful for when you have sites that have displays that take up the full screen. Displays like this tend to need media queries that understand both the users screen height and width at the same time. You may need to combine the ratio based media query with a more traditional pixel based media query for it to have the greatest effect. Read the [Media Query "and" statements](#media-query-and-statements) section for more details on how to do that.
+Ratio based media queries are mostly useful for when you have sites that have displays that take up the full screen. Displays like this tend to need media queries that understand both the users screen height and width at the same time. You may need to combine the ratio based media query with a more traditional pixel based media query for it to have the greatest effect. Read the [Media Query `plus` statements](#media-query-plus-statements) section for more details on how to do that.
 
 ### Full list of media query ranges
 
@@ -329,9 +330,9 @@ Well actually after gzipping, all the repetitive media query declarations [becom
 
 ## Combining media queries
 
-### Media query "or" statements
+### Media query `or` statements
 
-Media Query "or" statements are only possible using an MQ variable.
+Media Query `or` statements are only possible using an MQ variable.
 
 `````````````scss
 SASS:
@@ -396,7 +397,7 @@ $MQ-element__color--alt:
 }
 `````````````
 
-### Media Query "and" statements
+### Media Query `plus` statements
 
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
 
@@ -470,7 +471,7 @@ $MQ-subHeading--hidden: (inside, 800px, 400px);
 }
 `````````````
 
-It will even work as part of an "or" statement:
+It will even work as part of an `or` statement:
 
 `````````````scss
 $MQ-subHeading--hidden: (inside, 800px, 400px);
@@ -629,6 +630,7 @@ $MQ-c: (
 }
 `````````````
 `````````````css
+/* outputted css */
 @media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
   .module {
     background: red;
@@ -696,7 +698,7 @@ $BP-page: 1200px;
         //styles go here
     }
 }
-````````
+`````````
 
 ## Bonus retina display mixin
 
@@ -747,6 +749,7 @@ To create this css:
 ### v1.3.0
 
 - Added the `plus` keyword for improved handling of "and" statements
+- Changed the breakpoints list example to just a list of variables
 
 ### v1.2.0
 
