@@ -24,8 +24,9 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
         * [Naming your MQ variables](#naming-your-mq-variables)
         * [Creating your MQ variables](#creating-your-mq-variables)
 * [Combining media queries](#combining-media-queries)
-    * [Media query "or" statements](#media-query-or-statements)
-    * [Media Query "and" statements](#media-query-and-statements)
+    * [Media query `or` statements](#media-query-or-statements)
+    * [Media Query `plus` statements](#media-query-plus-statements)
+        * [**!IMPORTANT!** limitations of `plus`](#important-limitations-of-plus)
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
@@ -66,7 +67,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (max-width: 600px) {
@@ -90,7 +91,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (min-width: 601px) {
@@ -118,7 +119,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (max-width: 1024px) and (min-width: 601px) {
@@ -143,7 +144,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 
@@ -176,7 +177,7 @@ SASS:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (min-aspect-ratio: 2 / 1) {
@@ -188,7 +189,7 @@ It is easiest to think of ratio based media queries as always being based more o
 
 There are 2 types of ratio based media queries, "aspect-ratio" (shortened to just `ratio` in the mq mixin) and "device-aspect-ratio" (shortened to `device-ratio` in the mq mixin). It is generally best to stick with "aspect-ratio" rather than "device-aspect-ratio" since "aspect-ratio" is determined by the users browser window size. "device-aspect-ratio" is based on the physical screen size of the users device. With "aspect-ratio" you can see the effects by just resizing the browser window. With "device-aspect-ratio" you will physically have to look at the site on a different screen in order to see the effect... or look at the site with the Chrome dev tools screen emulator open (Chromes screen emulator obeys "device-aspect-ratio" media queries).
 
-Ratio based media queries are mostly useful for when you have sites that have displays that take up the full screen. Displays like this tend to need media queries that understand both the users screen height and width at the same time. You may need to combine the ratio based media query with a more traditional pixel based media query for it to have the greatest effect. Read the [Media Query "and" statements](#media-query-and-statements) section for more details on how to do that.
+Ratio based media queries are mostly useful for when you have sites that have displays that take up the full screen. Displays like this tend to need media queries that understand both the users screen height and width at the same time. You may need to combine the ratio based media query with a more traditional pixel based media query for it to have the greatest effect. Read the [Media Query `plus` statements](#media-query-plus-statements) section for more details on how to do that.
 
 ### Full list of media query ranges
 
@@ -307,7 +308,7 @@ $MQ-element__color--alt: (outside, 1024px, 600px);
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
     .module__element { background: red; }
@@ -329,9 +330,9 @@ Well actually after gzipping, all the repetitive media query declarations [becom
 
 ## Combining media queries
 
-### Media query "or" statements
+### Media query `or` statements
 
-Media Query "or" statements are only possible using an MQ variable.
+Media Query `or` statements are only possible using an MQ variable.
 
 `````````````scss
 SASS:
@@ -351,7 +352,7 @@ $MQ-element__color--alt:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 .element { background: red; }
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
@@ -386,7 +387,7 @@ $MQ-element__color--alt:
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
     .element { background: blue; }
@@ -396,9 +397,54 @@ outputted css:
 }
 `````````````
 
-### Media Query "and" statements
+### Media Query `plus` statements
 
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
+
+`````````````scss
+$MQ-sideBar__width--full: (max, 600px);
+$MQ-subHeading--hidden: (inside, 800px, 400px);
+$MQ-mainHeading--red: ($MQ-sideBar__width--full plus $MQ-subHeading--hidden);
+
+.module {
+    &__sideBar {
+        width: 33.33%;
+        @include mq($MQ-sideBar__width--full){
+            width: 100%;
+        }
+    }
+    &__subHeading {
+        @include mq($MQ-subHeading--hidden){
+            display: none;
+        }
+    }
+    &__mainHeading {
+        @include mq($MQ-mainHeading--red){
+            //Styles that only apply when both the sidebar is full width and the subheading is hidden
+            background: red;
+        }
+    }
+}
+`````````````
+
+`````````````css
+/* outputted css: */
+
+.module__sideBar { width: 33.33%; }
+@media screen and (max-width: 600px) {
+    .module__sideBar { width: 100%; }
+}
+@media screen and (max-width: 800px) and (min-width: 401px) {
+    .module__subHeading { display: none; }
+}
+@media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
+    .module__mainHeading { background: red; }
+}
+`````````````
+
+This technique utilises the `plus` keyword (introduced in version 1.3.0) to glue the two media queries together into a single, more easily transportable, combined MQ variable.
+
+This can also be done inline as a one off like this:
 
 `````````````scss
 $MQ-sideBar__width--full: (max, 600px);
@@ -417,34 +463,203 @@ $MQ-subHeading--hidden: (inside, 800px, 400px);
         }
     }
     &__mainHeading {
+        @include mq($MQ-sideBar__width--full plus $MQ-subHeading--hidden){
+            //Styles that only apply when both the sidebar is full width and the subheading is hidden
+            background: red;
+        }
+    }
+}
+`````````````
+
+It will even work as part of an `or` statement:
+
+`````````````scss
+$MQ-subHeading--hidden: (inside, 800px, 400px);
+$MQ-sideBar__width--full: (max, 600px);
+
+$MQ-mainHeading--red: (
+    (min-ratio, '2 / 1') plus $MQ-subHeading--hidden,
+    $MQ-sideBar__width--full
+);
+
+.module {
+    &__sideBar {
+        width: 33.33%;
         @include mq($MQ-sideBar__width--full){
-            @include mq($MQ-subHeading--hidden){
-                //Styles that only apply when both the sidebar is full width and the subheading is hidden
-                background: red;
-            }
+            width: 100%;
+        }
+    }
+    &__subHeading {
+        @include mq($MQ-subHeading--hidden){
+            display: none;
+        }
+    }
+    &__mainHeading {
+        @include mq($MQ-mainHeading--red){
+            background: red;
         }
     }
 }
 `````````````
 
 `````````````css
-outputted css:
+/* outputted css: */
 
-.module__sideBar { width: 33.33%; }
+.module__sideBar {
+  width: 33.33%;
+}
 @media screen and (max-width: 600px) {
-    .module__sideBar { width: 100%; }
+  .module__sideBar {
+    width: 100%;
+  }
 }
 @media screen and (max-width: 800px) and (min-width: 401px) {
-    .module__subHeading { display: none; }
+  .module__subHeading {
+    display: none;
+  }
 }
-@media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
-    .module__mainHeading { background: red; }
+@media screen and (min-aspect-ratio: 2 / 1) and (max-width: 800px) and (min-width: 401px), screen and (max-width: 600px) {
+  .module__mainHeading {
+    background: red;
+  }
 }
 `````````````
 
-I'm looking into a more streamlined way of incorporating media query "and" statements without having to nest them inside one another like this but currently this is the best available method.
+You can also string multiple `plus` statements together:
 
-As of version 1.2.0 the `outside` range types also support this feature.
+`````````````scss
+$MQ-a: (inside, 800px, 400px);
+$MQ-b: (max, 600px);
+
+$MQ-c: ($MQ-a plus $MQ-b plus (min-ratio, '2 / 1'));
+
+.module {
+    @include mq($MQ-c){
+        background: red;
+    }
+}
+`````````````
+
+`````````````css
+/* outputted css: */
+@media screen and (max-width: 800px) and (min-width: 401px) and (max-width: 600px) and (min-aspect-ratio: 2 / 1) {
+  .module {
+    background: red;
+  }
+}
+`````````````
+
+### !IMPORTANT! limitations of `plus`
+
+You should note that `plus` does not work in all situations. There are some restrictions around using the `plus` keyword that you should be aware of.
+
+#### It can not be used in conjunction with any `outside` range type
+
+The following code **will not work** and will throw an error stating that all `outside` range types (`outside`, `outside-height`, `outside-ratio`, `outside-device-ratio`) are incompatible with `plus` statements.
+
+`````````````scss
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
+
+$MQ-c: ($MQ-a plus $MQ-b);
+
+.module {
+    @include mq($MQ-c){
+        background: red;
+    }
+}
+`````````````
+
+#### `plus` statements can not contain any `or` statements
+
+`or` statements can contain `plus` statements however `plus` statements can not contain `or` statements.
+
+The following code **will not work** and will throw an error stating that `or` statements can't be placed inside `plus` statements.
+
+`````````````scss
+$MQ-a: (
+    (inside, 1200px, 800px),
+    (max, 400px)
+);
+$MQ-b: (max, 600px);
+
+$MQ-c: ($MQ-a plus $MQ-b);
+
+.module {
+    @include mq($MQ-c){
+        background: red;
+    }
+}
+`````````````
+
+
+#### Work arounds
+
+You can generally get around these issues by placing the `plus` statement inside `or` statements.
+
+So instead of this:
+
+`````````````scss
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
+
+$MQ-c: ($MQ-a plus $MQ-b);
+
+.module {
+    @include mq($MQ-c){
+        background: red;
+    }
+}
+`````````````
+
+Do this:
+
+`````````````scss
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
+
+$MQ-c: (
+    ((max, 400px) plus $MQ-b),
+    ((min, 800px) plus $MQ-b)
+);
+
+.module {
+    @include mq($MQ-c){
+        background: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+@media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
+  .module {
+    background: red;
+  }
+}
+`````````````
+
+Alternatively, as of version 1.2.0, you can utilise the native media query merging feature in Sass to sort out the media queries for you (as long as you don't mind them being outside of variables).
+
+`````````````scss
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
+
+.module {
+    @include mq($MQ-a){
+        @include mq($MQ-b){
+            background: red;
+        }
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+@media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
+  .module {
+    background: red;
+  }
+}
+`````````````
 
 ## em conversion
 
@@ -466,34 +681,24 @@ $mq-em-base: 10px; //*default: 16px*/
 
 This mixin does not contain any string to pixel value functionality. This is to keep the mixin modular allowing you to use your own code for defining what the breakpoints should be.
 
-It is very easy to create a breakpoint function though. This is what I use in combination with the mq mixin to make writing media queries a breeze.
+The easiest way to set up a batch of breakpoints is to save them all as Sass variables, then call on them when using the mixin.
 
 `````````scss
-$breakPoints: (
-    'minimum': 320px, //*The smallest width that the site is able to shrink to */
-    'tiny': 350px,
-    'small': 480px,
-    'mobile': 600px, //*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
-    'phablet': 770px, //*essentially the maximum for iPads in portrait*/
-    'tablet': 960px, //*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
-    'large': 1024px, //*maximum for iPads in landscape*/
-    'page': 1200px, //*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
-);
+$BP-minimum: 320px;
+$BP-tiny: 350px;
+$BP-small: 480px;
+$BP-mobile: 600px;
+$BP-phablet: 770px;
+$BP-tablet: 960px;
+$BP-large: 1024px;
+$BP-page: 1200px;
 
-@function bp($value){
-    @return map-get($breakPoints, $value);
-}
-`````````
-
-You can then use it in combination with the mq mixin like this:
-
-````````scss
 .element {
-    @include mq(max, bp('mobile')){
+    @include mq(max, $BP-mobile){
         //styles go here
     }
 }
-````````
+`````````
 
 ## Bonus retina display mixin
 
@@ -540,6 +745,11 @@ To create this css:
 
 
 ## Change log
+
+### v1.3.0
+
+- Added the `plus` keyword for improved handling of "and" statements
+- Changed the breakpoints list example to just a list of variables
 
 ### v1.2.0
 
