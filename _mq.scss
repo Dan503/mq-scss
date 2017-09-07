@@ -122,24 +122,29 @@ $mq-em-base: 16px !default;
 	@return type-of(nth($range,1)) == string;
 }
 
-@function calculateBasicQuery($mqSet){
-	$newRange: nth($mqSet,1);
-	$newWidth1: nth($mqSet,2);
-	$newWidth2: null;
+@function calculateBasicQuery($mqSet, $isAndStatement: false){
+	$range: nth($mqSet,1);
+	$width1: nth($mqSet,2);
+	$width2: null;
 	@if (length($mqSet) == 3){
-		$newWidth2: nth($mqSet,3);
+		$width2: nth($mqSet,3);
 	}
 
-	@return calculateMQ($newRange, $newWidth1, $newWidth2);
+	@if ((str-index($range, 'outside') != null) and $isAndStatement){
+		$error: 'All "outside" range types are incompatible with "plus" statements: (' + $mqSet + ')';
+		@error $error;
+	}
+
+	@return calculateMQ($range, $width1, $width2);
 }
 
 @function joinQueries($range, $queryString: ()){
 
-	$isAndStatment: false;
+	$isAndStatement: false;
 
 	@each $statement in $range {
 		@if ($statement == 'plus') {
-			$isAndStatment: true;
+			$isAndStatement: true;
 		}
 	}
 
@@ -149,7 +154,7 @@ $mq-em-base: 16px !default;
 	//@include mq($MQ-example--single){}
 	@if (isBasicQuery($range)){
 
-		@return 'screen and ' + calculateBasicQuery($range);
+		@return 'screen and ' + calculateBasicQuery($range, $isAndStatement);
 
 	//Uses this functionality if using a multi level MQ variable
 	//eg:
@@ -159,15 +164,16 @@ $mq-em-base: 16px !default;
 	//;
 	//@include mq($MQ-example--multiple){}
 	} @else {
+		@debug $isAndStatement;
 
 		@each $mqSet in $range {
 
 			@if ($mqSet  != 'plus') {
 				@if (isBasicQuery($mqSet)){
 
-					$newQuery: calculateBasicQuery($mqSet);
+					$newQuery: calculateBasicQuery($mqSet, $isAndStatement);
 
-					@if ($isAndStatment) {
+					@if ($isAndStatement) {
 						@if ($queryString == ()){
 							$queryString: 'screen and ' + $newQuery;
 						} @else {
@@ -178,7 +184,7 @@ $mq-em-base: 16px !default;
 					}
 
 				} @else {
-					@if ($isAndStatment) {
+					@if ($isAndStatement) {
 						$queryString: joinQueries($mqSet, $queryString);
 						@if (length($queryString) > 1){
 							$error: 'mq-scss does not support "or" statements inside "plus" statements: ' + $queryString;
