@@ -85,87 +85,127 @@ $mq-em-base: 16px !default;
 
 	$mediaString: map-get((
 	//*1 value given*/
-		min : 'screen and (min-width: #{$setting1Plus})',
-		max : 'screen and (max-width: #{$setting1})',
+		min : '(min-width: #{$setting1Plus})',
+		max : '(max-width: #{$setting1})',
 
-		min-height : 'screen and (min-height: #{$setting1Plus})',
-		max-height : 'screen and (max-height: #{$setting1})',
+		min-height : '(min-height: #{$setting1Plus})',
+		max-height : '(max-height: #{$setting1})',
 
-		ratio : 'screen and (aspect-ratio: #{$setting1})',
-		min-ratio : 'screen and (min-aspect-ratio: #{$setting1})',
-		max-ratio : 'screen and (max-aspect-ratio: #{$setting1})',
+		ratio : '(aspect-ratio: #{$setting1})',
+		min-ratio : '(min-aspect-ratio: #{$setting1})',
+		max-ratio : '(max-aspect-ratio: #{$setting1})',
 
-		device-ratio : 'screen and (device-aspect-ratio: #{$setting1})',
-		min-device-ratio : 'screen and (min-device-aspect-ratio: #{$setting1})',
-		max-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting1})',
+		device-ratio : '(device-aspect-ratio: #{$setting1})',
+		min-device-ratio : '(min-device-aspect-ratio: #{$setting1})',
+		max-device-ratio : '(max-device-aspect-ratio: #{$setting1})',
 
-		orientation : 'screen and (orientation: #{$setting1})',
+		orientation : '(orientation: #{$setting1})',
 
 	//*2 values given*/
-		inside : 'screen and (max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
-		outside : 'screen and (max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})',
+		inside : '(max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
+		outside : '(max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})',
 
-		inside-height : 'screen and (max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
-		outside-height : 'screen and (max-height: #{$setting2}), screen and (min-height: #{$setting1Plus})',
+		inside-height : '(max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
+		outside-height : '(max-height: #{$setting2}), screen and (min-height: #{$setting1Plus})',
 
-		inside-ratio : 'screen and (max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
-		outside-ratio : 'screen and (max-aspect-ratio: #{$setting2}), screen and (min-aspect-ratio: #{$setting1})',
+		inside-ratio : '(max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
+		outside-ratio : '(max-aspect-ratio: #{$setting2}), screen and (min-aspect-ratio: #{$setting1})',
 
-		inside-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
-		outside-device-ratio : 'screen and (max-device-aspect-ratio: #{$setting2}), screen and (min-device-aspect-ratio: #{$setting1})',
+		inside-device-ratio : '(max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
+		outside-device-ratio : '(max-device-aspect-ratio: #{$setting2}), screen and (min-device-aspect-ratio: #{$setting1})',
 	), $range);
 
 	@return $mediaString;
+}
+
+@function isBasicQuery($range) {
+	@return type-of(nth($range,1)) == string;
+}
+
+@function calculateBasicQuery($mqSet, $isAndStatement: false){
+	$range: nth($mqSet,1);
+	$width1: nth($mqSet,2);
+	$width2: null;
+	@if (length($mqSet) == 3){
+		$width2: nth($mqSet,3);
+	}
+
+	@if ((str-index($range, 'outside') != null) and $isAndStatement){
+		$error: 'All "outside" range types are incompatible with "plus" statements: (' + $mqSet + ')';
+		@error $error;
+	}
+
+	@return calculateMQ($range, $width1, $width2);
+}
+
+@function joinQueries($range, $queryString: ()){
+
+	$isAndStatement: false;
+
+	@each $statement in $range {
+		@if ($statement == 'plus') {
+			$isAndStatement: true;
+		}
+	}
+
+	//Uses this functionality if using a single level MQ variable
+	//eg:
+	//$MQ-example--single: inside, 1000px, 500px;
+	//@include mq($MQ-example--single){}
+	@if (isBasicQuery($range)){
+
+		@return 'screen and ' + calculateBasicQuery($range, $isAndStatement);
+
+	//Uses this functionality if using a multi level MQ variable
+	//eg:
+	//$MQ-example--multiple:
+	//	(inside, 1000px, 500px),
+	//	(min, 1200px)
+	//;
+	//@include mq($MQ-example--multiple){}
+	} @else {
+
+		@each $mqSet in $range {
+
+			@if ($mqSet  != 'plus') {
+				@if (isBasicQuery($mqSet)){
+
+					$newQuery: calculateBasicQuery($mqSet, $isAndStatement);
+
+					@if ($isAndStatement) {
+						@if ($queryString == ()){
+							$queryString: 'screen and ' + $newQuery;
+						} @else {
+							$queryString: $queryString + ' and ' + $newQuery;
+						}
+					} @else {
+						$queryString: append($queryString, 'screen and ' + $newQuery, 'comma');
+					}
+
+				} @else {
+					@if ($isAndStatement) {
+						$queryString: joinQueries($mqSet, $queryString);
+						@if (length($queryString) > 1){
+							$error: 'mq-scss does not support "or" statements inside "plus" statements: ' + $queryString;
+							@error $error;
+						}
+					} @else {
+						$queryString: append($queryString, joinQueries($mqSet), 'comma');
+					}
+				}
+			}
+		}
+
+		@return $queryString;
+	}
 }
 
 @mixin mq($range, $setting1: null, $setting2: null) {
 
 	@if (length($range) > 1) {
 
-		//Uses this functionality if using a single level MQ variable
-		//eg:
-		//$MQ-example--single: inside, 1000px, 500px;
-		//@include mq($MQ-example--single){}
-		@if (type-of(nth($range,1)) == string){
-
-			$newRange: nth($range,1);
-			$newWidth1: nth($range,2);
-			$newWidth2: null;
-			@if (length($range) == 3){
-				$newWidth2: nth($range,3);
-			}
-
-			@media #{calculateMQ($newRange, $newWidth1, $newWidth2)} {
-				@content;
-			}
-
-
-		//Uses this functionality if using a multi level MQ variable
-		//eg:
-		//$MQ-example--multiple:
-		//	(inside, 1000px, 500px),
-		//	(min, 1200px)
-		//;
-		//@include mq($MQ-example--multiple){}
-		} @else {
-			$mediaQuery: ();
-
-			@each $mqSet in $range {
-
-				$newRange: nth($mqSet,1);
-				$newWidth1: nth($mqSet,2);
-				$newWidth2: null;
-				@if (length($mqSet) == 3){
-					$newWidth2: nth($mqSet,3);
-				}
-
-				$mediaQuery: append($mediaQuery, calculateMQ($newRange, $newWidth1, $newWidth2), 'comma');
-
-			}//end @each
-
-			@media #{$mediaQuery} {
-				@content;
-			}
+		@media #{joinQueries($range)} {
+			@content;
 		}
 
 	//Uses this functionality if placing MQ data inline
@@ -173,7 +213,7 @@ $mq-em-base: 16px !default;
 	//@include mq(inside, 1000px, 500px);
 	} @else {
 
-		@media #{calculateMQ($range, $setting1, $setting2)} {
+		@media #{'screen and ' + calculateMQ($range, $setting1, $setting2)} {
 			@content;
 		}
 	}
