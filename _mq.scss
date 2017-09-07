@@ -133,7 +133,7 @@ $mq-em-base: 16px !default;
 	@return calculateMQ($newRange, $newWidth1, $newWidth2);
 }
 
-@function joinQueries($range){
+@function joinQueries($range, $queryString: ()){
 
 	$isAndStatment: false;
 
@@ -160,8 +160,6 @@ $mq-em-base: 16px !default;
 	//@include mq($MQ-example--multiple){}
 	} @else {
 
-		$queryString: ();
-
 		@each $mqSet in $range {
 
 			@if ($mqSet  != 'plus') {
@@ -180,7 +178,11 @@ $mq-em-base: 16px !default;
 					}
 
 				} @else {
-					$queryString: $queryString + joinQueries($mqSet);
+					@if ($isAndStatment) {
+						$queryString: joinQueries($mqSet, $queryString);
+					} @else {
+						$queryString: append($queryString, joinQueries($mqSet), 'comma');
+					}
 				}
 			}
 		}
