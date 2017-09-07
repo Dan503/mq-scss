@@ -527,13 +527,13 @@ $MQ-mainHeading--red: (
 You can also string multiple `plus` statements together:
 
 `````````````scss
-$MQ-test1: (inside, 800px, 400px);
-$MQ-test2: (max, 600px);
+$MQ-a: (inside, 800px, 400px);
+$MQ-b: (max, 600px);
 
-$MQ-test3: ($MQ-test1 plus $MQ-test2 plus (min-ratio, '2 / 1'));
+$MQ-c: ($MQ-a plus $MQ-b plus (min-ratio, '2 / 1'));
 
 .module {
-    @include mq($MQ-test3){
+    @include mq($MQ-c){
         background: red;
     }
 }
@@ -548,68 +548,49 @@ $MQ-test3: ($MQ-test1 plus $MQ-test2 plus (min-ratio, '2 / 1'));
 }
 `````````````
 
-### !IMPORTANT! `plus` does not work in all situations
+### !IMPORTANT! limitations of `plus`
 
-There are some restrictions around using the `plus` keyword that you should be aware of. I haven't been able to write error messages for these edge cases warning users not to do these things. I didn't want the lack of error messages to hold back the feature though.
+You should note that `plus` does not work in all situations. There are some restrictions around using the `plus` keyword that you should be aware of.
 
 #### It can not be used in conjunction with any `outside` range type
 
-The following code **will not work** (at least not as expected)
+The following code **will not work** and will throw an error stating that all `outside` range types (`outside`, `outside-height`, `outside-ratio`, `outside-device-ratio`) are incompatible with `plus` statements.
 
 `````````````scss
-$MQ-test1: (outside, 800px, 400px);
-$MQ-test2: (max, 600px);
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
 
-$MQ-test3: ($MQ-test1 plus $MQ-test2);
+$MQ-c: ($MQ-a plus $MQ-b);
 
 .module {
-    @include mq($MQ-test3){
+    @include mq($MQ-c){
         background: red;
     }
 }
 `````````````
-`````````````css
-/* outputted css: */
-/* (max-width: 400px) is on it's own, not affected by the (max-width: 600px) rule */
-@media screen and (max-width: 400px), screen and (min-width: 801px) and (max-width: 600px) {
-  .module {
-    background: red;
-  }
-}
-`````````````
-
-This issue occurs across all `outside` range types (`outside`, `outside-height`, `outside-ratio`, `outside-device-ratio`).
 
 #### `plus` statements can not contain any `or` statements
 
-`Or` statements can contain `plus` statements however `plus` statements can not contain `or` statements.
+`or` statements can contain `plus` statements however `plus` statements can not contain `or` statements.
 
-The following code **will not work** (at least not as expected)
+The following code **will not work** and will throw an error stating that `or` statements can't be placed inside `plus` statements.
 
 `````````````scss
-$MQ-test1: (
+$MQ-a: (
     (inside, 1200px, 800px),
     (max, 400px)
 );
-$MQ-test2: (max, 600px);
+$MQ-b: (max, 600px);
 
-$MQ-test3: ($MQ-test1 plus $MQ-test2);
+$MQ-c: ($MQ-a plus $MQ-b);
 
 .module {
-    @include mq($MQ-test3){
+    @include mq($MQ-c){
         background: red;
     }
 }
 `````````````
-`````````````css
-/* outputted css: */
-/* (max-width: 600px) rule is completely ignored */
-@media screen and (max-width: 1200px) and (min-width: 801px) {
-  .module {
-    background: red;
-  }
-}
-`````````````
+
 
 #### Work arounds
 
@@ -618,13 +599,13 @@ You can generally get around these issues by placing the `plus` statement inside
 So instead of this:
 
 `````````````scss
-$MQ-test1: (outside, 800px, 400px);
-$MQ-test2: (max, 600px);
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
 
-$MQ-test3: ($MQ-test1 plus $MQ-test2);
+$MQ-c: ($MQ-a plus $MQ-b);
 
 .module {
-    @include mq($MQ-test3){
+    @include mq($MQ-c){
         background: red;
     }
 }
@@ -633,41 +614,37 @@ $MQ-test3: ($MQ-test1 plus $MQ-test2);
 Do this:
 
 `````````````scss
-$MQ-test1: (outside, 800px, 400px);
-$MQ-test2: (max, 600px);
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
 
-/////////////////////////////////////////////////// Test is not working
-
-$MQ-test3: (
-    ((min, 800px) plus $MQ-test2),
-    ((max, 400px) plus $MQ-test2)
+$MQ-c: (
+    ((max, 400px) plus $MQ-b),
+    ((min, 800px) plus $MQ-b)
 );
 
 .module {
-    @include mq($MQ-test3){
+    @include mq($MQ-c){
         background: red;
     }
 }
 `````````````
 `````````````css
-/* Test is not working, should be outputting something different */
-
-@media screen and (min-width: 801px) and (max-width: 600px) {
+@media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
   .module {
     background: red;
   }
 }
 `````````````
 
-Also, as of version 1.2.0, you can utilise the native media query merging feature in Sass to sort out the media queries for you (as long as you don't mind them being outside of variables)
+Alternatively, as of version 1.2.0, you can utilise the native media query merging feature in Sass to sort out the media queries for you (as long as you don't mind them being outside of variables).
 
 `````````````scss
-$MQ-test1: (outside, 800px, 400px);
-$MQ-test2: (max, 600px);
+$MQ-a: (outside, 800px, 400px);
+$MQ-b: (max, 600px);
 
 .module {
-    @include mq($MQ-test1){
-        @include mq($MQ-test2){
+    @include mq($MQ-a){
+        @include mq($MQ-b){
             background: red;
         }
     }
