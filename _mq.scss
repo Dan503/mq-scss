@@ -180,6 +180,10 @@ $mq-em-base: 16px !default;
 				} @else {
 					@if ($isAndStatment) {
 						$queryString: joinQueries($mqSet, $queryString);
+						@if (length($queryString) > 1){
+							$error: 'mq-scss does not support "or" statements inside "plus" statements: ' + $queryString;
+							@error $error;
+						}
 					} @else {
 						$queryString: append($queryString, joinQueries($mqSet), 'comma');
 					}
