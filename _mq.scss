@@ -164,7 +164,6 @@ $mq-em-base: 16px !default;
 	//;
 	//@include mq($MQ-example--multiple){}
 	} @else {
-		@debug $isAndStatement;
 
 		@each $mqSet in $range {
 
