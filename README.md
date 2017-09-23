@@ -11,6 +11,7 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
 * [Installation](#installation)
 * [Basic usage](#basic-usage)
     * [Min/Max width](#minmax-width)
+        * [Min/Max width long hand](#minmax-width-long-hand)
     * [Inside/Outside](#insideoutside)
         * [Changing which value comes first](#changing-which-value-comes-first)
     * [Ratio based media queries](#ratio-based-media-queries)
@@ -55,7 +56,7 @@ Import mq-scss at the top of your main Sass file (note that the exact path will 
 In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than or equal to 600px wide
 
 `````````````scss
-SASS:
+SCSS:
 
 .element {
     background: red;
@@ -70,6 +71,7 @@ SASS:
 /* outputted css: */
 
 .element { background: red; }
+
 @media screen and (max-width: 600px) {
     .element { background: blue; }
 }
@@ -79,7 +81,7 @@ SASS:
 It's just as easy to state a minimum width:
 
 `````````````scss
-SASS:
+SCSS:
 
 .element {
     background: red;
@@ -94,6 +96,7 @@ SASS:
 /* outputted css: */
 
 .element { background: red; }
+
 @media screen and (min-width: 601px) {
     .element { background: blue; }
 }
@@ -101,13 +104,75 @@ SASS:
 
 Note that in the sass, we state that the width is 600px but it gets outputted as 601px in the css. This makes the mixin more intuitive to use and it means you'll never have to worry about that ugly 1px cross over point where `min` and `max` ranges set to the same width display at the same time.
 
+#### Min/Max width long hand
+
+ As of v1.3.1, if you prefer to use `max-width` and `min-width` instead of `max` and `min` you can.
+
+For example, this code:
+
+`````````````scss
+SCSS:
+
+.element {
+    background: red;
+
+    @include mq(min, 800px){
+        background: blue;
+    }
+
+    @include mq(max, 600px){
+        background: green;
+    }
+}
+`````````````
+
+Produces identical css to this code:
+
+`````````````scss
+SCSS:
+
+.element {
+    background: red;
+
+    @include mq(min-width, 800px){
+        background: blue;
+    }
+
+    @include mq(max-width, 600px){
+        background: green;
+    }
+}
+`````````````
+
+Output css for both examples:
+
+````````css
+/* outputted css: */
+
+.element {
+  background: red;
+}
+
+@media screen and (min-width: 801px) {
+  .element {
+    background: blue;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .element {
+    background: green;
+  }
+}
+
+````````
 
 ### Inside/Outside
 
 What about those times when you only want a style to be effective within a given range? Perhaps you only want something to be blue if it's a tablet sized screen but not appear on mobile. That is when the `inside` range type comes in handy.
 
 `````````````scss
-SASS:
+SCSS:
 
 .element {
     background: red;
@@ -122,6 +187,7 @@ SASS:
 /* outputted css: */
 
 .element { background: red; }
+
 @media screen and (max-width: 1024px) and (min-width: 601px) {
     .element { background: blue; }
 }
@@ -132,7 +198,7 @@ Again notice how min-width gets outputted as +1 the value given to avoid potenti
 If you want something to be styled a certain way on mobiles and desktops but **not** tablets, we can use the `outside` range type instead:
 
 `````````````scss
-SASS:
+SCSS:
 
 .element {
     background: red;
@@ -165,7 +231,7 @@ Prior to v1.2.0 You needed to set an `$mq-largest-first` global setting variable
 Ratio ranges must be a division in the form of a sting like `'2 / 1'` (width / height). That example meaning that the screen width is 2 times the size of the screen height. Ratio ranges do not accept pixel values.
 
 `````````````scss
-SASS:
+SCSS:
 
 .element {
     background: red;
@@ -180,6 +246,7 @@ SASS:
 /* outputted css: */
 
 .element { background: red; }
+
 @media screen and (min-aspect-ratio: 2 / 1) {
     .element { background: blue; }
 }
@@ -205,6 +272,9 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
 - **min** : `screen and (min-width: XXX)`
 - **max** : `screen and (max-width: XXX)`
+
+- **min-width** : (long-hand for `min`)
+- **max-width** : (long-hand for `max`)
 
 - **min-height** : `screen and (min-height: XXX)`
 - **max-height** : `screen and (max-height: XXX)`
@@ -279,7 +349,7 @@ Here is the breakdown of what each part means. I tend to use camelCase for each 
 Here is an example of how to use it:
 
 `````````````scss
-SASS:
+SCSS:
 
 $MQ-element__color--main: (inside, 1024px, 600px);
 $MQ-element__color--alt: (outside, 1024px, 600px);
@@ -313,12 +383,15 @@ $MQ-element__color--alt: (outside, 1024px, 600px);
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
     .module__element { background: red; }
 }
+
 @media screen and (max-width: 1024px) and (min-width: 601px) {
     .module__element { background: blue; }
 }
+
 @media not screen and (max-width: 1024px) and (min-width: 601px) {
     .module__element--green { background: green; }
 }
+
 @media screen and (max-width: 1024px) and (min-width: 601px) {
     .module__element--green { background: grey; }
 }
@@ -335,7 +408,7 @@ Well actually after gzipping, all the repetitive media query declarations [becom
 Media Query `or` statements are only possible using an MQ variable.
 
 `````````````scss
-SASS:
+SCSS:
 
 $MQ-element__color--alt:
     (inside, 1024px, 980px),
@@ -355,6 +428,7 @@ $MQ-element__color--alt:
 /* outputted css: */
 
 .element { background: red; }
+
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
     .element { background: blue; }
 }
@@ -363,18 +437,22 @@ $MQ-element__color--alt:
 This technique is most useful when you are targeting a module that is inside a container that is changing in width quite frequently. It's a bit harder to make a counter media query for these though since as long as just a single rule in the or statement is true, the styles will take effect. To effectively create a counter media query for one of these multi queries, you need to carefully target all the gaps in the original statement.
 
 `````````````scss
-SASS:
+SCSS:
 
-$MQ-element__color--main:
+$MQ-element__color--main: (
     (inside, 1024px, 980px),
     (max, 600px)
-;
+);
 
-$MQ-element__color--alt:
-    (min, 1024px),//*$MQ-element__color--main does not go any higher than 1024px*/
-    (inside, 980px, 600px)//*$MQ-element__color--main does not target screen sizes between 980px and 600px.*/
+$MQ-element__color--alt: (
+    //*$MQ-element__color--main does not go any higher than 1024px*/
+    (min, 1024px),
+
+    //*$MQ-element__color--main does not target screen sizes between 980px and 600px.*/
+    (inside, 980px, 600px)
+
     //*$MQ-element__color--main covers all screen sizes below 600px so no further queries are needed for the counter query*/
-;
+);
 
 .element {
     @include mq($MQ-element__color--main){
@@ -392,6 +470,7 @@ $MQ-element__color--alt:
 @media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
     .element { background: blue; }
 }
+
 @media screen and (min-width: 1025px), screen and (max-width: 980px) and (min-width: 601px) {
     .element { background: red; }
 }
@@ -431,12 +510,15 @@ $MQ-mainHeading--red: ($MQ-sideBar__width--full plus $MQ-subHeading--hidden);
 /* outputted css: */
 
 .module__sideBar { width: 33.33%; }
+
 @media screen and (max-width: 600px) {
     .module__sideBar { width: 100%; }
 }
+
 @media screen and (max-width: 800px) and (min-width: 401px) {
     .module__subHeading { display: none; }
 }
+
 @media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
     .module__mainHeading { background: red; }
 }
@@ -508,16 +590,19 @@ $MQ-mainHeading--red: (
 .module__sideBar {
   width: 33.33%;
 }
+
 @media screen and (max-width: 600px) {
   .module__sideBar {
     width: 100%;
   }
 }
+
 @media screen and (max-width: 800px) and (min-width: 401px) {
   .module__subHeading {
     display: none;
   }
 }
+
 @media screen and (min-aspect-ratio: 2 / 1) and (max-width: 800px) and (min-width: 401px), screen and (max-width: 600px) {
   .module__mainHeading {
     background: red;
@@ -542,6 +627,7 @@ $MQ-c: ($MQ-a plus $MQ-b plus (min-ratio, '2 / 1'));
 
 `````````````css
 /* outputted css: */
+
 @media screen and (max-width: 800px) and (min-width: 401px) and (max-width: 600px) and (min-aspect-ratio: 2 / 1) {
   .module {
     background: red;
@@ -631,6 +717,7 @@ $MQ-c: (
 `````````````
 `````````````css
 /* outputted css */
+
 @media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
   .module {
     background: red;
@@ -654,6 +741,7 @@ $MQ-b: (max, 600px);
 `````````````
 `````````````css
 /* outputted css */
+
 @media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
   .module {
     background: red;
@@ -745,6 +833,10 @@ To create this css:
 
 
 ## Change log
+
+### v1.3.1
+
+- Made `min-width` and `max-width` valid range types that can be used instead of `min` and `max`.
 
 ### v1.3.0
 

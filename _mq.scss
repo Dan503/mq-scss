@@ -83,10 +83,15 @@ $mq-em-base: 16px !default;
 		$setting2Plus: _mq-em($setting2Plus);
 	}
 
+	$min-width: '(min-width: #{$setting1Plus})';
+	$max-width: '(max-width: #{$setting1})';
+
 	$mediaString: map-get((
 	//*1 value given*/
-		min : '(min-width: #{$setting1Plus})',
-		max : '(max-width: #{$setting1})',
+		min : $min-width,
+		min-width : $min-width,
+		max : $max-width,
+		max-width : $max-width,
 
 		min-height : '(min-height: #{$setting1Plus})',
 		max-height : '(max-height: #{$setting1})',
