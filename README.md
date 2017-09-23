@@ -834,6 +834,10 @@ To create this css:
 
 ## Change log
 
+### v1.3.1
+
+- Made `min-width` and `max-width` valid range types that can be used instead of `min` and `max`.
+
 ### v1.3.0
 
 - Added the `plus` keyword for improved handling of "and" statements
