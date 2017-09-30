@@ -151,7 +151,7 @@ Note that in the sass, we state that the width is 600px but it gets outputted as
     background: green;
   }
 }
-````````
+`````````````
 
 ### Inside/Outside
 
