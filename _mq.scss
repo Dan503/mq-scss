@@ -84,11 +84,15 @@ $mq-em-base: 16px !default;
 	$min-width: '(min-width: #{$setting1Plus})';
 	$max-width: '(max-width: #{$setting1})';
 
+	$inside-width: '(max-width: #{$setting1}) and (min-width: #{$setting2Plus})';
+	$outside-width: '(max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})';
+
 	$mediaString: map-get((
 	//*1 value given*/
 		min : $min-width,
-		min-width : $min-width,
 		max : $max-width,
+
+		min-width : $min-width,
 		max-width : $max-width,
 
 		min-height : '(min-height: #{$setting1Plus})',
@@ -105,8 +109,11 @@ $mq-em-base: 16px !default;
 		orientation : '(orientation: #{$setting1})',
 
 	//*2 values given*/
-		inside : '(max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
-		outside : '(max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})',
+		inside : $inside-width,
+		outside : $outside-width,
+
+		inside-width : $inside-width,
+		outside-width : $outside-width,
 
 		inside-height : '(max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
 		outside-height : '(max-height: #{$setting2}), screen and (min-height: #{$setting1Plus})',
