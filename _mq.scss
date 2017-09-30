@@ -51,7 +51,7 @@ $mq-em-base: 16px !default;
 		}
 	} @else {
 		@if ($setting2 != 0) {
-			@error '"#{$range}" range can only take one value. Currently providing both "#{$setting1}" and "#{$setting2}" values.';
+			@error '"#{$range}" range can only take one value. Currently providing both "#{$setting1}" and "#{$setting2}" as values.';
 		}
 	}
 
