@@ -21,9 +21,7 @@ $mq-em-base: 16px !default;
 
 			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
 		} @else {
-			@if ($setting1 < $setting2){
-				$swap-values: true;
-			}
+			$swap-values: $setting1 < $setting2;
 		}
 
 		//Swaps the settings around
@@ -51,7 +49,7 @@ $mq-em-base: 16px !default;
 		}
 	} @else {
 		@if ($setting2 != 0) {
-			@error '"#{$range}" range can only take one value. Currently providing both "#{$setting1}" and "#{$setting2}" values.';
+			@error '"#{$range}" range can only take one value. Currently providing both "#{$setting1}" and "#{$setting2}" as values.';
 		}
 	}
 
@@ -86,11 +84,15 @@ $mq-em-base: 16px !default;
 	$min-width: '(min-width: #{$setting1Plus})';
 	$max-width: '(max-width: #{$setting1})';
 
+	$inside-width: '(max-width: #{$setting1}) and (min-width: #{$setting2Plus})';
+	$outside-width: '(max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})';
+
 	$mediaString: map-get((
 	//*1 value given*/
 		min : $min-width,
-		min-width : $min-width,
 		max : $max-width,
+
+		min-width : $min-width,
 		max-width : $max-width,
 
 		min-height : '(min-height: #{$setting1Plus})',
@@ -107,8 +109,11 @@ $mq-em-base: 16px !default;
 		orientation : '(orientation: #{$setting1})',
 
 	//*2 values given*/
-		inside : '(max-width: #{$setting1}) and (min-width: #{$setting2Plus})',
-		outside : '(max-width: #{$setting2}), screen and (min-width: #{$setting1Plus})',
+		inside : $inside-width,
+		outside : $outside-width,
+
+		inside-width : $inside-width,
+		outside-width : $outside-width,
 
 		inside-height : '(max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
 		outside-height : '(max-height: #{$setting2}), screen and (min-height: #{$setting1Plus})',
