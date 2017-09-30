@@ -56,7 +56,7 @@ Import mq-scss at the top of your main Sass file (note that the exact path will 
 In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than or equal to 600px wide
 
 `````````````scss
-SCSS:
+// SCSS
 
 .element {
     background: red;
@@ -81,7 +81,7 @@ SCSS:
 It's just as easy to state a minimum width:
 
 `````````````scss
-SCSS:
+// SCSS
 
 .element {
     background: red;
@@ -108,11 +108,10 @@ Note that in the sass, we state that the width is 600px but it gets outputted as
 
  As of v1.3.1, if you prefer to use `max-width` and `min-width` instead of `max` and `min` you can.
 
-For example, this code:
-
 `````````````scss
-SCSS:
+// SCSS
 
+// Both this:
 .element {
     background: red;
 
@@ -124,13 +123,8 @@ SCSS:
         background: green;
     }
 }
-`````````````
 
-Produces identical css to this code:
-
-`````````````scss
-SCSS:
-
+// And This:
 .element {
     background: red;
 
@@ -142,29 +136,21 @@ SCSS:
         background: green;
     }
 }
-`````````````
 
-Output css for both examples:
-
-````````css
-/* outputted css: */
-
+// Produces this CSS:
 .element {
   background: red;
 }
-
 @media screen and (min-width: 801px) {
   .element {
     background: blue;
   }
 }
-
 @media screen and (max-width: 600px) {
   .element {
     background: green;
   }
 }
-
 ````````
 
 ### Inside/Outside
@@ -172,7 +158,7 @@ Output css for both examples:
 What about those times when you only want a style to be effective within a given range? Perhaps you only want something to be blue if it's a tablet sized screen but not appear on mobile. That is when the `inside` range type comes in handy.
 
 `````````````scss
-SCSS:
+// SCSS
 
 .element {
     background: red;
@@ -198,7 +184,7 @@ Again notice how min-width gets outputted as +1 the value given to avoid potenti
 If you want something to be styled a certain way on mobiles and desktops but **not** tablets, we can use the `outside` range type instead:
 
 `````````````scss
-SCSS:
+// SCSS
 
 .element {
     background: red;
@@ -219,6 +205,31 @@ SCSS:
 }
 `````````````
 
+Also, as of version 1.3.2, if you prefer to explicitly state `width` when using `inside` and `outside`, you can use the alternate `inside-width` and `outside-width` syntax.
+
+`````````````scss
+// SCSS
+
+// Both this:
+.element {
+    @include mq(inside, 1024px, 600px){
+        background: blue;
+    }
+}
+
+// And this this:
+.element {
+    @include mq(inside-width, 1024px, 600px){
+        background: blue;
+    }
+}
+
+// Produces this css:
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+    .element { background: blue; }
+}
+`````````````
+
 #### Changing which value comes first
 
 As of version 1.2.0, you no longer need to worry about which value you use first. Place the breakpoint values in any order and the mixin will figure it out from there. 
@@ -231,7 +242,7 @@ Prior to v1.2.0 You needed to set an `$mq-largest-first` global setting variable
 Ratio ranges must be a division in the form of a sting like `'2 / 1'` (width / height). That example meaning that the screen width is 2 times the size of the screen height. Ratio ranges do not accept pixel values.
 
 `````````````scss
-SCSS:
+// SCSS
 
 .element {
     background: red;
@@ -273,8 +284,8 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 - **min** : `screen and (min-width: XXX)`
 - **max** : `screen and (max-width: XXX)`
 
-- **min-width** : (long-hand for `min`)
-- **max-width** : (long-hand for `max`)
+- **min-width** : (same as `min`)
+- **max-width** : (same as `max`)
 
 - **min-height** : `screen and (min-height: XXX)`
 - **max-height** : `screen and (max-height: XXX)`
@@ -293,6 +304,9 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
 - **inside** : `screen and (max-width: XXX) and (min-width: YYY)`
 - **outside** : `screen and (max-width: YYY), screen and (min-width: XXX)`
+
+- **inside-width** : (same as `inside`)
+- **outside-width** : (same as `outside`)
 
 - **inside-height** : `screen and (max-height: XXX) and (min-height: YYY)`
 - **outside-height** : `screen and (max-height: YYY), screen and (min-height: XXX)`
@@ -349,7 +363,7 @@ Here is the breakdown of what each part means. I tend to use camelCase for each 
 Here is an example of how to use it:
 
 `````````````scss
-SCSS:
+// SCSS
 
 $MQ-element__color--main: (inside, 1024px, 600px);
 $MQ-element__color--alt: (outside, 1024px, 600px);
@@ -408,7 +422,7 @@ Well actually after gzipping, all the repetitive media query declarations [becom
 Media Query `or` statements are only possible using an MQ variable.
 
 `````````````scss
-SCSS:
+// SCSS
 
 $MQ-element__color--alt:
     (inside, 1024px, 980px),
@@ -437,7 +451,7 @@ $MQ-element__color--alt:
 This technique is most useful when you are targeting a module that is inside a container that is changing in width quite frequently. It's a bit harder to make a counter media query for these though since as long as just a single rule in the or statement is true, the styles will take effect. To effectively create a counter media query for one of these multi queries, you need to carefully target all the gaps in the original statement.
 
 `````````````scss
-SCSS:
+// SCSS
 
 $MQ-element__color--main: (
     (inside, 1024px, 980px),
@@ -481,6 +495,8 @@ $MQ-element__color--alt: (
 So the scenario is that you have some styles you want to apply only when both the side bar is full width and the sub heading is hidden. This is the easiest way to do that:
 
 `````````````scss
+// SCSS
+
 $MQ-sideBar__width--full: (max, 600px);
 $MQ-subHeading--hidden: (inside, 800px, 400px);
 $MQ-mainHeading--red: ($MQ-sideBar__width--full plus $MQ-subHeading--hidden);
@@ -529,6 +545,8 @@ This technique utilises the `plus` keyword (introduced in version 1.3.0) to glue
 This can also be done inline as a one off like this:
 
 `````````````scss
+// SCSS
+
 $MQ-sideBar__width--full: (max, 600px);
 $MQ-subHeading--hidden: (inside, 800px, 400px);
 
@@ -556,6 +574,8 @@ $MQ-subHeading--hidden: (inside, 800px, 400px);
 It will even work as part of an `or` statement:
 
 `````````````scss
+// SCSS
+
 $MQ-subHeading--hidden: (inside, 800px, 400px);
 $MQ-sideBar__width--full: (max, 600px);
 
@@ -613,6 +633,8 @@ $MQ-mainHeading--red: (
 You can also string multiple `plus` statements together:
 
 `````````````scss
+// SCSS
+
 $MQ-a: (inside, 800px, 400px);
 $MQ-b: (max, 600px);
 
@@ -644,6 +666,8 @@ You should note that `plus` does not work in all situations. There are some rest
 The following code **will not work** and will throw an error stating that all `outside` range types (`outside`, `outside-height`, `outside-ratio`, `outside-device-ratio`) are incompatible with `plus` statements.
 
 `````````````scss
+// SCSS
+
 $MQ-a: (outside, 800px, 400px);
 $MQ-b: (max, 600px);
 
@@ -663,6 +687,8 @@ $MQ-c: ($MQ-a plus $MQ-b);
 The following code **will not work** and will throw an error stating that `or` statements can't be placed inside `plus` statements.
 
 `````````````scss
+// SCSS
+
 $MQ-a: (
     (inside, 1200px, 800px),
     (max, 400px)
@@ -686,6 +712,8 @@ You can generally get around these issues by placing the `plus` statement inside
 So instead of this:
 
 `````````````scss
+// SCSS
+
 $MQ-a: (outside, 800px, 400px);
 $MQ-b: (max, 600px);
 
@@ -701,6 +729,8 @@ $MQ-c: ($MQ-a plus $MQ-b);
 Do this:
 
 `````````````scss
+// SCSS
+
 $MQ-a: (outside, 800px, 400px);
 $MQ-b: (max, 600px);
 
@@ -728,6 +758,8 @@ $MQ-c: (
 Alternatively, as of version 1.2.0, you can utilise the native media query merging feature in Sass to sort out the media queries for you (as long as you don't mind them being outside of variables).
 
 `````````````scss
+// SCSS
+
 $MQ-a: (outside, 800px, 400px);
 $MQ-b: (max, 600px);
 
@@ -772,6 +804,8 @@ This mixin does not contain any string to pixel value functionality. This is to 
 The easiest way to set up a batch of breakpoints is to save them all as Sass variables, then call on them when using the mixin.
 
 `````````scss
+// SCSS
+
 $BP-minimum: 320px;
 $BP-tiny: 350px;
 $BP-small: 480px;
@@ -799,6 +833,8 @@ I've also added a retina display mixin for detecting retina display devices
 It can be used like this:
 
 ````````scss
+// SCSS
+
 .element {
     @include retina {
         /* styles that will only appear on retina screen devices (minimum of 2dppx) */
@@ -811,7 +847,9 @@ It can be used like this:
 
 To create this css:
 
-````````scss
+````````css
+/* outputted css */
+
 @media  only screen and (min-device-pixel-ratio: 2),
         only screen and (min-resolution: 192ppi),
         only screen and (min-resolution: 2dppx) {
@@ -831,8 +869,13 @@ To create this css:
 }
 ````````
 
-
 ## Change log
+
+This change log only covers major changes to the mixin. Due to how npm works, things like edits to the readme file require releasing whole new versions of the module to publish the edits. Those sorts of releases are not listed here.
+
+### v1.3.2
+
+- Made `inside-width` and `outside-width` valid range types that can be used instead of `inside` and `outside`.
 
 ### v1.3.1
 
