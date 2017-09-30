@@ -21,9 +21,7 @@ $mq-em-base: 16px !default;
 
 			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
 		} @else {
-			@if ($setting1 < $setting2){
-				$swap-values: true;
-			}
+			$swap-values: $setting1 < $setting2;
 		}
 
 		//Swaps the settings around
