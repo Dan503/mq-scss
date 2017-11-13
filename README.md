@@ -28,6 +28,7 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
     * [Media query `or` statements](#media-query-or-statements)
     * [Media Query `plus` statements](#media-query-plus-statements)
         * [**!IMPORTANT!** limitations of `plus`](#important-limitations-of-plus)
+* [Defining media types](#defining-media-types)
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
@@ -781,6 +782,122 @@ $MQ-b: (max, 600px);
 }
 `````````````
 
+## Defining media types
+
+By default, mq-scss doesn't apply a media type to the media-queries it generates. As of v2.0.0, you can now declare custom media types in your media queries.
+
+Let's say that you are making a fancy print style sheet and only want to target this media query at printers. Here is how to go about it:
+
+`````````````scss
+// SCSS
+
+.element {
+    @include mq(min, 800px, 'print'){
+        color: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+
+@media print and (min-width: 801px) {
+  .element {
+    color: red;
+  }
+}
+`````````````
+
+Note that if you get an error that looks like this:
+
+``````
+Error: media query expression must begin with '('
+``````
+
+It is most likely because you have entered a media type that sass doesn't recognize. I want to avoid having to maintain a list of valid media type expressions so I don't intend on clarifying this error.
+
+Here are some more examples of how you can use the media type declaration:
+
+`````````````scss
+// SCSS
+
+.element {
+    @include mq(outside, 800px, 900px, 'only screen'){
+        color: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+
+@media only screen and (max-width: 800px), only screen and (min-width: 901px) {
+  .element {
+    color: red;
+  }
+}
+`````````````
+
+This one is a bit ridiculous but it at least shows the level of freedom you have when declaring media types:
+
+`````````````scss
+// SCSS
+
+$mq: (
+    (inside, 1000px, 1200px, 'screen'),
+    (max, 800px, 'only print') plus (min-ratio, '2 / 1')
+)
+
+.element {
+    @include mq($mq){
+        color: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+
+@media screen and (max-width: 1200px) and (min-width: 1001px), only print and (max-width: 800px) and (min-aspect-ratio: 2/1) {
+  .element {
+    color: red;
+  }
+}
+`````````````
+
+An important thing to note about media types and `plus` statements. Only the media type that is defined at the start of the plus statement will be honoured. All other media types will be ignored.
+
+`````````````scss
+// SCSS
+
+// "screen" is ignored
+.media-ignored {
+    @include mq((max, 1000px) plus (min, 800px, 'screen')){
+        color: red;
+    }
+}
+
+// "screen" is honoured
+.media-added {
+    @include mq((max, 1000px, 'screen') plus (min, 800px)){
+        color: green;
+    }
+}
+
+`````````````
+`````````````css
+/* outputted css */
+
+@media (max-width: 1000px) and (min-width: 801px) {
+  .media-ignored {
+    color: red;
+  }
+}
+
+@media screen and (max-width: 1000px) and (min-width: 801px) {
+  .media-added {
+    color: green;
+  }
+}
+`````````````
+
 ## em conversion
 
 Pixel based media queries can actually appear incorrectly when zooming on some browsers (it's particularly infamous in Safari on Mac).
@@ -875,8 +992,10 @@ This change log only covers major changes to the mixin. Due to how npm works, th
 
 ### v2.0.0
 
-- **BREAKING CHANGE:** By default, no media type is added to the media query (previously it added "screen" as the media type to all media queries)
 - Added the ability to define custom media types for individual mq statements.
+- **BREAKING CHANGE:** By default, no media type is added to the media query (previously it added "screen" as the media type to all media queries)
+    - If upgrading from v1.x you may want to add `"screen"` to the end of all your MQ statements to retain consistency with v1.x.
+    - eg. from `@include mq(max, 800px)` to `@include mq(max, 800px, 'screen')`
 
 ### v1.3.2
 
