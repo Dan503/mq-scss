@@ -29,7 +29,7 @@ $mq-em-base: 16px !default;
 		@error '"'+$mediaType+'" is not a valid media type';
 	}
 
-	@if ($setting2 != null){
+	@if ($setting2 != null and type-of($setting2) == 'number'){
 
 		@if (type-of($setting1) == 'string'){
 
@@ -94,7 +94,7 @@ $mq-em-base: 16px !default;
 	$setting1Plus: $setting1 + 1;
 	$setting2Plus: $setting2 + 1;
 
-	$media: mediaType($mediaType);
+	$media: $mediaType;
 
 	@if ($mq-ems) {
 		$setting1: _mq-em($setting1);
@@ -171,20 +171,27 @@ $mq-em-base: 16px !default;
 	}
 
 	@if (length($mqSet) == 4){
-		$width2: nth($mqSet, 3);
-		$media: nth($mqSet, 4);
+		$third: nth($mqSet, 3);
+		$fourth: nth($mqSet, 4);
+
+		@if ($fourth == false and type-of($third) == 'string'){
+			$media: $third;
+		} @else {
+			$width2: $third;
+			$media: $fourth;
+		}
 	}
 
 	@return (
 		range: $range,
 		width1: $width1,
 		width2: $width2,
-		media: $media,
+		media: mediaType($media),
 	);
 }
 
 @function get_media($mqSet){
-	@return map-get( get_values($mqSet) , media);
+	@return  map-get( get_values($mqSet) , media);
 }
 
 @function calculateBasicQuery($mqSet, $isAndStatement: false){
@@ -279,8 +286,15 @@ $mq-em-base: 16px !default;
 	//eg:
 	//@include mq(inside, 1000px, 500px, 'screen');
 	} @else {
+		//standardises the values to prevent mediaType from getting confused with setting2
+		$values: get_values($range $setting1 $setting2 $mediaType);
 
-		@media #{ mediaType($mediaType) + calculateMQ($range, $setting1, $setting2)} {
+		$newRange: map-get($values, range);
+		$newWidth1: map-get($values, width1);
+		$newWidth2: map-get($values, width2);
+		$newMedia: map-get($values, media);
+
+		@media #{ $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2) } {
 			@content;
 		}
 	}
