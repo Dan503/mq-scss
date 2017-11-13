@@ -873,6 +873,11 @@ To create this css:
 
 This change log only covers major changes to the mixin. Due to how npm works, things like edits to the readme file require releasing whole new versions of the module to publish the edits. Those sorts of releases are not listed here.
 
+### v2.0.0
+
+- **BREAKING CHANGE:** By default, no media type is added to the media query (previously it added "screen" as the media type to all media queries)
+- Added the ability to define custom media types for individual mq statements.
+
 ### v1.3.2
 
 - Made `inside-width` and `outside-width` valid range types that can be used instead of `inside` and `outside`.
