@@ -28,6 +28,7 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
     * [Media query `or` statements](#media-query-or-statements)
     * [Media Query `plus` statements](#media-query-plus-statements)
         * [**!IMPORTANT!** limitations of `plus`](#important-limitations-of-plus)
+* [Defining media types](#defining-media-types)
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
@@ -72,7 +73,7 @@ In this example we state that we want the background of the element to be red by
 
 .element { background: red; }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
     .element { background: blue; }
 }
 `````````````
@@ -97,7 +98,7 @@ It's just as easy to state a minimum width:
 
 .element { background: red; }
 
-@media screen and (min-width: 601px) {
+@media (min-width: 601px) {
     .element { background: blue; }
 }
 `````````````
@@ -141,12 +142,12 @@ Note that in the sass, we state that the width is 600px but it gets outputted as
 .element {
   background: red;
 }
-@media screen and (min-width: 801px) {
+@media (min-width: 801px) {
   .element {
     background: blue;
   }
 }
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .element {
     background: green;
   }
@@ -174,7 +175,7 @@ What about those times when you only want a style to be effective within a given
 
 .element { background: red; }
 
-@media screen and (max-width: 1024px) and (min-width: 601px) {
+@media (max-width: 1024px) and (min-width: 601px) {
     .element { background: blue; }
 }
 `````````````
@@ -200,7 +201,7 @@ If you want something to be styled a certain way on mobiles and desktops but **n
 
 .element { background: red; }
 
-@media screen and (max-width: 600px), screen and (min-width: 1025px) {
+@media (max-width: 600px), (min-width: 1025px) {
     .element { background: blue; }
 }
 `````````````
@@ -225,7 +226,7 @@ Also, as of version 1.3.2, if you prefer to explicitly state `width` when using 
 }
 
 // Produces this css:
-@media screen and (max-width: 1024px) and (min-width: 601px) {
+@media (max-width: 1024px) and (min-width: 601px) {
     .element { background: blue; }
 }
 `````````````
@@ -258,7 +259,7 @@ Ratio ranges must be a division in the form of a sting like `'2 / 1'` (width / h
 
 .element { background: red; }
 
-@media screen and (min-aspect-ratio: 2 / 1) {
+@media (min-aspect-ratio: 2 / 1) {
     .element { background: blue; }
 }
 `````````````
@@ -303,19 +304,19 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 #### Double value ranges
 
 - **inside** : `screen and (max-width: XXX) and (min-width: YYY)`
-- **outside** : `screen and (max-width: YYY), screen and (min-width: XXX)`
+- **outside** : `screen and (max-width: YYY), (min-width: XXX)`
 
 - **inside-width** : (same as `inside`)
 - **outside-width** : (same as `outside`)
 
 - **inside-height** : `screen and (max-height: XXX) and (min-height: YYY)`
-- **outside-height** : `screen and (max-height: YYY), screen and (min-height: XXX)`
+- **outside-height** : `screen and (max-height: YYY), (min-height: XXX)`
 
 - **inside-ratio** : `screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)`
-- **outside-ratio** : `screen and (max-aspect-ratio: YYY), screen and (min-aspect-ratio: XXX)`
+- **outside-ratio** : `screen and (max-aspect-ratio: YYY), (min-aspect-ratio: XXX)`
 
 - **inside-device-ratio** : `screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
-- **outside-device-ratio** : `screen and (max-device-aspect-ratio: YYY), screen and (min-device-aspect-ratio: XXX)`
+- **outside-device-ratio** : `screen and (max-device-aspect-ratio: YYY), (min-device-aspect-ratio: XXX)`
 
 
 ## MQ variables
@@ -398,7 +399,7 @@ $MQ-element__color--alt: (outside, 1024px, 600px);
     .module__element { background: red; }
 }
 
-@media screen and (max-width: 1024px) and (min-width: 601px) {
+@media (max-width: 1024px) and (min-width: 601px) {
     .module__element { background: blue; }
 }
 
@@ -406,7 +407,7 @@ $MQ-element__color--alt: (outside, 1024px, 600px);
     .module__element--green { background: green; }
 }
 
-@media screen and (max-width: 1024px) and (min-width: 601px) {
+@media (max-width: 1024px) and (min-width: 601px) {
     .module__element--green { background: grey; }
 }
 `````````````
@@ -424,10 +425,10 @@ Media Query `or` statements are only possible using an MQ variable.
 `````````````scss
 // SCSS
 
-$MQ-element__color--alt:
+$MQ-element__color--alt: (
     (inside, 1024px, 980px),
     (max, 600px)
-;
+);
 
 .element {
     background: red;
@@ -443,7 +444,7 @@ $MQ-element__color--alt:
 
 .element { background: red; }
 
-@media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
+@media (max-width: 1024px) and (min-width: 981px), (max-width: 600px) {
     .element { background: blue; }
 }
 `````````````
@@ -481,11 +482,11 @@ $MQ-element__color--alt: (
 `````````````css
 /* outputted css: */
 
-@media screen and (max-width: 1024px) and (min-width: 981px), screen and (max-width: 600px) {
+@media (max-width: 1024px) and (min-width: 981px), (max-width: 600px) {
     .element { background: blue; }
 }
 
-@media screen and (min-width: 1025px), screen and (max-width: 980px) and (min-width: 601px) {
+@media (min-width: 1025px), (max-width: 980px) and (min-width: 601px) {
     .element { background: red; }
 }
 `````````````
@@ -527,15 +528,15 @@ $MQ-mainHeading--red: ($MQ-sideBar__width--full plus $MQ-subHeading--hidden);
 
 .module__sideBar { width: 33.33%; }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
     .module__sideBar { width: 100%; }
 }
 
-@media screen and (max-width: 800px) and (min-width: 401px) {
+@media (max-width: 800px) and (min-width: 401px) {
     .module__subHeading { display: none; }
 }
 
-@media screen and (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
+@media (max-width: 600px) and (max-width: 800px) and (min-width: 401px) {
     .module__mainHeading { background: red; }
 }
 `````````````
@@ -611,19 +612,19 @@ $MQ-mainHeading--red: (
   width: 33.33%;
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .module__sideBar {
     width: 100%;
   }
 }
 
-@media screen and (max-width: 800px) and (min-width: 401px) {
+@media (max-width: 800px) and (min-width: 401px) {
   .module__subHeading {
     display: none;
   }
 }
 
-@media screen and (min-aspect-ratio: 2 / 1) and (max-width: 800px) and (min-width: 401px), screen and (max-width: 600px) {
+@media (min-aspect-ratio: 2 / 1) and (max-width: 800px) and (min-width: 401px), (max-width: 600px) {
   .module__mainHeading {
     background: red;
   }
@@ -650,7 +651,7 @@ $MQ-c: ($MQ-a plus $MQ-b plus (min-ratio, '2 / 1'));
 `````````````css
 /* outputted css: */
 
-@media screen and (max-width: 800px) and (min-width: 401px) and (max-width: 600px) and (min-aspect-ratio: 2 / 1) {
+@media (max-width: 800px) and (min-width: 401px) and (max-width: 600px) and (min-aspect-ratio: 2 / 1) {
   .module {
     background: red;
   }
@@ -748,7 +749,7 @@ $MQ-c: (
 `````````````css
 /* outputted css */
 
-@media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
+@media (max-width: 400px) and (max-width: 600px), (min-width: 801px) and (max-width: 600px) {
   .module {
     background: red;
   }
@@ -774,9 +775,125 @@ $MQ-b: (max, 600px);
 `````````````css
 /* outputted css */
 
-@media screen and (max-width: 400px) and (max-width: 600px), screen and (min-width: 801px) and (max-width: 600px) {
+@media (max-width: 400px) and (max-width: 600px), (min-width: 801px) and (max-width: 600px) {
   .module {
     background: red;
+  }
+}
+`````````````
+
+## Defining media types
+
+By default, mq-scss doesn't apply a media type to the media-queries it generates. As of v2.0.0, you can now declare custom media types in your media queries.
+
+Let's say that you are making a fancy print style sheet and only want to target this media query at printers. Here is how to go about it:
+
+`````````````scss
+// SCSS
+
+.element {
+    @include mq(min, 800px, 'print'){
+        color: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+
+@media print and (min-width: 801px) {
+  .element {
+    color: red;
+  }
+}
+`````````````
+
+Note that if you get an error that looks like this:
+
+``````
+Error: media query expression must begin with '('
+``````
+
+It is most likely because you have entered a media type that sass doesn't recognize. I want to avoid having to maintain a list of valid media type expressions so I don't intend on clarifying this error.
+
+Here are some more examples of how you can use the media type declaration:
+
+`````````````scss
+// SCSS
+
+.element {
+    @include mq(outside, 800px, 900px, 'only screen'){
+        color: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+
+@media only screen and (max-width: 800px), only screen and (min-width: 901px) {
+  .element {
+    color: red;
+  }
+}
+`````````````
+
+This one is a bit ridiculous but it at least shows the level of freedom you have when declaring media types:
+
+`````````````scss
+// SCSS
+
+$mq: (
+    (inside, 1000px, 1200px, 'screen'),
+    (max, 800px, 'only print') plus (min-ratio, '2 / 1')
+)
+
+.element {
+    @include mq($mq){
+        color: red;
+    }
+}
+`````````````
+`````````````css
+/* outputted css */
+
+@media screen and (max-width: 1200px) and (min-width: 1001px), only print and (max-width: 800px) and (min-aspect-ratio: 2/1) {
+  .element {
+    color: red;
+  }
+}
+`````````````
+
+An important thing to note about media types and `plus` statements. Only the media type that is defined at the start of the plus statement will be honoured. All other media types will be ignored.
+
+`````````````scss
+// SCSS
+
+// "screen" is ignored
+.media-ignored {
+    @include mq((max, 1000px) plus (min, 800px, 'screen')){
+        color: red;
+    }
+}
+
+// "screen" is honoured
+.media-added {
+    @include mq((max, 1000px, 'screen') plus (min, 800px)){
+        color: green;
+    }
+}
+
+`````````````
+`````````````css
+/* outputted css */
+
+@media (max-width: 1000px) and (min-width: 801px) {
+  .media-ignored {
+    color: red;
+  }
+}
+
+@media screen and (max-width: 1000px) and (min-width: 801px) {
+  .media-added {
+    color: green;
   }
 }
 `````````````
@@ -872,6 +989,13 @@ To create this css:
 ## Change log
 
 This change log only covers major changes to the mixin. Due to how npm works, things like edits to the readme file require releasing whole new versions of the module to publish the edits. Those sorts of releases are not listed here.
+
+### v2.0.0
+
+- Added the ability to define custom media types for individual mq statements.
+- **BREAKING CHANGE:** By default, no media type is added to the media query (previously it added "screen" as the media type to all media queries)
+    - If upgrading from v1.x you may want to add `"screen"` to the end of all your MQ statements to retain consistency with v1.x.
+    - eg. from `@include mq(max, 800px)` to `@include mq(max, 800px, 'screen')`
 
 ### v1.3.2
 
