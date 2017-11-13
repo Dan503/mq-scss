@@ -17,9 +17,15 @@ $mq-em-base: 16px !default;
 
 	$swap-values: false;
 
-	$isValidMediaType: $mediaType != false and type-of($mediaType) != 'number' and str-index($mediaType, '/') > -1;
+	$mediaTypeString: '' + $mediaType + '';
 
-	@if (not $isValidMediaType){
+	$invalidMediaType:
+		($mediaType != false) and (
+			(type-of($mediaType) == 'number') or
+			(str-index($mediaTypeString, '/') != null)
+		);
+
+	@if ($invalidMediaType == true){
 		@error '"'+$mediaType+'" is not a valid media type';
 	}
 
@@ -182,14 +188,14 @@ $mq-em-base: 16px !default;
 }
 
 @function calculateBasicQuery($mqSet, $isAndStatement: false){
-	$values: get_values($range);
+	$values: get_values($mqSet);
 
 	$range: map-get($values, range);
 	$width1: map-get($values, width1);
 	$width2: map-get($values, width2);
 	$media: map-get($values, media);
 
-	@if ((str-index($newRange, 'outside') != null) and $isAndStatement){
+	@if ((str-index($range, 'outside') != null) and $isAndStatement){
 		$error: 'All "outside" range types are incompatible with "plus" statements: (' + $mqSet + ')';
 		@error $error;
 	}
