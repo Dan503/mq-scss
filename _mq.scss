@@ -5,10 +5,10 @@ $mq-em-base: 16px !default;
 
 @import '_functions';
 
-@function mediaType($mediaType: false){
+@function mediaType($mediaType: false, $hasAnd: true){
 	$media: '';
 	@if ($mediaType){
-		$media: $mediaType + ' and ';
+		$media: if($hasAnd, $mediaType + ' and ', $mediaType);
 	}
 	@return $media;
 }
@@ -27,6 +27,10 @@ $mq-em-base: 16px !default;
 
 	@if ($invalidMediaType == true){
 		@error '"'+$mediaType+'" is not a valid media type';
+	}
+
+	@if ($range == null) {
+		@return $mediaType;
 	}
 
 	@if ($setting2 != null and type-of($setting2) == 'number'){
@@ -151,14 +155,36 @@ $mq-em-base: 16px !default;
 }
 
 @function isBasicQuery($range) {
-	@return type-of(nth($range,1)) == string;
+	$first_is_string: type-of(nth($range,1)) == string;
+	$longer_than_1: length($range) > 1;
+	$not_plus_statment: true;
+	@if ($longer_than_1) {
+		$not_plus_statment: nth($range,2) != 'plus';
+	}
+	@return $first_is_string and $longer_than_1 and $not_plus_statment;
 }
 
 @function get_values($mqSet){
+
+	@debug mqSet $mqSet length length($mqSet);
+
 	$range: nth($mqSet,1);
-	$width1: nth($mqSet,2);
+	$width1: null;
 	$width2: null;
 	$media: false;
+
+	@if (length($mqSet) == 1){
+		$first: nth($mqSet, 1);
+		@if (type-of($first) != 'string'){
+			@error '"#{$first}" is not a valid media type';
+		}
+		$range: null;
+		$media: $first;
+	}
+
+	@if (length($mqSet) > 1){
+		$width1: nth($mqSet, 2);
+	}
 
 	@if (length($mqSet) == 3){
 		$third: nth($mqSet, 3);
@@ -180,13 +206,34 @@ $mq-em-base: 16px !default;
 			$width2: $third;
 			$media: $fourth;
 		}
+
+		@if ($media == " and ") {
+			$media: '';
+		}
 	}
+
+	//specifically for things like this:
+	//(('screen') plus (min, 800px))
+	@if (nth($mqSet, 2) == 'plus') {
+		// $media: $range;
+		// $range: null;
+		// $width1: null;
+	}
+
+	@debug (
+		range: $range,
+		width1: $width1,
+		width2: $width2,
+		media: mediaType($media, $range != null),
+	);
+
+	@debug '';
 
 	@return (
 		range: $range,
 		width1: $width1,
 		width2: $width2,
-		media: mediaType($media),
+		media: mediaType($media, $range != null),
 	);
 }
 
@@ -202,6 +249,11 @@ $mq-em-base: 16px !default;
 	$width2: map-get($values, width2);
 	$media: map-get($values, media);
 
+	@if ($range == null) {
+		//if only a media type is given return nothing because it is added elsewhere
+		@return '';
+	}
+
 	@if ((str-index($range, 'outside') != null) and $isAndStatement){
 		$error: 'All "outside" range types are incompatible with "plus" statements: (' + $mqSet + ')';
 		@error $error;
@@ -213,12 +265,23 @@ $mq-em-base: 16px !default;
 @function joinQueries($range, $queryString: ()){
 
 	$isAndStatement: false;
+	$contains_media_only_statement: false;
 
-	@each $statement in $range {
-		@if ($statement == 'plus') {
-			$isAndStatement: true;
+	@if (length($range) > 1) {
+		@for $i from 1 through length($range) {
+			$statement: nth($range,$i);
+			@debug statement $statement;
+			@if ($statement == 'plus') {
+				$isAndStatement: true;
+				@if ($i == 2 and length(nth($range,1)) == 1) {
+					$contains_media_only_statement: true;
+				}
+			}
 		}
+	} @else if (type-of(nth($range,1)) == 'string') {
+		$contains_media_only_statement: true;
 	}
+
 
 	//Uses this functionality if using a single level MQ variable
 	//eg:
@@ -237,9 +300,11 @@ $mq-em-base: 16px !default;
 	//@include mq($MQ-example--multiple){}
 	} @else {
 
+		@debug contains_media_only_statement $contains_media_only_statement;
+
 		@each $mqSet in $range {
 
-			@if ($mqSet  != 'plus') {
+			@if ($mqSet != 'plus') {
 				@if (isBasicQuery($mqSet)){
 
 					$newQuery: calculateBasicQuery($mqSet, $isAndStatement);
@@ -249,7 +314,7 @@ $mq-em-base: 16px !default;
 					@if ($isAndStatement) {
 						@if ($queryString == ()){
 							$queryString: $media + $newQuery;
-						} @else {
+						} @else if ($newQuery != '') {
 							$queryString: $queryString + ' and ' + $newQuery;
 						}
 					} @else {
@@ -257,14 +322,23 @@ $mq-em-base: 16px !default;
 					}
 
 				} @else {
+					$is_media_only_statment: $contains_media_only_statement and type-of($mqSet) == 'string';
 					@if ($isAndStatement) {
-						$queryString: joinQueries($mqSet, $queryString);
+						@if ($is_media_only_statment) {
+							$queryString: $mqSet;
+						} @else {
+							$queryString: joinQueries($mqSet, $queryString);
+						}
 						@if (length($queryString) > 1){
 							$error: 'mq-scss does not support "or" statements inside "plus" statements: ' + $queryString;
 							@error $error;
 						}
 					} @else {
-						$queryString: append($queryString, joinQueries($mqSet), 'comma');
+						@if ($is_media_only_statment) {
+							$queryString: $mqSet;
+						} @else {
+							$queryString: append($queryString, joinQueries($mqSet), 'comma');
+						}
 					}
 				}
 			}
@@ -278,6 +352,8 @@ $mq-em-base: 16px !default;
 
 	@if (length($range) > 1) {
 
+		@debug '!!!!! FINAL OUTPUT:' (joinQueries($range));
+
 		@media #{joinQueries($range)} {
 			@content;
 		}
@@ -287,16 +363,30 @@ $mq-em-base: 16px !default;
 	//@include mq(inside, 1000px, 500px, 'screen');
 	} @else {
 		//standardises the values to prevent mediaType from getting confused with setting2
-		$values: get_values($range $setting1 $setting2 $mediaType);
+		$mediaOnly: $setting1 == null and $setting2 == null and $mediaType == false;
+		@debug mediaOnly $mediaOnly;
+		@debug range $range setting1 $setting1 setting2 $setting2 mediaType $mediaType;
+		$values: get_values(if($mediaOnly, $range, ($range $setting1 $setting2 $mediaType)));
 
 		$newRange: map-get($values, range);
 		$newWidth1: map-get($values, width1);
 		$newWidth2: map-get($values, width2);
 		$newMedia: map-get($values, media);
 
-		@media #{ $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2) } {
-			@content;
+		@if ($mediaOnly) {
+
+			@media #{ $newMedia } {
+				@content;
+			}
+
+		} @else {
+
+			@media #{ $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2) } {
+				@content;
+			}
+
 		}
+
 	}
 }
 
