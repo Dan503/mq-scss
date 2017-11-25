@@ -13,6 +13,15 @@ $mq-em-base: 16px !default;
 	@return $media;
 }
 
+@function isRatio($string){
+	@if (type-of($string) == 'string'){
+		@if (str-index($string, "/")){
+			@return true;
+		}
+	}
+	@return false;
+}
+
 @function calculateMQ($range, $setting1: null, $setting2: null, $mediaType: false){
 
 	$swap-values: false;
@@ -33,15 +42,17 @@ $mq-em-base: 16px !default;
 		@return $mediaType;
 	}
 
-	@if ($setting2 != null and type-of($setting2) == 'number'){
+	@if ($setting2 != null){
 
-		@if (type-of($setting1) == 'string'){
+		@if (isRatio($setting1)){
 
 			$setting1_1: get-start($setting1);
 			$setting1_2: get-end($setting1);
 
 			$setting2_1: get-start($setting2);
 			$setting2_2: get-end($setting2);
+
+			@debug (setting1_1: $setting1_1, setting1_2: $setting1_2, setting2_1: $setting2_1, setting2_2: $setting2_2);
 
 			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
 		} @else {
@@ -66,6 +77,8 @@ $mq-em-base: 16px !default;
 			@error '"orientation" range only accepts the values "landscape" and "portrait". Currently providing the value "#{$setting1}".';
 		}
 	}
+
+	@debug (range: $range, setting1: $setting1, setting2: $setting2, mediaType: $mediaType);
 
 	@if (str-index($range, 'inside') != null or str-index($range, 'outside') != null){
 		@if ($setting2 == 0) {
@@ -200,7 +213,7 @@ $mq-em-base: 16px !default;
 		$third: nth($mqSet, 3);
 		$fourth: nth($mqSet, 4);
 
-		@if ($fourth == false and type-of($third) == 'string'){
+		@if ($fourth == false and type-of($third) == 'string' and not isRatio($third)){
 			$media: $third;
 		} @else {
 			$width2: $third;
