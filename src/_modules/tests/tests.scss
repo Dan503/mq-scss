@@ -7,6 +7,11 @@ $green: #004700;
 	grid-gap: 20px;
 }
 
+@mixin isActive {
+	background: $green;
+	&::after { content: ' = true'; }
+}
+
 .test {
 	padding: 30px;
 	border: 2px solid #000;
@@ -16,100 +21,107 @@ $green: #004700;
 	justify-content: center;
 	margin-bottom: 20px;
 
-	&::before {
+	&::before, &::after {
 		color: #fff;
-		font-size: 20px;
 		white-space: pre;
+	}
+
+	&::before {
+		font-size: 20px;
 		//Use "\A" to create new lines
+	}
+
+	&::after {
+		content: ' = false';
 	}
 
 	&.-max {
 		&::before { content: '(max, #{$BP-medium})'; }
 		@include mq(max, $BP-medium) {
-			background: $green;
+			@include isActive;
 		}
 	}
 	&.-maxWidth {
 		&::before { content: '(max-width, #{$BP-medium})'; }
 		@include mq(max-width, $BP-medium) {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-min {
 		&::before { content: '(min, #{$BP-medium})'; }
 		@include mq(min, $BP-medium) {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-minWidth {
 		&::before { content: '(min-width, #{$BP-medium})'; }
 		@include mq(min-width, $BP-medium) {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-inside {
 		&::before { content: '(inside, #{$BP-medium}, #{$BP-medium})'; }
 		@include mq(inside, $BP-medium, $BP-small) {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-insideWidth {
 		&::before { content: '(inside-width, #{$BP-small}, #{$BP-medium})'; }
 		@include mq(inside-width, $BP-small, $BP-medium) {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-outside {
 		&::before { content: '(outside, #{$BP-medium}, #{$BP-small})'; }
 		@include mq(outside, $BP-medium, $BP-small) {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-outsideWidth {
 		&::before { content: '(outside-width, #{$BP-small}, #{$BP-medium})'; }
 		@include mq(outside-width, $BP-small, $BP-medium) {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-ratio {
 		&::before { content: '(ratio, "2 / 1")'; }
 		@include mq(ratio, "2 / 1") {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-minRatio {
 		&::before { content: '(min-ratio, "2 / 1")'; }
 		@include mq(min-ratio, "2 / 1") {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-maxRatio {
 		&::before { content: '(max-ratio, "2 / 1")'; }
 		@include mq(max-ratio, "2 / 1") {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-insideRatio {
 		&::before { content: '(inside-ratio, "2 / 1", "1 / 1")'; }
 		@include mq(inside-ratio, "2 / 1", "1 / 1") {
-			background: $green;
+			@include isActive;
 		}
 	}
 
 	&.-outsideRatio {
 		&::before { content: '(outside-ratio, "1 / 1", "2 / 1")'; }
 		@include mq(outside-ratio, "1 / 1", "2 / 1") {
-			background: $green;
+			@include isActive;
 		}
 	}
 
