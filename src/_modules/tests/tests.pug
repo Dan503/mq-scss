@@ -8,6 +8,11 @@
 
 h2 Tests
 
+//- ======
+//- WIDTH
+//- ======
+h3 Width
+
 .tests
   //-max
   +demo({
@@ -96,6 +101,61 @@ h2 Tests
   background: $green;
 }`,
   })
+
+  //- ======
+  //- HEIGHT
+  //- ======
+  h3 Height
+
+  //-maxHeight
+  +demo({
+    html: `
+.test.-maxHeight
+`,
+    scss: `
+@include mq(max-height, $BP-medium) {
+  background: $green;
+}`,
+  })
+
+  //-minHeight
+  +demo({
+    html: `
+.test.-minHeight
+`,
+    scss: `
+@include mq(min-height, $BP-medium) {
+  background: $green;
+}`,
+  })
+
+  //-insideHeight
+  +demo({
+    html: `
+.test.-insideHeight
+`,
+    scss: `
+@include mq(inside-height, $BP-small, $BP-medium) {
+  background: $green;
+}`,
+  })
+
+  //-outsideHeight
+  +demo({
+    html: `
+.test.-outsideHeight
+`,
+    scss: `
+@include mq(outside-height, $BP-small, $BP-medium) {
+  background: $green;
+}`,
+  })
+
+
+  //- =====
+  //- RATIO
+  //- =====
+  h3 Ratio
 
   //-ratio
   +demo({

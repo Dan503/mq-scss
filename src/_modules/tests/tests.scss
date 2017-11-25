@@ -21,6 +21,10 @@ $green: #004700;
 	justify-content: center;
 	margin-bottom: 20px;
 
+	h3 {
+		margin-bottom: 0;
+	}
+
 	&::before, &::after {
 		color: #fff;
 		white-space: pre;
@@ -86,6 +90,35 @@ $green: #004700;
 	&.-outsideWidth {
 		&::before { content: '(outside-width, #{$BP-small}, #{$BP-medium})'; }
 		@include mq(outside-width, $BP-small, $BP-medium) {
+			@include isActive;
+		}
+	}
+
+	&.-maxHeight {
+		&::before { content: '(max-height, #{$BP-medium})'; }
+		@include mq(max-height, $BP-medium) {
+			@include isActive;
+		}
+	}
+
+	&.-minHeight {
+		&::before { content: '(min-height, #{$BP-medium})'; }
+		@include mq(min-height, $BP-medium) {
+			@include isActive;
+		}
+	}
+
+
+	&.-insideHeight {
+		&::before { content: '(inside-height, #{$BP-small}, #{$BP-medium})'; }
+		@include mq(inside-height, $BP-small, $BP-medium) {
+			@include isActive;
+		}
+	}
+
+	&.-outsideHeight {
+		&::before { content: '(outside-height, #{$BP-small}, #{$BP-medium})'; }
+		@include mq(outside-height, $BP-small, $BP-medium) {
 			@include isActive;
 		}
 	}
