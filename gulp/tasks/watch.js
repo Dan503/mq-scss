@@ -17,6 +17,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
     if (!args.production) {
       // Styles
       gulp.watch([
+        path.join('*.{scss,sass}'),
         path.join(dirs.source, dirs.styles, '**/*.{scss,sass}'),
         path.join(dirs.source, dirs.modules, '**/*.{scss,sass}')
       ])
