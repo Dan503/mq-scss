@@ -39,121 +39,236 @@ $green: #004700;
 		content: ' = false';
 	}
 
+	// =====
+	// WIDTH
+	// =====
+
 	&.-max {
-		&::before { content: '(max, #{$BP-medium})'; }
+		&::before { content: 'mq(max, #{$BP-medium})'; }
 		@include mq(max, $BP-medium) {
 			@include isActive;
 		}
 	}
 	&.-maxWidth {
-		&::before { content: '(max-width, #{$BP-medium})'; }
+		&::before { content: 'mq(max-width, #{$BP-medium})'; }
 		@include mq(max-width, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-maxVar {
+		$MQ-maxVar: (max, $BP-medium);
+		&::before { content: 'mq($MQ-maxVar)'; }
+		@include mq($MQ-maxVar) {
+			@include isActive;
+		}
+	}
+
 	&.-min {
-		&::before { content: '(min, #{$BP-medium})'; }
+		&::before { content: 'mq(min, #{$BP-medium})'; }
 		@include mq(min, $BP-medium) {
 			@include isActive;
 		}
 	}
 
 	&.-minWidth {
-		&::before { content: '(min-width, #{$BP-medium})'; }
+		&::before { content: 'mq(min-width, #{$BP-medium})'; }
 		@include mq(min-width, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-minVar {
+		$MQ-minVar: (min, $BP-medium);
+		&::before { content: 'mq($MQ-minVar)'; }
+		@include mq($MQ-minVar) {
+			@include isActive;
+		}
+	}
+
 	&.-inside {
-		&::before { content: '(inside, #{$BP-medium}, #{$BP-medium})'; }
+		&::before { content: 'mq(inside, #{$BP-medium}, #{$BP-medium})'; }
 		@include mq(inside, $BP-medium, $BP-small) {
 			@include isActive;
 		}
 	}
 
 	&.-insideWidth {
-		&::before { content: '(inside-width, #{$BP-small}, #{$BP-medium})'; }
+		&::before { content: 'mq(inside-width, #{$BP-small}, #{$BP-medium})'; }
 		@include mq(inside-width, $BP-small, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-insideVar {
+		$MQ-insideVar: (inside, $BP-medium, $BP-small);
+		&::before { content: 'mq($MQ-insideVar)'; }
+		@include mq($MQ-insideVar) {
+			@include isActive;
+		}
+	}
+
 	&.-outside {
-		&::before { content: '(outside, #{$BP-medium}, #{$BP-small})'; }
+		&::before { content: 'mq(outside, #{$BP-medium}, #{$BP-small})'; }
 		@include mq(outside, $BP-medium, $BP-small) {
 			@include isActive;
 		}
 	}
 
 	&.-outsideWidth {
-		&::before { content: '(outside-width, #{$BP-small}, #{$BP-medium})'; }
+		&::before { content: 'mq(outside-width, #{$BP-small}, #{$BP-medium})'; }
 		@include mq(outside-width, $BP-small, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-outsideVar {
+		$MQ-outsideVar: (outside, $BP-medium, $BP-small);
+		&::before { content: 'mq($MQ-outsideVar)'; }
+		@include mq($MQ-outsideVar) {
+			@include isActive;
+		}
+	}
+
+	// ======
+	// HEIGHT
+	// ======
+
 	&.-maxHeight {
-		&::before { content: '(max-height, #{$BP-medium})'; }
+		&::before { content: 'mq(max-height, #{$BP-medium})'; }
 		@include mq(max-height, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-maxHeightVar {
+		$MQ-maxHeightVar: (max-height, $BP-medium);
+		&::before { content: 'mq($MQ-maxHeightVar)'; }
+		@include mq($MQ-maxHeightVar) {
+			@include isActive;
+		}
+	}
+
 	&.-minHeight {
-		&::before { content: '(min-height, #{$BP-medium})'; }
+		&::before { content: 'mq(min-height, #{$BP-medium})'; }
 		@include mq(min-height, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-minHeightVar {
+		$MQ-minHeightVar: (min-height, $BP-medium);
+		&::before { content: 'mq($MQ-minHeightVar)'; }
+		@include mq($MQ-minHeightVar) {
+			@include isActive;
+		}
+	}
 
 	&.-insideHeight {
-		&::before { content: '(inside-height, #{$BP-small}, #{$BP-medium})'; }
+		&::before { content: 'mq(inside-height, #{$BP-small}, #{$BP-medium})'; }
 		@include mq(inside-height, $BP-small, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-insideHeightVar {
+		$MQ-insideHeightVar: (inside-height, $BP-small, $BP-medium);
+		&::before { content: 'mq($MQ-insideHeightVar)'; }
+		@include mq($MQ-insideHeightVar) {
+			@include isActive;
+		}
+	}
+
 	&.-outsideHeight {
-		&::before { content: '(outside-height, #{$BP-small}, #{$BP-medium})'; }
+		&::before { content: 'mq(outside-height, #{$BP-small}, #{$BP-medium})'; }
 		@include mq(outside-height, $BP-small, $BP-medium) {
 			@include isActive;
 		}
 	}
 
+	&.-outsideHeightVar {
+		$MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
+		&::before { content: 'mq($MQ-outsideHeightVar)'; }
+		@include mq($MQ-outsideHeightVar) {
+			@include isActive;
+		}
+	}
+
+	// ======
+	// RATIO
+	// ======
+
 	&.-ratio {
-		&::before { content: '(ratio, "2 / 1")'; }
+		&::before { content: 'mq(ratio, "2 / 1")'; }
 		@include mq(ratio, "2 / 1") {
 			@include isActive;
 		}
 	}
 
+	&.-ratioVar {
+		$MQ-ratioVar: (ratio, "2 / 1");
+		&::before { content: 'mq($MQ-ratioVar)'; }
+		@include mq($MQ-ratioVar) {
+			@include isActive;
+		}
+	}
+
 	&.-minRatio {
-		&::before { content: '(min-ratio, "2 / 1")'; }
+		&::before { content: 'mq(min-ratio, "2 / 1")'; }
 		@include mq(min-ratio, "2 / 1") {
 			@include isActive;
 		}
 	}
 
+	&.-minRatioVar {
+		$MQ-minRatioVar: (min-ratio, "2 / 1");
+		&::before { content: 'mq($MQ-minRatioVar)'; }
+		@include mq($MQ-minRatioVar) {
+			@include isActive;
+		}
+	}
+
 	&.-maxRatio {
-		&::before { content: '(max-ratio, "2 / 1")'; }
+		&::before { content: 'mq(max-ratio, "2 / 1")'; }
 		@include mq(max-ratio, "2 / 1") {
 			@include isActive;
 		}
 	}
 
+	&.-maxRatioVar {
+		$MQ-maxRatioVar: (max-ratio, "2 / 1");
+		&::before { content: 'mq($MQ-minRatioVar)'; }
+		@include mq($MQ-maxRatioVar) {
+			@include isActive;
+		}
+	}
+
 	&.-insideRatio {
-		&::before { content: '(inside-ratio, "2 / 1", "1 / 1")'; }
+		&::before { content: 'mq(inside-ratio, "2 / 1", "1 / 1")'; }
 		@include mq(inside-ratio, "2 / 1", "1 / 1") {
 			@include isActive;
 		}
 	}
 
+	&.-insideRatioVar {
+		$MQ-insideRatioVar: (inside-ratio, "2 / 1", "1 / 1");
+		&::before { content: 'mq($MQ-minRatioVar)'; }
+		@include mq($MQ-insideRatioVar) {
+			@include isActive;
+		}
+	}
+
 	&.-outsideRatio {
-		&::before { content: '(outside-ratio, "1 / 1", "2 / 1")'; }
+		&::before { content: 'mq(outside-ratio, "1 / 1", "2 / 1")'; }
 		@include mq(outside-ratio, "1 / 1", "2 / 1") {
+			@include isActive;
+		}
+	}
+
+	&.-outsideRatioVar {
+		$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
+		&::before { content: 'mq($MQ-minRatioVar)'; }
+		@include mq($MQ-outsideRatioVar) {
 			@include isActive;
 		}
 	}

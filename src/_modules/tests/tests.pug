@@ -36,6 +36,18 @@ h3 Width
 }`,
   })
 
+  //-maxVar
+  +demo({
+    html: `
+.test.-maxVar
+`,
+    scss: `
+$MQ-maxVar: (max, $BP-medium);
+@include mq($MQ-maxVar) {
+  background: $green;
+}`,
+  })
+
   //-min
   +demo({
     html: `
@@ -54,6 +66,18 @@ h3 Width
 `,
     scss: `
 @include mq(min-width, $BP-medium) {
+  background: $green;
+}`,
+  })
+
+  //-minVar
+  +demo({
+    html: `
+.test.-minVar
+`,
+    scss: `
+$MQ-minVar: (min, $BP-medium);
+@include mq($MQ-minVar) {
   background: $green;
 }`,
   })
@@ -80,6 +104,18 @@ h3 Width
 }`,
   })
 
+  //-insideVar
+  +demo({
+    html: `
+.test.-insideVar
+`,
+    scss: `
+$MQ-insideVar: (inside, $BP-medium, $BP-small);
+@include mq($MQ-insideVar) {
+  background: $green;
+}`,
+  })
+
   //-outside
   +demo({
     html: `
@@ -102,6 +138,18 @@ h3 Width
 }`,
   })
 
+  //-outsideVar
+  +demo({
+    html: `
+.test.-outsideVar
+`,
+    scss: `
+$MQ-outsideVar: (outside, $BP-medium, $BP-small);
+@include mq($MQ-outsideVar) {
+  background: $green;
+}`,
+  })
+
   //- ======
   //- HEIGHT
   //- ======
@@ -118,6 +166,18 @@ h3 Width
 }`,
   })
 
+  //-maxHeightVar
+  +demo({
+    html: `
+.test.-maxHeightVar
+`,
+    scss: `
+$MQ-maxHeightVar: (max-height, $BP-medium);
+@include mq($MQ-maxHeightVar) {
+  background: $green;
+}`,
+  })
+
   //-minHeight
   +demo({
     html: `
@@ -125,6 +185,18 @@ h3 Width
 `,
     scss: `
 @include mq(min-height, $BP-medium) {
+  background: $green;
+}`,
+  })
+
+  //-minHeightVar
+  +demo({
+    html: `
+.test.-minHeightVar
+`,
+    scss: `
+$MQ-minHeightVar: (min-height, $BP-medium);
+@include mq($MQ-minHeightVar) {
   background: $green;
 }`,
   })
@@ -140,6 +212,18 @@ h3 Width
 }`,
   })
 
+  //-insideHeightVar
+  +demo({
+    html: `
+.test.-insideHeightVar
+`,
+    scss: `
+$MQ-insideHeightVar: (inside-height, $BP-small, $BP-medium);
+@include mq($MQ-insideHeightVar) {
+  background: $green;
+}`,
+  })
+
   //-outsideHeight
   +demo({
     html: `
@@ -147,6 +231,18 @@ h3 Width
 `,
     scss: `
 @include mq(outside-height, $BP-small, $BP-medium) {
+  background: $green;
+}`,
+  })
+
+  //-outsideHeightVar
+  +demo({
+    html: `
+.test.-outsideHeightVar
+`,
+    scss: `
+$MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
+@include mq($MQ-outsideHeightVar) {
   background: $green;
 }`,
   })
@@ -163,7 +259,19 @@ h3 Width
 .test.-ratio
 `,
     scss: `
-@include mq(ratio, $BP-small, $BP-medium) {
+@include mq(ratio, "2 / 1") {
+  background: $green;
+}`,
+  })
+
+  //-ratioVar
+  +demo({
+    html: `
+.test.-ratioVar
+`,
+    scss: `
+$MQ-ratioVar: (ratio, "2 / 1");
+@include mq($MQ-ratioVar) {
   background: $green;
 }`,
   })
@@ -174,7 +282,19 @@ h3 Width
 .test.-minRatio
 `,
     scss: `
-@include mq(min-ratio, $BP-small, $BP-medium) {
+@include mq(min-ratio, "2 / 1") {
+  background: $green;
+}`,
+  })
+
+  //-minRatioVar
+  +demo({
+    html: `
+.test.-minRatioVar
+`,
+    scss: `
+$MQ-minRatioVar: (min-ratio, "2 / 1");
+@include mq($MQ-minRatioVar) {
   background: $green;
 }`,
   })
@@ -185,7 +305,19 @@ h3 Width
 .test.-maxRatio
 `,
     scss: `
-@include mq(max-ratio, $BP-small, $BP-medium) {
+@include mq(max-ratio, "2 / 1") {
+  background: $green;
+}`,
+  })
+
+  //-maxRatioVar
+  +demo({
+    html: `
+.test.-maxRatioVar
+`,
+    scss: `
+$MQ-maxRatioVar: (max-ratio, "2 / 1");
+@include mq($MQ-maxRatioVar) {
   background: $green;
 }`,
   })
@@ -196,7 +328,19 @@ h3 Width
 .test.-insideRatio
 `,
     scss: `
-@include mq(inside-ratio, $BP-small, $BP-medium) {
+@include mq(inside-ratio, "2 / 1", "1 / 1") {
+  background: $green;
+}`,
+  })
+
+  //-insideRatioVar
+  +demo({
+    html: `
+.test.-insideRatioVar
+`,
+    scss: `
+$MQ-insideRatioVar: (inside-ratio, "2 / 1", "1 / 1");
+@include mq($MQ-insideRatioVar) {
   background: $green;
 }`,
   })
@@ -207,7 +351,19 @@ h3 Width
 .test.-outsideRatio
 `,
     scss: `
-@include mq(outside-ratio, $BP-small, $BP-medium) {
+@include mq(outside-ratio, "2 / 1", "1 / 1") {
+  background: $green;
+}`,
+  })
+
+  //-outsideRatioVar
+  +demo({
+    html: `
+.test.-outsideRatioVar
+`,
+    scss: `
+$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
+@include mq($MQ-outsideRatioVar) {
   background: $green;
 }`,
   })
