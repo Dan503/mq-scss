@@ -1,5 +1,7 @@
 .demo {
-	margin: 25px 0 35px;
+	padding: 5px;
+	border: 2px solid #000;
+
 	&__segment {
 		position: relative;
 		margin-top: 35px;
@@ -31,7 +33,6 @@
 		}
 	}
 	&__result {
-    margin-top: 65px;
 		&:before {
 			content: 'Example';
 

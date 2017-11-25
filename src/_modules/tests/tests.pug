@@ -8,158 +8,146 @@
 
 h2 Tests
 
-//-max
-+demo({
-  html: `
+.tests
+  //-max
+  +demo({
+    html: `
 .test.-max
 `,
-  scss: `
+    scss: `
 @include mq(max, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-maxWidth
-+demo({
-  html: `
+  //-maxWidth
+  +demo({
+    html: `
 .test.-maxWidth
 `,
-  scss: `
+    scss: `
 @include mq(max-width, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-min
-+demo({
-  html: `
+  //-min
+  +demo({
+    html: `
 .test.-min
 `,
-  scss: `
+    scss: `
 @include mq(min, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-minWidth
-+demo({
-  html: `
+  //-minWidth
+  +demo({
+    html: `
 .test.-minWidth
 `,
-  scss: `
+    scss: `
 @include mq(min-width, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-inside
-+demo({
-  html: `
+  //-inside
+  +demo({
+    html: `
 .test.-inside
 `,
-  scss: `
+    scss: `
 @include mq(inside, $BP-medium, $BP-small) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-insideWidth
-+demo({
-  html: `
+  //-insideWidth
+  +demo({
+    html: `
 .test.-insideWidth
 `,
-  scss: `
+    scss: `
 @include mq(inside-width, $BP-small, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-outside
-+demo({
-  html: `
+  //-outside
+  +demo({
+    html: `
 .test.-outside
 `,
-  scss: `
+    scss: `
 @include mq(outside, $BP-medium, $BP-small) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-outsideWidth
-+demo({
-  html: `
+  //-outsideWidth
+  +demo({
+    html: `
 .test.-outsideWidth
 `,
-  scss: `
+    scss: `
 @include mq(outside-width, $BP-small, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-ratio
-+demo({
-  html: `
+  //-ratio
+  +demo({
+    html: `
 .test.-ratio
 `,
-  scss: `
+    scss: `
 @include mq(ratio, $BP-small, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-minRatio
-+demo({
-  html: `
+  //-minRatio
+  +demo({
+    html: `
 .test.-minRatio
 `,
-  scss: `
+    scss: `
 @include mq(min-ratio, $BP-small, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-maxRatio
-+demo({
-  html: `
+  //-maxRatio
+  +demo({
+    html: `
 .test.-maxRatio
 `,
-  scss: `
+    scss: `
 @include mq(max-ratio, $BP-small, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-insideRatio
-+demo({
-  html: `
+  //-insideRatio
+  +demo({
+    html: `
 .test.-insideRatio
 `,
-  scss: `
+    scss: `
 @include mq(inside-ratio, $BP-small, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
 
-//-outsideRatio
-+demo({
-  html: `
+  //-outsideRatio
+  +demo({
+    html: `
 .test.-outsideRatio
 `,
-  scss: `
+    scss: `
 @include mq(outside-ratio, $BP-small, $BP-medium) {
   background: $green;
-}
-`,
-})
+}`,
+  })
