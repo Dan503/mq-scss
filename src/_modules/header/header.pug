@@ -1,0 +1,19 @@
+
+mixin header(spec)
+  -
+    var defaultTo = require('default-to').default;
+    spec = defaultTo(spec, {
+      classes : '',
+      attr: {},
+      elem: 'div',
+      __width: {
+        classes: '',
+        attr: {},
+        elem: 'div'
+      }
+    });
+
+  header.header(class=spec.classes)&attributes(spec.attr)
+    h1 mq-scss testing environment
+    p.version= 'v'+pkg.version
+    pre.no-lines: code(style='text-align: center;') npm install mq-scss --save

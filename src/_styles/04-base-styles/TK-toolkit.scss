@@ -1,0 +1,42 @@
+
+%TK-noDots { list-style: none; margin: 0; padding: 0; }
+
+//these are the same styles as drupal
+%TK-visHid {position:absolute !important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);word-wrap:normal;}
+
+.TK {
+	//remove dot points from a list
+	&-noDots { @extend %TK-noDots; }
+
+	//HIDE the element if JS is DISABLED,
+	//SHOW the element if JS is ENABLED
+	&-noJsHide {
+		.no-js & { display: none; }
+	}
+
+	&-jsHide {
+		.js & { display: none!important; }
+		.no-js & { display: block;  }
+	}
+
+	//A link that only appears when the user focuses on it
+	&-skipLink {
+		border:0;
+		clip:rect(0 0 0 0);
+		width:0;
+		height:0;
+		padding:0;
+		overflow:hidden;
+		position:absolute;
+		opacity: 0;
+
+		&:active, &:focus {
+			clip: auto;
+			width:auto;
+			height:auto;
+			position: static;
+			opacity: 1;
+		}
+	}
+
+}

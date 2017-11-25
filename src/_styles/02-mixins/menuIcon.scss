@@ -1,0 +1,91 @@
+///*******************\
+//	PURE CSS MENU ICON
+//*******************/
+@mixin menuIcon($color: #000, $width: 20px, $thickness: 5px, $gutter: 2px, $radius: $thickness, $posType: relative, $margin: ($thickness + $gutter) auto, $animatable: true){
+
+	@if (type-of($color) == 'color'){
+		$distance: $thickness + $gutter;
+
+		width: $width;
+		position: $posType;
+		margin: $margin;
+		display: block;
+
+		&, &:before, &:after {
+			height: $thickness;
+			background-color: $color;
+			@if($animatable){
+				@include MG-animate;
+			}
+			@if($radius > 0){
+				border-radius: $radius;
+			}
+		}
+
+		@include MG-before-after {
+			width: 100%;
+			position: absolute;
+			left: 0;
+			right: 0;
+		}
+		&:before {
+			bottom: $distance;
+		}
+		&:after {
+			top: $distance;
+		}
+
+//basically if $color isn't a color, it assumes you want the icon to look like a cross instead of a menu icon
+	} @else if ($color == 'cross') {
+		background-color: transparent;
+		&:before {
+			transform: rotate(45deg);
+			bottom: 0;
+			margin: 0;
+		}
+		&:after {
+			transform: rotate(-45deg);
+			top: 0;
+			margin: 0;
+		}
+	} @else if ($color == 'plus') {
+		background-color: transparent;
+		&:before, &:after {
+			margin: 0;
+			right: auto;
+		}
+		&:before {
+			transform: rotate(90deg);
+			bottom: 0;
+			left: 0;
+		}
+		&:after {
+			transform: rotate(0deg);
+			top: 0;
+			left: 0;
+		}
+	} @else {
+		@error "The first argument in M-menuIcon must be either a color or the word 'cross' or 'plus'";
+	}
+}
+
+//use to alter the size of a menu icon with only the essential styles
+@mixin menuIcon-size ($width: 20px, $thickness: 5px, $gutter: 2px, $margin: ($thickness + $gutter) auto){
+
+		$distance: $thickness + $gutter;
+
+		width: $width;
+		margin: $margin;
+
+		&, &:before, &:after {
+			height: $thickness;
+			border-radius: $thickness;
+		}
+
+		&:before {
+			bottom: $distance;
+		}
+		&:after {
+			top: $distance;
+		}
+}

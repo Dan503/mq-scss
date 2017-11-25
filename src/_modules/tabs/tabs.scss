@@ -1,0 +1,18 @@
+
+.tabs {
+	padding-top: 1px;
+	&__link {
+		text-align: center;
+		text-transform: capitalize;
+	}
+
+	&__content {
+		.js & {
+			display: none;
+		}
+	}
+
+	.no-flexbox & {
+		width: 780px;
+	}
+}

@@ -1,0 +1,69 @@
+///*================================================*\
+//	COLORS
+//----------------------------------------------------
+//	All color variables are listed here
+//*================================================*/
+
+//CB- for "Color-Base-"
+
+///////////////////////////
+// Name color variables //
+/////////////////////////
+
+//changes the intensity of color change on hover
+$hoverModifier: 60%;
+$hoverModifier--large: 80%;
+$hoverModifier--small: 20%;
+
+//green
+$CB-green-light: #b9d48b;
+$CB-green-bright: #00C000;
+$CB-green-dark: #08705e;//quaternary
+	//green hover states
+	$CB-green-light--hover: shade($CB-green-light, 20%);
+	$CB-green-dark--hover: shade($CB-green-dark, $hoverModifier);
+
+//aqua
+$CB-aqua-light: #7FD6CD;//tertiary
+//$CB-aqua-mid: #2590C0;
+//$CB-aqua-dim: #1E4E91;
+//$CB-aqua-dimmer: #15354A;
+//$CB-aqua-dark: #0E283B;
+	//aqua hover states
+	$CB-aqua-light--hover: tint($CB-aqua-light, $hoverModifier);
+	//$CB-aqua-mid--hover: tint($CB-aqua-mid, $hoverModifier);
+	//$CB-aqua-dim--hover: tint($CB-aqua-dim, $hoverModifier);
+	//$CB-aqua-dark--hover: shade($CB-aqua-dark, $hoverModifier);
+
+//blue
+$CB-blue-light: #0CCBEE;
+	$CB-blue-light--hover: tint($CB-blue-light, $hoverModifier);
+
+//red
+//$CB-red-pale: #FFD1D1;
+//$CB-red-light: #D76860;
+$CB-red-mid: #CF1730; //primary
+$CB-red-dim: #B11235;
+$CB-red-dark: #5B1223;
+	//red hover states
+//	$CB-red-pale--hover: tint($CB-red-pale, $hoverModifier);
+//	$CB-red-light--hover: tint($CB-red-light, $hoverModifier);
+	$CB-red-mid--hover: $CB-red-dark;
+	$CB-red-dim--hover: shade($CB-red-dim, $hoverModifier);
+	$CB-red-dark--hover: shade($CB-red-dark, $hoverModifier);
+
+//grey
+//$CB-grey-paler: #FAFAFA;
+$CB-grey-pale: #F0F0F0;
+$CB-grey-light: #cbcbce;
+$CB-grey-mid: #898989;
+$CB-grey-dim: #555555;
+$CB-grey-dark: #231f20;
+$CB-grey-x-dark: #000;//secondary
+	//grey hover states
+	$CB-grey-pale--hover: shade($CB-grey-pale, $hoverModifier);
+	$CB-grey-light--hover: shade($CB-grey-light, $hoverModifier);
+	$CB-grey-mid--hover: $CB-grey-x-dark;
+	$CB-grey-dim--hover: tint($CB-grey-dim, $hoverModifier);
+	$CB-grey-dark--hover: tint($CB-grey-dark, $hoverModifier);
+	$CB-grey-x-dark--hover: tint($CB-grey-x-dark, $hoverModifier);

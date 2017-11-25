@@ -1,0 +1,16 @@
+// Add percentage of white to a color
+//https://gist.github.com/benfrain/7545629
+@function tint($color, $percent){
+	@return mix(white, $color, $percent);
+}
+
+// Add percentage of black to a color
+//https://gist.github.com/benfrain/7545629
+@function shade($color, $percent){
+	@return mix(black, $color, $percent);
+}
+
+//Generate a grey color based on a percentage of black
+@function grey($percentage){
+	@return mix(#000, #fff, $percentage);
+}

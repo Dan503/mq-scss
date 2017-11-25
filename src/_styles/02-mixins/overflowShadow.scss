@@ -1,0 +1,43 @@
+//adds a shadow to items that have overflow:auto
+@mixin overflowShadow ($direction: h, $bg: #fff, $shadow: grey(25%), $shadowSize: 20px, $baseSize: 10 * $shadowSize){
+
+	$start: to right;
+	$end: to left;
+
+	$sizeBase: $baseSize 100%;
+	$sizeShadow: $shadowSize 100%;
+
+	$posStart: 0 0;
+	$posEnd: 100% 0;
+
+	$axis : x;
+
+	@if ($direction == 'v'){
+		$start: top;
+		$end: bottom;
+
+		$sizeBase: 100% $baseSize;
+		$sizeShadow: 100% $shadowSize;
+
+		$posEnd: 0 100%;
+
+		$axis : y;
+	} @else if ($direction != 'h'){
+		@error "direction (#{$direction}) must be either 'h' (horizontal) or 'v' (vertical)";
+	}
+
+	overflow-#{$axis}: auto;
+
+	//adds the shadow to the table
+	background-image:
+		linear-gradient($start, $bg, rgba($bg, 0)),
+		linear-gradient($end, $bg, rgba($bg, 0)),
+		linear-gradient($start, $shadow, rgba($shadow, 0)),
+		linear-gradient($end, $shadow, rgba($shadow, 0));
+
+	background-position: $posStart, $posEnd, $posStart, $posEnd;
+	background-repeat: no-repeat;
+	background-color: $bg;
+	background-size: $sizeBase, $sizeBase, $sizeShadow, $sizeShadow;
+	background-attachment: local, local, scroll, scroll;
+}

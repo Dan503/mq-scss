@@ -1,0 +1,43 @@
+.test {
+	padding: 30px;
+	border: 2px solid #000;
+	background: #6D0808;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 20px;
+
+	&::before {
+		color: #fff;
+		font-size: 20px;
+		white-space: pre;
+		//Use "\A" to create new lines
+	}
+
+	&.-max {
+		&::before { content: '(max, #{$BP-medium})'; }
+		@include mq(max, $BP-medium) {
+			background: green;
+		}
+	}
+}
+
+.breakpoints {
+	padding: 20px;
+	border: 2px solid #000;
+
+	&__size {
+		@each $name, $value in $breakpoints {
+			&.-#{$name} {
+				&::before {
+					content: 'BP-#{$name}: ';
+				}
+				&::after {
+					content: '#{$value}';
+					font-weight: bold;
+					font-size: 1.2em;
+				}
+			}
+		}
+	}
+}

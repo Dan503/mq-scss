@@ -1,0 +1,30 @@
+///*================================================*\
+//	BREAK POINTS
+//----------------------------------------------------
+//	Defines the points at which the page design
+//	can snap and drastically change it's layout
+//	these values are global and can be used in
+//	all modules.
+//*================================================*/
+
+$BP-minimum: 320px;
+
+$BP-small: 600px;
+$BP-medium: 800px;
+$BP-large: 1000px;
+
+$BP-page: 1200px;
+
+$breakpoints: (
+	minimum: $BP-minimum,
+	small: $BP-small,
+	medium: $BP-medium,
+	large: $BP-large,
+	page: $BP-page,
+)
+
+:root {
+	@each $name, $value in $breakpoints {
+		--BP-#{$name}: $value;
+	}
+}

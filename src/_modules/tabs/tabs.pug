@@ -1,0 +1,32 @@
+
+mixin tabs__content(spec)
+	-
+		spec = defaultTo(spec, {
+			classes : '',
+			attr: {},
+		});
+
+	.tabs__content(class=spec.classes)&attributes(spec.attr).JS-tabs__content
+		if block
+			block
+		else
+			p This is an example paragraph for the tab module
+
+mixin tabs(spec)
+	-
+		spec = defaultTo(spec, {
+			classes : '',
+			attr: {},
+			links: []
+		});
+
+	.tabs(class=spec.classes)&attributes(spec.attr).JS-tabs
+		.tabs__links.grid.grid--hasInners.grid--noMQs.grid--gutter-tabs.grid--outerGutters-bottom
+			each link, i in spec.links
+				.grid__cell
+					a.tabs__link.grid__inner.btn(href='#').JS-tabs__trigger= link
+		.tabs__contentWrap
+			if block
+				block
+			else
+				p This is an example paragraph for the tabs module

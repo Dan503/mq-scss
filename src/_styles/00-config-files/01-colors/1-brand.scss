@@ -1,0 +1,90 @@
+//changes the intensity of color change on hover
+$V-hoverModifier: 60%;
+
+//lists the primary brand colors of the site.
+//Greys do not belong in this list unless it is a MAJOR brand color
+$brand: (
+	//*Main color*/
+	color: $CB-red-mid,
+
+	//*Most likely hover state color for the main color*/
+	hover: $CB-red-mid--hover,
+
+	/*if set as a background color, the text inside will most likely be this color*/
+	text: #fff,
+),
+
+//*Second most prominent brand color etc. */
+(
+	color: $CB-green-light,
+	hover: $CB-green-light--hover,
+	text: #000,
+),
+(
+	color: $CB-aqua-light,
+	hover: $CB-aqua-light--hover,
+	text: #000,
+),
+(
+	color: $CB-blue-light,
+	hover: $CB-blue-light--hover,
+	text: #000,
+),
+(
+	color: $CB-green-dark,
+	hover: $CB-green-dark--hover,
+	text: #fff,
+);
+
+
+//Get prominent colors easily
+//    usage standard: brand(1);
+//    usage for hover state: brand(1, 'hover')
+//    usage for partner: brand(1, 'partner')
+@function brand($prominance, $type: color){
+	$colorGroup: nth($brand,$prominance);
+	@if (not map-has-key($colorGroup, $type)){
+		@warn '"#{$type}" is not a valid color type for "brand(#{$prominance})"';
+		$type: color;
+	}
+	@return map-get($colorGroup, $type);
+}
+
+
+
+/*
+//apply color variations and overrides to specific modules more easily for stronger color application
+
+//usage:
+.module {
+	@include brandColors((
+		border-left-color : 'text',
+		outline-color: 'color'
+	));
+}
+
+//equivalent to:
+
+.color-1 .module {
+	border-left-color : brand(1,'text');
+	outline-color : brand(1);
+}
+.color-2 .module {
+	border-left-color : brand(2,'text');
+	outline-color : brand(2);
+}
+
+etc.
+
+*/
+
+@mixin brandColors($rules){
+	@for $i from 1 through length($brand) {
+		.color-#{$i} & {
+			@each $attribute, $colorType in $rules {
+				#{$attribute} : brand($i, $colorType);
+			}
+		}
+	}
+}
+

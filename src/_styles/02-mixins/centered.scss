@@ -1,0 +1,42 @@
+//CENTER AN ELEMENT BOTH VERTICALLY AND HORIZONTALLY (or only one of the two)
+//Element must have a set width and height to work
+
+//usage:
+//@include MG-centered; //center both horizontally and vertically
+//@include MG-centered(v); // only center vertically
+//@include MG-centered(h); // only center horizontally
+
+@mixin centered($type: both, $isModern: 'not-modern') {
+
+	position: absolute;
+
+	@if ($isModern == 'modern') {
+		@if ($type == both) {
+			top: 50%;
+			left: 50%;
+			transform: translateY(-50%) translateX(-50%);
+		} @else if ($type == v) {
+			top: 50%;
+			transform: translateY(-50%);
+		} @else if ($type == h) {
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	} @else {
+		@if ($type == both) {
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+		} @else if ($type == v) {
+			top: 0;
+			bottom: 0;
+			margin: auto 0;
+		} @else if ($type == h) {
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+		}
+	}
+}

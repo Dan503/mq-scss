@@ -1,0 +1,28 @@
+@import '01-functions/color-functions';
+
+//loads the configuration settings for the site
+@import '00-config-files/config-loader';
+
+@import '02-mixins/clearfix';
+@import '02-mixins/centered';
+@import '02-mixins/searchIcon';
+@import '02-mixins/overflowShadow';
+@import '02-mixins/menuIcon';
+
+//Styles from 3rd party plugins
+@import '03-plugins/normalize.altered';
+@import '03-plugins/highlight.theme.atom-one-dark';
+
+// Base styles
+@import '04-base-styles/elements';
+@import '04-base-styles/color-classes';
+@import '04-base-styles/TK-toolkit';
+
+//module imports
+@import '../_modules/pageContainer/pageContainer';
+@import '../_modules/demo/demo';
+@import '../_modules/tabs/tabs';
+@import '../_modules/bodyContent/bodyContent';
+@import '../_modules/btn/btn';
+@import '../_modules/header/header';
+@import '../_modules/tests/tests';

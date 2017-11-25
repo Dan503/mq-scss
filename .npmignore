@@ -4,4 +4,10 @@ logs
 npm-debug.log*
 
 node_modules
+src
 tmp
+gulp
+.babelrc
+.gitignore
+gulpfile.babel.js
+

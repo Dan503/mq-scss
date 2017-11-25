@@ -1,0 +1,18 @@
+
+mixin pageContainer(spec)
+	-
+		var defaultTo = require('default-to').default;
+		spec = defaultTo(spec, {
+			classes : '',
+			attr: {},
+			elem: 'div',
+			__width: {
+				classes: '',
+				attr: {},
+				elem: 'div'
+			}
+		});
+
+	#{spec.elem}.pageContainer(class=spec.classes)&attributes(spec.attr)
+		#{spec.__width.elem}.pageContainer__width(class=spec.__width.classes)&attributes(spec.__width.attr)
+			block

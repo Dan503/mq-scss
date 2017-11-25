@@ -1,0 +1,218 @@
+
+/*================================================*\
+  BASE ELEMENT STYLING
+//----------------------------------------------------
+//  This file holds base styling for elements.
+//  NO CLASSES ALLOWED!
+//  these are essentially site resets
+\*================================================*/
+
+* {
+  &:before, &:after, & {
+    //Makes fonts smoother
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+
+    //supposedly this makes fonts cleaner but it makes fonts not appear in safari
+    //text-rendering: optimizeLegibility;
+
+    //all elements are given their parents box-sizing
+    box-sizing: inherit;
+  }
+}
+
+html, body {
+  //unless set otherwise, all elements will recieve border box box sizing
+  box-sizing: border-box;
+
+  //required for best scroll animation results
+  height: 100%;
+
+  //removes default spacing around the edges of the web page
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  //Makes it easier to alter font size with rem's. 1.3rem = 13px
+  font-size: 62.5%;
+}
+
+//counteracts * margin styling
+span,
+em,
+strong,
+a,
+b,
+i,
+label,
+input,
+div,
+textarea,
+select,
+header,
+footer,
+aside,
+time,
+html,
+form,
+nav,
+nav li { margin-top: 0; }
+
+//Sets default font size for the site to 1.4rem with a 14px backup.
+//Setting the font-size using the mixin is the best way to set font size.
+body {
+  background-color: $CF-body__bg;
+  position: relative;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $CF-body__text;
+  font-family: $font-1;
+  font-weight: $normal;
+}
+
+p, ul, ol {
+  //margin top becomes the default paragraph spacer
+  margin: $VG-p__spacing 0;
+
+  //allows body elements to sit hard up against their parent element top and bottom sides
+  &:first-child { margin-top: 0; }
+  &:last-child { margin-bottom: 0; }
+}
+
+/*HEADINGS*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-2;
+  font-weight: $bold;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  margin-bottom: 15px;
+  margin-top: $VG-p__spacing;
+
+  &:first-child { margin-top: 0; }
+  &:last-child { margin-bottom: 0; }
+  + {
+    p, ul, ol { margin-top: 0; }
+  }
+  .-theme--dark & {
+    color: brand(2);
+  }
+
+}
+h1 {
+  font-size: 30px;
+  text-align: center;
+  + h2 { margin-top: 30px; }
+}
+h2 { font-size: 25px; margin-top: 75px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; text-transform: uppercase; }
+
+
+a {
+  text-decoration: none;
+  color: $CF-links;
+  transition: 0.3s;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+
+  &[disabled] {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.2;
+
+    .no-csspointerevents & {
+      display: none;
+    }
+  }
+}
+
+//makes nav default to not having dot points
+nav ul { @extend %TK-noDots; }
+
+label, input[type=radio], input[type=checkbox] { cursor: pointer; }
+
+img { display: block; max-width: 100%; width: 100%; }
+
+a > img {
+  transition: 0.3s;
+}
+a:hover, a:focus {
+  > img { transform: scale(1.05); }
+}
+
+blockquote {
+  background-color: transparent;
+  border-left: 0;
+  border-left: 6px solid #000;
+  font-style: normal;
+  margin: 0;
+  margin-left: 30px;
+  padding: 55px 25px 40px;
+
+  &:before {
+    display: none;
+  }
+
+  p {
+    font-size: 22px;
+    line-height: 1.25;
+  }
+}
+
+pre {
+  padding: 10px 70px 10px 0;
+  margin-left: -20px;
+  margin-right: -20px;
+  font-family: 'Monaco', 'Lucida Console', monospace;
+  font-size: 13px;
+  line-height: 20px;
+  box-shadow: inset 0 0 5px #000;
+  word-wrap: break-word;
+  color: #d6d6d6;
+  background-color: #282c34;
+  padding: 0;
+
+  &, &.lines {
+    margin: 0;
+    padding:{left: 0; right: 0;}
+  }
+
+  &.lines {
+    font-size: 12px;
+    padding: 10px;
+    float:  left;
+    display: block !important;
+    box-shadow: none;
+    color: #d6d6d6;
+    background-color: #000;
+    width: 40px;
+    padding: {top: 7px; bottom: 7px;}
+    text-align: center !important;
+  }
+
+  code {
+    padding: 10px 5px;
+    font-size: 1em;
+  }
+
+  .no-flexbox & {
+    max-width: 780px;
+  }
+}
+
+code {
+  max-width: 100%;
+}
+
+p, li, h1, h2, h3, h4, h5 {
+  code {
+    background-color: #c5c7cc;
+    padding: 3px 4px;
+    font-size: .85em;
+  }
+}
