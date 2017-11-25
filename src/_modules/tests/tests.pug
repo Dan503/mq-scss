@@ -8,6 +8,7 @@
 
 h2 Tests
 
+//-max
 +demo({
   html: `
 .test.-max
@@ -19,3 +20,146 @@ h2 Tests
 `,
 })
 
+//-maxWidth
++demo({
+  html: `
+.test.-maxWidth
+`,
+  scss: `
+@include mq(max-width, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-min
++demo({
+  html: `
+.test.-min
+`,
+  scss: `
+@include mq(min, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-minWidth
++demo({
+  html: `
+.test.-minWidth
+`,
+  scss: `
+@include mq(min-width, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-inside
++demo({
+  html: `
+.test.-inside
+`,
+  scss: `
+@include mq(inside, $BP-medium, $BP-small) {
+  background: green;
+}
+`,
+})
+
+//-insideWidth
++demo({
+  html: `
+.test.-insideWidth
+`,
+  scss: `
+@include mq(inside-width, $BP-small, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-outside
++demo({
+  html: `
+.test.-outside
+`,
+  scss: `
+@include mq(outside, $BP-medium, $BP-small) {
+  background: green;
+}
+`,
+})
+
+//-outsideWidth
++demo({
+  html: `
+.test.-outsideWidth
+`,
+  scss: `
+@include mq(outside-width, $BP-small, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-ratio
++demo({
+  html: `
+.test.-ratio
+`,
+  scss: `
+@include mq(ratio, $BP-small, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-minRatio
++demo({
+  html: `
+.test.-minRatio
+`,
+  scss: `
+@include mq(min-ratio, $BP-small, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-maxRatio
++demo({
+  html: `
+.test.-maxRatio
+`,
+  scss: `
+@include mq(max-ratio, $BP-small, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-insideRatio
++demo({
+  html: `
+.test.-insideRatio
+`,
+  scss: `
+@include mq(inside-ratio, $BP-small, $BP-medium) {
+  background: green;
+}
+`,
+})
+
+//-outsideRatio
++demo({
+  html: `
+.test.-outsideRatio
+`,
+  scss: `
+@include mq(outside-ratio, $BP-small, $BP-medium) {
+  background: green;
+}
+`,
+})

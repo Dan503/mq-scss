@@ -20,6 +20,90 @@
 			background: green;
 		}
 	}
+	&.-maxWidth {
+		&::before { content: '(max-width, #{$BP-medium})'; }
+		@include mq(max-width, $BP-medium) {
+			background: green;
+		}
+	}
+
+	&.-min {
+		&::before { content: '(min, #{$BP-medium})'; }
+		@include mq(min, $BP-medium) {
+			background: green;
+		}
+	}
+
+	&.-minWidth {
+		&::before { content: '(min-width, #{$BP-medium})'; }
+		@include mq(min-width, $BP-medium) {
+			background: green;
+		}
+	}
+
+	&.-inside {
+		&::before { content: '(inside, #{$BP-medium}, #{$BP-medium})'; }
+		@include mq(inside, $BP-medium, $BP-small) {
+			background: green;
+		}
+	}
+
+	&.-insideWidth {
+		&::before { content: '(inside-width, #{$BP-small}, #{$BP-medium})'; }
+		@include mq(inside-width, $BP-small, $BP-medium) {
+			background: green;
+		}
+	}
+
+	&.-outside {
+		&::before { content: '(outside, #{$BP-medium}, #{$BP-small})'; }
+		@include mq(outside, $BP-medium, $BP-small) {
+			background: green;
+		}
+	}
+
+	&.-outsideWidth {
+		&::before { content: '(outside-width, #{$BP-small}, #{$BP-medium})'; }
+		@include mq(outside-width, $BP-small, $BP-medium) {
+			background: green;
+		}
+	}
+
+	&.-ratio {
+		&::before { content: '(ratio, "2 / 1")'; }
+		@include mq(ratio, "2 / 1") {
+			background: green;
+		}
+	}
+
+	&.-minRatio {
+		&::before { content: '(min-ratio, "2 / 1")'; }
+		@include mq(min-ratio, "2 / 1") {
+			background: green;
+		}
+	}
+
+	&.-maxRatio {
+		&::before { content: '(max-ratio, "2 / 1")'; }
+		@include mq(max-ratio, "2 / 1") {
+			background: green;
+		}
+	}
+
+	&.-insideRatio {
+		&::before { content: '(inside-ratio, "2 / 1", "1 / 1")'; }
+		@include mq(inside-ratio, "2 / 1", "1 / 1") {
+			background: green;
+		}
+	}
+
+	&.-outsideRatio {
+		&::before { content: '(outside-ratio, "1 / 1", "2 / 1")'; }
+		@include mq(outside-ratio, "1 / 1", "2 / 1") {
+			background: green;
+		}
+	}
+
 }
 
 .breakpoints {
