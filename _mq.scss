@@ -111,7 +111,7 @@ $mq-em-base: 16px !default;
 	$setting1Plus: $setting1 + 1;
 	$setting2Plus: $setting2 + 1;
 
-	$media: $mediaType;
+	$media: if($mediaType, $mediaType, '');
 
 	@if ($mq-ems) {
 		$setting1: _mq-em($setting1);
@@ -240,8 +240,6 @@ $mq-em-base: 16px !default;
 		media: mediaType($media, $range != null),
 	);
 
-	@debug '';
-
 	@return (
 		range: $range,
 		width1: $width1,
@@ -363,10 +361,14 @@ $mq-em-base: 16px !default;
 
 @mixin mq($range, $setting1: null, $setting2: null, $mediaType: false) {
 
+	//spacer
+	@debug '';
+	@debug $range;
+
 	@if (length($range) > 1) {
 
-		@debug '!!!!! FINAL OUTPUT:' (joinQueries($range));
 
+		@debug '!!!!! FINAL OUTPUT: @media ' + (joinQueries($range));
 		@media #{joinQueries($range)} {
 			@content;
 		}
@@ -388,12 +390,16 @@ $mq-em-base: 16px !default;
 
 		@if ($mediaOnly) {
 
+
+			@debug '!!!!! FINAL OUTPUT: @media ' + $newMedia;
 			@media #{ $newMedia } {
 				@content;
 			}
 
 		} @else {
 
+
+			@debug '!!!!! FINAL OUTPUT: @media ' + $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2) ;
 			@media #{ $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2) } {
 				@content;
 			}
