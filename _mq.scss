@@ -16,12 +16,16 @@ $mq-debug: false !default;
 }
 
 @function isRatio($string){
-	@if (type-of($string) == 'string'){
+	@if (type-of($string) == 'string' and $string != 'plus'){
 		@if (str-index($string, "/")){
 			@return true;
 		}
 	}
 	@return false;
+}
+
+@function isMedia($string){
+	@return type-of($string) == 'string' and $string != 'plus' and not isRatio($string);
 }
 
 @function calculateMQ($range, $breakpoint_1: null, $breakpoint_2: null, $mediaType: false, $debug: $mq-debug){
@@ -221,7 +225,7 @@ $mq-debug: false !default;
 		$third: nth($mqSet, 3);
 		$fourth: nth($mqSet, 4);
 
-		@if ($fourth == false and type-of($third) == 'string' and not isRatio($third)){
+		@if ($fourth == false and isMedia($third)){
 			$media: $third;
 		} @else {
 			$breakpoint_2: $third;
@@ -248,7 +252,7 @@ $mq-debug: false !default;
 }
 
 @function get_media($mqSet){
-	@return  map-get( get_values($mqSet), media);
+	@return map-get( get_values($mqSet), media);
 }
 
 @function calculateBasicQuery($mqSet, $isAndStatement: false, $debug: $mq-debug){
@@ -276,6 +280,7 @@ $mq-debug: false !default;
 
 	$isAndStatement: false;
 	$contains_media_only_statement: false;
+	$media_statement_at_start: true;
 
 	@if (length($range) > 1) {
 		@for $i from 1 through length($range) {
@@ -283,17 +288,24 @@ $mq-debug: false !default;
 			@if ($debug) {
 				@debug joinQueries_statement $statement;
 			}
+			$mediaNotFirst: $i != 1 and isMedia($statement);
 			@if ($statement == 'plus') {
 				$isAndStatement: true;
 				@if ($i == 2 and length(nth($range,1)) == 1) {
 					$contains_media_only_statement: true;
 				}
 			}
+			@if ($mediaNotFirst){
+				$media_statement_at_start: false;
+			}
 		}
 	} @else if (type-of(nth($range,1)) == 'string') {
 		$contains_media_only_statement: true;
 	}
 
+	@if ($isAndStatement and not $media_statement_at_start) {
+		@error 'Media type definitions must be specified at the start of plus statements: (#{$range)})';
+	}
 
 	//Uses this functionality if using a single level MQ variable
 	//eg:
