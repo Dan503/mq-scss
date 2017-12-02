@@ -252,7 +252,7 @@ $green: #004700;
 
 	&.-insideRatioVar {
 		$MQ-insideRatioVar: (inside-ratio, "2 / 1", "1 / 1");
-		&::before { content: 'mq($MQ-minRatioVar)'; }
+		&::before { content: 'mq($MQ-insideRatioVar)'; }
 		@include mq($MQ-insideRatioVar) {
 			@include isActive;
 		}
@@ -267,12 +267,121 @@ $green: #004700;
 
 	&.-outsideRatioVar {
 		$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
-		&::before { content: 'mq($MQ-minRatioVar)'; }
+		&::before { content: 'mq($MQ-outsideRatioVar)'; }
 		@include mq($MQ-outsideRatioVar) {
 			@include isActive;
 		}
 	}
 
+	&.-exactRatioWorkAround1 {
+		//equivenlent to (min-ratio, '2 / 1') but without the 1px sour spot
+		$MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
+		&::before { content: 'mq($MQ-exactRatioWorkAround1)'; }
+		@include mq($MQ-exactRatioWorkAround1) {
+			@include isActive;
+		}
+	}
+
+	&.-exactRatioWorkAround2 {
+		//Exactly the same as above but formatted differently
+		$MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
+		&::before { content: 'mq($MQ-exactRatioWorkAround2)'; }
+		@include mq($MQ-exactRatioWorkAround2) {
+			@include isActive;
+		}
+	}
+
+	&.-exactRatioWorkAround3 {
+		//The same again this time inline
+		&::before { content: "mq(max-ratio, '2 / 1', 'not')"; }
+		@include mq(max-ratio, '2 / 1', 'not') {
+			@include isActive;
+		}
+	}
+
+	// ======
+	// MEDIA
+	// ======
+
+	&.-simpleMedia {
+		&::before { content: "mq(min, #{$BP-medium}, 'screen')"; }
+		@include mq(min, $BP-medium, 'screen') {
+			@include isActive;
+		}
+	}
+
+	&.-notMedia {
+		&::before { content: "mq(min, #{$BP-medium}, 'not')"; }
+		@include mq(min, $BP-medium, 'not') {
+			@include isActive;
+		}
+	}
+
+	&.-onlyMedia {
+		&::before { content: "mq('screen')"; }
+		@include mq('screen') {
+			@include isActive;
+		}
+	}
+
+
+	//- =====
+	//- PLUS
+	//- =====
+
+	&.-simplePlus {
+		$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
+		&::before { content: "mq($MQ-simplePlus)"; }
+		@include mq($MQ-simplePlus) {
+			@include isActive;
+		}
+	}
+
+	&.-inlinePlus {
+		$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
+		&::before { content: "mq((min-width, #{$BP-medium}) plus (min-height, 600px))"; }
+		@include mq((min-width, $BP-medium) plus (min-height, 600px)) {
+			@include isActive;
+		}
+	}
+
+	&.-mediaOnlyPlus {
+		&::before { content: "mq('screen' plus (min, #{$BP-medium}))"; }
+		@include mq('screen' plus (min, $BP-medium)) {
+			@include isActive;
+		}
+	}
+
+	&.-complexPlus {
+		$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
+		&::before { content: "mq($MQ-complexPlus)"; }
+		@include mq($MQ-complexPlus) {
+			@include isActive;
+		}
+	}
+
+	&.-ignoredMediaType {
+		$MQ-ignoredMediaType: (inside-width, $BP-small, $BP-medium) plus (inside-ratio, '2/1', '1/1', 'print');
+		&::before { content: "mq($MQ-ignoredMediaType)"; }
+		@include mq($MQ-ignoredMediaType) {
+			@include isActive;
+		}
+	}
+
+	&.-multiPlus {
+		$MQ-multiPlus: (
+			('screen') plus
+			(min-width, $BP-medium) plus
+			(min-height, 400px) plus
+			(inside, $BP-small, $BP-large) plus
+			(inside-ratio, '2/1', '1/1')
+		);
+		&::before { content: "mq($MQ-multiPlus)"; }
+
+		@include mq($MQ-multiPlus, $debug: true) {
+					@include isActive;
+		}
+	}
 }
 
 .breakpoints {

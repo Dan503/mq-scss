@@ -367,3 +367,171 @@ $MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
   background: $green;
 }`,
   })
+
+  p A Note on these next three examples. If you set your screen size to exactly 800px width by 400px height, you will see that every single ratio so far returns true. The following 2 examples show a work around for this 1px sour spot issue. FYI, using this technique will make the media query incompatible with Sass media query nesting. #[code not] produces unexpected results when nesting media queries in Sass.
+
+  //-exactRatioWorkAround1
+  +demo({
+    html: `
+.test.-exactRatioWorkAround1
+`,
+    scss: `
+//equivenlent to (min-ratio, '2 / 1') but without the 1px sour spot
+$MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
+@include mq($MQ-exactRatioWorkAround1) {
+  background: $green;
+}`,
+  })
+
+  //-exactRatioWorkAround2
+  +demo({
+    html: `
+.test.-exactRatioWorkAround2
+`,
+    scss: `
+//Exactly the same as above but formatted differently
+$MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
+@include mq($MQ-exactRatioWorkAround2) {
+  background: $green;
+}`,
+  })
+
+  //-exactRatioWorkAround3
+  +demo({
+    html: `
+.test.-exactRatioWorkAround3
+`,
+    scss: `
+//The same again this time inline
+@include mq(max-ratio, '2 / 1', 'not') {
+  background: $green;
+}
+`,
+  })
+
+
+  //- =====
+  //- MEDIA
+  //- =====
+  h3 Media defined statements
+
+  //-simpleMedia
+  +demo({
+    html: `
+.test.-simpleMedia
+`,
+    scss: `
+@include mq(min, $BP-medium, 'screen') {
+  background: $green;
+}`,
+  })
+
+  //-notMedia
+  +demo({
+    html: `
+.test.-notMedia
+`,
+    scss: `
+@include mq(min, $BP-medium, 'not') {
+  background: $green;
+}`,
+  })
+
+  //-onlyMedia
+  +demo({
+    html: `
+.test.-onlyMedia
+`,
+    scss: `
+@include mq('screen') {
+  background: $green;
+}`,
+  })
+
+
+  //- =====
+  //- PLUS
+  //- =====
+  h3 #[code plus] statements
+
+  //-simplePlus
+  +demo({
+    html: `
+.test.-simplePlus
+`,
+    scss: `
+$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
+@include mq($MQ-simplePlus) {
+  background: $green;
+}`,
+  })
+
+  //-inlinePlus
+  +demo({
+    html: `
+.test.-inlinePlus
+`,
+    scss: `
+//inline plus statement
+@include mq((min-width, $BP-medium) plus (min-height, 600px)) {
+  background: $green;
+}`,
+  })
+
+  //-mediaOnlyPlus
+  +demo({
+    html: `
+.test.-mediaOnlyPlus
+`,
+    scss: `
+@include mq('screen' plus (min, $BP-medium)) {
+  background: $green;
+}`,
+  })
+
+  //-complexPlus
+  +demo({
+    html: `
+.test.-complexPlus
+`,
+    scss: `
+//note that 'print' appplies to the full plus statement
+$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
+@include mq($MQ-complexPlus) {
+  background: $green;
+}`,
+  })
+
+  //-ignoredMediaType
+  +demo({
+    html: `
+.test.-ignoredMediaType
+`,
+    scss: `
+//The media type in the second plus statement is ignored
+//Only media types in the first definition are honoured in a plus statement
+$MQ-ignoredMediaType: (inside-width, $BP-small, $BP-medium) plus (inside-ratio, '2/1', '1/1', 'print');
+@include mq($MQ-ignoredMediaType) {
+  background: $green;
+}`,
+  })
+
+  //-multiPlus
+  +demo({
+    html: `
+.test.-multiPlus
+`,
+    scss: `
+$MQ-multiPlus: (
+  ('screen') plus
+  (min-width, $BP-medium) plus
+  (min-height, 400px) plus
+  (inside, $BP-small, $BP-large) plus
+  (inside-ratio, '2/1', '1/1')
+);
+
+@include mq($MQ-multiPlus) {
+  background: $green;
+}`,
+  })
+
