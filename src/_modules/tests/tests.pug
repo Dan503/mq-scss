@@ -376,7 +376,7 @@ $MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
 .test.-exactRatioWorkAround1
 `,
     scss: `
-//equivenlent to (min-ratio, '2 / 1') but without the 1px sour spot
+//equivalent to (min-ratio, '2 / 1') but without the 1px sour spot
 $MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
 @include mq($MQ-exactRatioWorkAround1) {
   background: $green;

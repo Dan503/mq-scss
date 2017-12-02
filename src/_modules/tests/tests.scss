@@ -274,7 +274,7 @@ $green: #004700;
 	}
 
 	&.-exactRatioWorkAround1 {
-		//equivenlent to (min-ratio, '2 / 1') but without the 1px sour spot
+		//equivalent to (min-ratio, '2 / 1') but without the 1px sour spot
 		$MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
 		&::before { content: 'mq($MQ-exactRatioWorkAround1)'; }
 		@include mq($MQ-exactRatioWorkAround1) {
@@ -434,6 +434,11 @@ $green: #004700;
 	}
 
 }
+
+@include mq('not' plus (max-ratio, '2 / 1')) {
+	body { color: #000; }
+}
+
 
 .breakpoints {
 	padding: 20px;
