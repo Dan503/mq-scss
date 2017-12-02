@@ -6,12 +6,39 @@
   .breakpoints__size.-large
   .breakpoints__size.-page
 
-h2 Tests
+h2#tests Tests
+
+-
+  var headings = {
+    'Width' : 'width',
+    'Height' : 'height',
+    'Ratio' : 'ratio',
+    'Media statements' : 'media',
+    'Plus statements' : 'plus',
+    'Or statements' : 'or',
+  };
+
+mixin menuItem(heading, value)
+  -
+    var isObj = typeof value === 'object';
+    var href = `#${isObj ? value.id : value}`;
+
+  li: a(href=href, style='color: #000;')= heading
+    if isObj
+      ol
+        each subId, subHeading in value.list
+          +menuItem(subHeading, subId)
+
+ol
+  each id, heading in headings
+    +menuItem(heading, id)
+
+
 
 //- ======
 //- WIDTH
 //- ======
-h3 Width
+h3#width Width
 
 .tests
   //-max
@@ -153,7 +180,7 @@ $MQ-outsideVar: (outside, $BP-medium, $BP-small);
   //- ======
   //- HEIGHT
   //- ======
-  h3 Height
+  h3#height Height
 
   //-maxHeight
   +demo({
@@ -251,7 +278,7 @@ $MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
   //- =====
   //- RATIO
   //- =====
-  h3 Ratio
+  h3#ratio Ratio
 
   //-ratio
   +demo({
@@ -413,7 +440,7 @@ $MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
   //- =====
   //- MEDIA
   //- =====
-  h3 Media defined statements
+  h3#media Media statements
 
   //-simpleMedia
   +demo({
@@ -452,7 +479,7 @@ $MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
   //- =====
   //- PLUS
   //- =====
-  h3 #[code plus] statements
+  h3#plus #[code plus] statements
 
   //-simplePlus
   +demo({
@@ -539,7 +566,7 @@ $MQ-multiPlus: (
   //- =====
   //- OR
   //- =====
-  h3 #[code or] statements
+  h3#or #[code or] statements
 
   //-simpleOr
   +demo({

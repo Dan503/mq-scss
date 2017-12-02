@@ -31,7 +31,7 @@
         <pre class="no-lines"><code style="text-align: center">npm install mq-scss --save</code></pre>
       </header>
       <div class="bodyContent"><p>This is a testing/demo site for mq-scss. Full documentation can be found on <a href="https://github.com/Dan503/mq-scss">GitHub</a> and <a href="https://www.npmjs.com/package/mq-scss">npm</a>.</p>
-<p>This site is best Viewed on desktop. Resizing the browser window will cause differenet media queries to activate at different screen sizes.</p>
+<p>This site is best viewed on desktop. Resizing the browser window will cause different media queries to activate at different screen sizes.</p>
 
         <div class="breakpoints">
           <h2>Breakpoints</h2>
@@ -41,8 +41,16 @@
           <div class="breakpoints__size -large"></div>
           <div class="breakpoints__size -page"></div>
         </div>
-        <h2>Tests</h2>
-        <h3>Width</h3>
+        <h2 id="tests">Tests</h2>
+        <ol>
+          <li><a href="#width" style="color: #000">Width</a></li>
+          <li><a href="#height" style="color: #000">Height</a></li>
+          <li><a href="#ratio" style="color: #000">Ratio</a></li>
+          <li><a href="#media" style="color: #000">Media statements</a></li>
+          <li><a href="#plus" style="color: #000">Plus statements</a></li>
+          <li><a href="#or" style="color: #000">Or statements</a></li>
+        </ol>
+        <h3 id="width">Width</h3>
         <div class="tests">
           <aside class="demo">
             <div class="demo__result demo__segment">
@@ -204,7 +212,7 @@ $MQ-outsideVar: (outside, $BP-medium, $BP-small);
               </div>
             </div>
           </aside>
-          <h3>Height</h3>
+          <h3 id="height">Height</h3>
           <aside class="demo">
             <div class="demo__result demo__segment">
 <div class="test -maxHeight"></div>
@@ -313,7 +321,7 @@ $MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
               </div>
             </div>
           </aside>
-          <h3>Ratio</h3>
+          <h3 id="ratio">Ratio</h3>
           <aside class="demo">
             <div class="demo__result demo__segment">
 <div class="test -ratio"></div>
@@ -495,7 +503,7 @@ $MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
               </div>
             </div>
           </aside>
-          <h3>Media defined statements</h3>
+          <h3 id="media">Media statements</h3>
           <aside class="demo">
             <div class="demo__result demo__segment">
 <div class="test -simpleMedia"></div>
@@ -535,7 +543,7 @@ $MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
               </div>
             </div>
           </aside>
-          <h3><code>plus</code> statements</h3>
+          <h3 id="plus"><code>plus</code> statements</h3>
           <aside class="demo">
             <div class="demo__result demo__segment">
 <div class="test -simplePlus"></div>
@@ -629,7 +637,7 @@ $MQ-multiPlus: (
               </div>
             </div>
           </aside>
-          <h3><code>or</code> statements</h3>
+          <h3 id="or"><code>or</code> statements</h3>
           <aside class="demo">
             <div class="demo__result demo__segment">
 <div class="test -simpleOr"></div>
