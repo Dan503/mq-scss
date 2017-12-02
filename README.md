@@ -49,7 +49,7 @@ Import mq-scss at the top of your main Sass file (note that the exact path will 
 ## Basic usage
 
 ``````scss
-@include mq($range, $breakpoint-1 [, $breakpoint-2]){ @content }
+@include mq($range, $breakpoint_1 [, $breakpoint_2] [, $mediaType] [, $debug]){ @content }
 ``````
 
 ### Min/Max width
