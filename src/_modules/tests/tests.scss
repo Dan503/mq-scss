@@ -378,10 +378,61 @@ $green: #004700;
 		);
 		&::before { content: "mq($MQ-multiPlus)"; }
 
-		@include mq($MQ-multiPlus, $debug: true) {
+		@include mq($MQ-multiPlus) {
 					@include isActive;
 		}
 	}
+
+	//- =====
+	//- OR
+	//- =====
+
+	&.-simpleOr {
+		$MQ-simpleOr: (
+			(min-width, $BP-medium),
+			(min-height, 800px)
+		);
+		&::before { content: "mq($MQ-simpleOr)"; }
+		@include mq($MQ-simpleOr) {
+		}
+	}
+
+	&.-complexOr {
+		&::before { content: "mq($MQ-complexOr)"; }
+		$MQ-complexOr: (
+			(inside, $BP-small, $BP-medium, 'screen'),
+			(outside-ratio, '2/1', '1/1')
+		);
+		@include mq($MQ-complexOr) {
+			@include isActive;
+		}
+	}
+
+	&.-multiOr {
+		&::before { content: "mq($MQ-multiOr)"; }
+		$MQ-multiOr: (
+			(min-width, $BP-medium, 'screen'),
+			(min-height, 800px),
+			(inside, $BP-small, $BP-large),
+			(inside-ratio, '2/1', '1/1'),
+			('print')
+		);
+		@include mq($MQ-multiOr) {
+			@include isActive;
+		}
+	}
+
+	&.-orPlusCombo {
+		&::before { content: "mq($MQ-orPlusCombo)"; }
+		$MQ-orPlusCombo: (
+			(min-width, $BP-medium, 'screen') plus (min-height, 800px),
+			'screen' plus (inside, $BP-small, $BP-large) plus (inside-ratio, '2/1', '1/1')
+		);
+		@include mq($MQ-orPlusCombo) {
+			@include isActive;
+		}
+	}
+
 }
 
 .breakpoints {

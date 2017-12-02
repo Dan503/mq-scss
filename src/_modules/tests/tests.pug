@@ -535,3 +535,71 @@ $MQ-multiPlus: (
 }`,
   })
 
+
+  //- =====
+  //- OR
+  //- =====
+  h3 #[code or] statements
+
+  //-simpleOr
+  +demo({
+    html: `
+.test.-simpleOr
+`,
+    scss: `
+$MQ-simpleOr: (
+  (min-width, $BP-medium),
+  (min-height, 800px)
+);
+@include mq($MQ-simpleOr) {
+  background: $green;
+}`,
+  })
+
+  //-complexOr
+  +demo({
+    html: `
+.test.-complexOr
+`,
+    scss: `
+$MQ-complexOr: (
+  (inside, $BP-small, $BP-medium, 'screen'),
+  (outside-ratio, '2/1', '1/1')
+);
+@include mq($MQ-complexOr) {
+  background: $green;
+}`,
+  })
+
+  //-multiOr
+  +demo({
+    html: `
+.test.-multiOr
+`,
+    scss: `
+$MQ-multiOr: (
+  (min-width, $BP-medium, 'screen'),
+  (min-height, 800px),
+  (inside, $BP-small, $BP-large),
+  (inside-ratio, '2/1', '1/1'),
+  ('print')
+);
+@include mq($MQ-multiOr) {
+  background: $green;
+}`,
+  })
+
+  //-orPlusCombo
+  +demo({
+    html: `
+.test.-orPlusCombo
+`,
+    scss: `
+$MQ-orPlusCombo: (
+  (min-width, $BP-medium, 'screen') plus (min-height, 800px),
+  'screen' plus (inside, $BP-small, $BP-large) plus (inside-ratio, '2/1', '1/1')
+);
+@include mq($MQ-orPlusCombo) {
+  background: $green;
+}`,
+  })
