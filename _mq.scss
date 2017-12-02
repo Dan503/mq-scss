@@ -23,7 +23,7 @@ $mq-debug: false !default;
 	@return false;
 }
 
-@function calculateMQ($range, $setting1: null, $setting2: null, $mediaType: false, $debug: $mq-debug){
+@function calculateMQ($range, $breakpoint_1: null, $breakpoint_2: null, $mediaType: false, $debug: $mq-debug){
 
 	$swap-values: false;
 
@@ -43,93 +43,93 @@ $mq-debug: false !default;
 		@return $mediaType;
 	}
 
-	@if ($setting2 != null){
+	@if ($breakpoint_2 != null){
 
-		@if (isRatio($setting1)){
+		@if (isRatio($breakpoint_1)){
 
-			$setting1_1: get-start($setting1);
-			$setting1_2: get-end($setting1);
+			$A1: get-start($breakpoint_1);
+			$A2: get-end($breakpoint_1);
 
-			$setting2_1: get-start($setting2);
-			$setting2_2: get-end($setting2);
+			$B1: get-start($breakpoint_2);
+			$B2: get-end($breakpoint_2);
 
 			@if ($debug) {
-				@debug range_numbers "('A1/A2', 'B1/B2')" (A1: $setting1_1, A2: $setting1_2, B1: $setting2_1, B2: $setting2_2);
+				@debug range_numbers "('A1/A2', 'B1/B2')" (A1: $A1, A2: $A2, B1: $B1, B2: $B2);
 			}
 
-			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
+			$swap-values: $A1 / $A2 < $B1 / $B2;
 		} @else {
-			$swap-values: $setting1 < $setting2;
+			$swap-values: $breakpoint_1 < $breakpoint_2;
 		}
 
-		//Swaps the settings around
+		//Swaps the breakpoint_s around
 		@if ($swap-values){
-			$temp: $setting1;
-			$setting1: $setting2;
-			$setting2: $temp;
+			$temp: $breakpoint_1;
+			$breakpoint_1: $breakpoint_2;
+			$breakpoint_2: $temp;
 		}
 
 	} @else {
-		$setting2: 0;
+		$breakpoint_2: 0;
 	}
 
 	$mediaString: '';
 
 	@if ($range == 'orientation'){
-		@if ($setting1 != 'landscape' and $setting1 != 'portrait'){
-			@error '"orientation" range only accepts the values "landscape" and "portrait". Currently providing the value "#{$setting1}".';
+		@if ($breakpoint_1 != 'landscape' and $breakpoint_1 != 'portrait'){
+			@error '"orientation" range only accepts the values "landscape" and "portrait". Currently providing the value "#{$breakpoint_1}".';
 		}
 	}
 
 	@if ($debug){
-		@debug calculateMQ (range: $range, setting1: $setting1, setting2: $setting2, mediaType: $mediaType);
+		@debug calculateMQ (range: $range, breakpoint_1: $breakpoint_1, breakpoint_2: $breakpoint_2, mediaType: $mediaType);
 	}
 
 	@if (str-index($range, 'inside') != null or str-index($range, 'outside') != null){
-		@if ($setting2 == 0) {
-			@error '"#{$range}" range requires a second value. Currently only providing "#{$setting1}" as a value.';
+		@if ($breakpoint_2 == 0) {
+			@error '"#{$range}" range requires a second value. Currently only providing "#{$breakpoint_1}" as a value.';
 		}
 	} @else {
-		@if ($setting2 != 0) {
-			@error '"#{$range}" range can only take one value. Currently providing both "#{$setting1}" and "#{$setting2}" as values.';
+		@if ($breakpoint_2 != 0) {
+			@error '"#{$range}" range can only take one value. Currently providing both "#{$breakpoint_1}" and "#{$breakpoint_2}" as values.';
 		}
 	}
 
 	@if (str-index($range, 'ratio') == null){
 		//if a standard media query
-		@if (type-of($setting1) != number and $range != 'orientation'){
-			@if ($setting2 != 0) {
-				@error '"#{$range}" range requires the settings ("#{$setting1}" and "#{$setting2}") to be pixel values';
+		@if (type-of($breakpoint_1) != number and $range != 'orientation'){
+			@if ($breakpoint_2 != 0) {
+				@error '"#{$range}" range requires the breakpoint_s ("#{$breakpoint_1}" and "#{$breakpoint_2}") to be pixel values';
 			} @else {
-				@error '"#{$range}" range requires the setting "#{$setting1}" to be a pixel value';
+				@error '"#{$range}" range requires the breakpoint_ "#{$breakpoint_1}" to be a pixel value';
 			}
 		}
 	} @else {
 		//else if it's a ratio...
-		@if ((($setting2 != 0) and (type-of($setting2) != string))){
-			@error '"#{$range}" range requires the settings ("#{$setting1}" and "#{$setting2}") to both be strings in this format "4 / 3" (width ratio / height ratio).';
-		} @else if (type-of($setting1) != string) {
-			@error '"#{$range}" range requires the setting "#{$setting1}" to be a string in this format "4 / 3" (width ratio / height ratio).';
+		@if ((($breakpoint_2 != 0) and (type-of($breakpoint_2) != string))){
+			@error '"#{$range}" range requires the breakpoint_s ("#{$breakpoint_1}" and "#{$breakpoint_2}") to both be strings in this format "4 / 3" (width ratio / height ratio).';
+		} @else if (type-of($breakpoint_1) != string) {
+			@error '"#{$range}" range requires the breakpoint_ "#{$breakpoint_1}" to be a string in this format "4 / 3" (width ratio / height ratio).';
 		}
 	}
 
-	$setting1Plus: $setting1 + 1;
-	$setting2Plus: $setting2 + 1;
+	$breakpoint_1_plus: $breakpoint_1 + 1;
+	$breakpoint_2_plus: $breakpoint_2 + 1;
 
 	$media: if($mediaType, $mediaType, '');
 
 	@if ($mq-ems) {
-		$setting1: _mq-em($setting1);
-		$setting2: _mq-em($setting2);
-		$setting1Plus: _mq-em($setting1Plus);
-		$setting2Plus: _mq-em($setting2Plus);
+		$breakpoint_1: _mq-em($breakpoint_1);
+		$breakpoint_2: _mq-em($breakpoint_2);
+		$breakpoint_1_plus: _mq-em($breakpoint_1_plus);
+		$breakpoint_2_plus: _mq-em($breakpoint_2_plus);
 	}
 
-	$min-width: '(min-width: #{$setting1Plus})';
-	$max-width: '(max-width: #{$setting1})';
+	$min-width: '(min-width: #{$breakpoint_1_plus})';
+	$max-width: '(max-width: #{$breakpoint_1})';
 
-	$inside-width: '(max-width: #{$setting1}) and (min-width: #{$setting2Plus})';
-	$outside-width: '(max-width: #{$setting2}), '+$media+'(min-width: #{$setting1Plus})';
+	$inside-width: '(max-width: #{$breakpoint_1}) and (min-width: #{$breakpoint_2_plus})';
+	$outside-width: '(max-width: #{$breakpoint_2}), '+$media+'(min-width: #{$breakpoint_1_plus})';
 
 	$mediaString: map-get((
 	//*1 value given*/
@@ -139,18 +139,18 @@ $mq-debug: false !default;
 		min-width : $min-width,
 		max-width : $max-width,
 
-		min-height : '(min-height: #{$setting1Plus})',
-		max-height : '(max-height: #{$setting1})',
+		min-height : '(min-height: #{$breakpoint_1_plus})',
+		max-height : '(max-height: #{$breakpoint_1})',
 
-		ratio : '(aspect-ratio: #{$setting1})',
-		min-ratio : '(min-aspect-ratio: #{$setting1})',
-		max-ratio : '(max-aspect-ratio: #{$setting1})',
+		ratio : '(aspect-ratio: #{$breakpoint_1})',
+		min-ratio : '(min-aspect-ratio: #{$breakpoint_1})',
+		max-ratio : '(max-aspect-ratio: #{$breakpoint_1})',
 
-		device-ratio : '(device-aspect-ratio: #{$setting1})',
-		min-device-ratio : '(min-device-aspect-ratio: #{$setting1})',
-		max-device-ratio : '(max-device-aspect-ratio: #{$setting1})',
+		device-ratio : '(device-aspect-ratio: #{$breakpoint_1})',
+		min-device-ratio : '(min-device-aspect-ratio: #{$breakpoint_1})',
+		max-device-ratio : '(max-device-aspect-ratio: #{$breakpoint_1})',
 
-		orientation : '(orientation: #{$setting1})',
+		orientation : '(orientation: #{$breakpoint_1})',
 
 	//*2 values given*/
 		inside : $inside-width,
@@ -159,14 +159,14 @@ $mq-debug: false !default;
 		inside-width : $inside-width,
 		outside-width : $outside-width,
 
-		inside-height : '(max-height: #{$setting1}) and (min-height: #{$setting2Plus})',
-		outside-height : '(max-height: #{$setting2}), '+$media+'(min-height: #{$setting1Plus})',
+		inside-height : '(max-height: #{$breakpoint_1}) and (min-height: #{$breakpoint_2_plus})',
+		outside-height : '(max-height: #{$breakpoint_2}), '+$media+'(min-height: #{$breakpoint_1_plus})',
 		
-		inside-ratio : '(max-aspect-ratio: #{$setting1}) and (min-aspect-ratio: #{$setting2})',
-		outside-ratio : '(max-aspect-ratio: #{$setting2}), '+$media+'(min-aspect-ratio: #{$setting1})',
+		inside-ratio : '(max-aspect-ratio: #{$breakpoint_1}) and (min-aspect-ratio: #{$breakpoint_2})',
+		outside-ratio : '(max-aspect-ratio: #{$breakpoint_2}), '+$media+'(min-aspect-ratio: #{$breakpoint_1})',
 		
-		inside-device-ratio : '(max-device-aspect-ratio: #{$setting1}) and (min-device-aspect-ratio: #{$setting2})',
-		outside-device-ratio : '(max-device-aspect-ratio: #{$setting2}), '+$media+'(min-device-aspect-ratio: #{$setting1})',
+		inside-device-ratio : '(max-device-aspect-ratio: #{$breakpoint_1}) and (min-device-aspect-ratio: #{$breakpoint_2})',
+		outside-device-ratio : '(max-device-aspect-ratio: #{$breakpoint_2}), '+$media+'(min-device-aspect-ratio: #{$breakpoint_1})',
 	), $range);
 
 	@return $mediaString;
@@ -189,8 +189,8 @@ $mq-debug: false !default;
 	}
 
 	$range: nth($mqSet,1);
-	$width1: null;
-	$width2: null;
+	$breakpoint_1: null;
+	$breakpoint_2: null;
 	$media: false;
 
 	@if (length($mqSet) == 1){
@@ -203,14 +203,14 @@ $mq-debug: false !default;
 	}
 
 	@if (length($mqSet) > 1){
-		$width1: nth($mqSet, 2);
+		$breakpoint_1: nth($mqSet, 2);
 	}
 
 	@if (length($mqSet) == 3){
 		$third: nth($mqSet, 3);
 
 		@if (type-of($third) == 'number' or isRatio($third)){
-			$width2: $third;
+			$breakpoint_2: $third;
 		} @else {
 			$media: $third;
 		}
@@ -223,7 +223,7 @@ $mq-debug: false !default;
 		@if ($fourth == false and type-of($third) == 'string' and not isRatio($third)){
 			$media: $third;
 		} @else {
-			$width2: $third;
+			$breakpoint_2: $third;
 			$media: $fourth;
 		}
 
@@ -234,8 +234,8 @@ $mq-debug: false !default;
 
 	$finalValues: (
 		range: $range,
-		width1: $width1,
-		width2: $width2,
+		breakpoint_1: $breakpoint_1,
+		breakpoint_2: $breakpoint_2,
 		media: mediaType($media, $range != null),
 	);
 
@@ -254,8 +254,8 @@ $mq-debug: false !default;
 	$values: get_values($mqSet, $debug);
 
 	$range: map-get($values, range);
-	$width1: map-get($values, width1);
-	$width2: map-get($values, width2);
+	$breakpoint_1: map-get($values, breakpoint_1);
+	$breakpoint_2: map-get($values, breakpoint_2);
 	$media: map-get($values, media);
 
 	@if ($range == null) {
@@ -268,7 +268,7 @@ $mq-debug: false !default;
 		@error $error;
 	}
 
-	@return calculateMQ($range, $width1, $width2, $media, $debug: $debug);
+	@return calculateMQ($range, $breakpoint_1, $breakpoint_2, $media, $debug: $debug);
 }
 
 @function joinQueries($range, $queryString: (), $debug: $mq-debug){
@@ -357,7 +357,7 @@ $mq-debug: false !default;
 	}
 }
 
-@mixin mq($range, $setting1: null, $setting2: null, $mediaType: false, $debug: $mq-debug) {
+@mixin mq($range, $breakpoint_1: null, $breakpoint_2: null, $mediaType: false, $debug: $mq-debug) {
 
 	@if ($debug) {
 		@debug $range;
@@ -376,16 +376,16 @@ $mq-debug: false !default;
 	//eg:
 	//@include mq(inside, 1000px, 500px, 'screen');
 	} @else {
-		//standardises the values to prevent mediaType from getting confused with setting2
-		$mediaOnly: $setting1 == null and $setting2 == null and $mediaType == false;
+		//standardises the values to prevent mediaType from getting confused with breakpoint_2
+		$mediaOnly: $breakpoint_1 == null and $breakpoint_2 == null and $mediaType == false;
 		@if ($debug) {
-			@debug inline_mq_settings (range: $range, setting1: $setting1, setting2: $setting2, mediaType: $mediaType, mediaOnly: $mediaOnly);
+			@debug inline_mq_breakpoint_s (range: $range, breakpoint_1: $breakpoint_1, breakpoint_2: $breakpoint_2, mediaType: $mediaType, mediaOnly: $mediaOnly);
 		}
-		$values: get_values(if($mediaOnly, $range, ($range $setting1 $setting2 $mediaType)), $debug: $debug);
+		$values: get_values(if($mediaOnly, $range, ($range $breakpoint_1 $breakpoint_2 $mediaType)), $debug: $debug);
 
 		$newRange: map-get($values, range);
-		$newWidth1: map-get($values, width1);
-		$newWidth2: map-get($values, width2);
+		$newWidth1: map-get($values, breakpoint_1);
+		$newWidth2: map-get($values, breakpoint_2);
 		$newMedia: map-get($values, media);
 
 		@if ($mediaOnly) {
