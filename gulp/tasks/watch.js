@@ -14,48 +14,46 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
     jsWatch.isEnabled = true;
     jsWatch.calledFromWatch = true;
 
-    if (!args.production) {
-      // Styles
-      gulp.watch([
-        path.join('*.{scss,sass}'),
-        path.join(dirs.source, dirs.styles, '**/*.{scss,sass}'),
-        path.join(dirs.source, dirs.modules, '**/*.{scss,sass}')
-      ])
-      .on('change', gulp.series('sass'));
+    // Styles
+    gulp.watch([
+      path.join('*.{scss,sass}'),
+      path.join(dirs.source, dirs.styles, '**/*.{scss,sass}'),
+      path.join(dirs.source, dirs.modules, '**/*.{scss,sass}')
+    ])
+    .on('change', gulp.series('sass'));
 
-      // Scripts (watchify takes over, this is just to get the ball rolling)
-      gulp.watch([
-        path.join(dirs.source, '**/*.js'),
-      ])
-      .on('change', gulp.series('browserify'));
+    // Scripts (watchify takes over, this is just to get the ball rolling)
+    gulp.watch([
+      path.join(dirs.source, '**/*.js'),
+    ])
+    .on('change', gulp.series('browserify'));
 
-      // Jade Templates
-      gulp.watch([
-        path.join(dirs.source, '**/*.pug'),
-        path.join(dirs.source, dirs.data, '**/*.{json,yaml,yml}')
-      ])
-      .on('change', gulp.series('pug:compile'));
+    // Jade Templates
+    gulp.watch([
+      path.join(dirs.source, '**/*.pug'),
+      path.join(dirs.source, dirs.data, '**/*.{json,yaml,yml}')
+    ])
+    .on('change', gulp.series('pug:compile'));
 
-      // Copy
-      gulp.watch([
-        path.join(dirs.source, '**/*'),
-        '!' + path.join(dirs.source, '{**/\_*,**/\_*/**}'),
-        '!' + path.join(dirs.source, '**/*.pug')
-      ])
-      .on('change', gulp.series('copy'));
+    // Copy
+    gulp.watch([
+      path.join(dirs.source, '**/*'),
+      '!' + path.join(dirs.source, '{**/\_*,**/\_*/**}'),
+      '!' + path.join(dirs.source, '**/*.pug')
+    ])
+    .on('change', gulp.series('copy'));
 
-      // Images
-      gulp.watch([
-        path.join(dirs.source, dirs.images, '**/*.{jpg,jpeg,gif,svg,png}')
-      ])
-      .on('change', gulp.parallel('imagemin', 'pug'));
+    // Images
+    gulp.watch([
+      path.join(dirs.source, dirs.images, '**/*.{jpg,jpeg,gif,svg,png}')
+    ])
+    .on('change', gulp.parallel('imagemin', 'pug'));
 
-      // All other files
-      gulp.watch([
-        path.join(dirs.temporary, '**/*'),
-        '!' + path.join(dirs.temporary, '**/*.{css,map,html,js}')
-      ]).on('change', browserSync.reload);
-    }
+    // All other files
+    gulp.watch([
+      path.join(dirs.temporary, '**/*'),
+      '!' + path.join(dirs.temporary, '**/*.{css,map,html,js}')
+    ]).on('change', browserSync.reload);
 
     done();
   }));
