@@ -939,6 +939,40 @@ $BP-page: 1200px;
 }
 `````````
 
+## Debug
+
+As of version 2.1.0, you can now access some debug information. You have 2 options available to you; local, and global.
+
+The easiest option is using the local method. Simply set the `$debug` property of the mixin to `true` and you will be given access to the debug information.
+
+````scss
+.element {
+    //Show debug info for only this media query
+    @include mq(inside, 600px, 1000px, $debug: true){
+        //styles go here
+    }
+}
+````
+
+That example would produce a log in your console that looks like this:
+
+````
+mq-scss/_mq.scss:378 DEBUG: inside
+mq-scss/_mq.scss:397 DEBUG: inline_mq_values (range: inside, breakpoint_1: 600px, breakpoint_2: 1000px, mediaType: false, mediaO
+nly: false)
+mq-scss/_mq.scss:248 DEBUG: get_values_result (range: inside, breakpoint_1: 600px, breakpoint_2: 1000px, media: "")
+mq-scss/_mq.scss:90 DEBUG: calculateMQ (range: inside, breakpoint_1: 1000px, breakpoint_2: 600px, mediaType: false)
+mq-scss/_mq.scss:421 DEBUG: !!!!! FINAL OUTPUT: @media (max-width: 1000px) and (min-width: 601px)
+````
+
+The other option is to turn debugging on globally. Set `$mq-debug` to `true` before the mixin import statement and it will produce debug information for every media query you have created with mq-scss across the entire site. I don't find this as useful as debugging individual mq-scss media queries but it's there if you want it.
+
+````scss
+//Show debug info for all media-queries across the entire site
+$mq-debug: true;
+@import '../node_modules/mq-scss/_mq';
+````
+
 ## Bonus retina display mixin
 
 I've also added a retina display mixin for detecting retina display devices
