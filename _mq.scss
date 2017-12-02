@@ -2,6 +2,7 @@ $mediaQuery: ();
 
 $mq-ems: false !default;
 $mq-em-base: 16px !default;
+$mq-debug: false !default;
 
 @import '_functions';
 
@@ -22,7 +23,7 @@ $mq-em-base: 16px !default;
 	@return false;
 }
 
-@function calculateMQ($range, $setting1: null, $setting2: null, $mediaType: false){
+@function calculateMQ($range, $setting1: null, $setting2: null, $mediaType: false, $debug: $mq-debug){
 
 	$swap-values: false;
 
@@ -52,7 +53,9 @@ $mq-em-base: 16px !default;
 			$setting2_1: get-start($setting2);
 			$setting2_2: get-end($setting2);
 
-			@debug (setting1_1: $setting1_1, setting1_2: $setting1_2, setting2_1: $setting2_1, setting2_2: $setting2_2);
+			@if ($debug) {
+				@debug range_numbers "('A1/A2', 'B1/B2')" (A1: $setting1_1, A2: $setting1_2, B1: $setting2_1, B2: $setting2_2);
+			}
 
 			$swap-values: $setting1_1 / $setting1_2 < $setting2_1 / $setting2_2;
 		} @else {
@@ -78,7 +81,9 @@ $mq-em-base: 16px !default;
 		}
 	}
 
-	@debug (range: $range, setting1: $setting1, setting2: $setting2, mediaType: $mediaType);
+	@if ($debug){
+		@debug calculateMQ (range: $range, setting1: $setting1, setting2: $setting2, mediaType: $mediaType);
+	}
 
 	@if (str-index($range, 'inside') != null or str-index($range, 'outside') != null){
 		@if ($setting2 == 0) {
@@ -177,9 +182,11 @@ $mq-em-base: 16px !default;
 	@return $first_is_string and $longer_than_1 and $not_plus_statment;
 }
 
-@function get_values($mqSet){
+@function get_values($mqSet, $debug: $mq-debug){
 
-	@debug mqSet $mqSet length length($mqSet);
+	@if ($mq-debug) {
+		@debug mqSet (length: length($mqSet), mqSet: $mqSet);
+	}
 
 	$range: nth($mqSet,1);
 	$width1: null;
@@ -225,27 +232,26 @@ $mq-em-base: 16px !default;
 		}
 	}
 
-	@debug (
+	$finalValues: (
 		range: $range,
 		width1: $width1,
 		width2: $width2,
 		media: mediaType($media, $range != null),
 	);
 
-	@return (
-		range: $range,
-		width1: $width1,
-		width2: $width2,
-		media: mediaType($media, $range != null),
-	);
+	@if ($debug) {
+		@debug get_values_result $finalValues;
+	}
+
+	@return $finalValues;
 }
 
 @function get_media($mqSet){
-	@return  map-get( get_values($mqSet) , media);
+	@return  map-get( get_values($mqSet), media);
 }
 
-@function calculateBasicQuery($mqSet, $isAndStatement: false){
-	$values: get_values($mqSet);
+@function calculateBasicQuery($mqSet, $isAndStatement: false, $debug: $mq-debug){
+	$values: get_values($mqSet, $debug);
 
 	$range: map-get($values, range);
 	$width1: map-get($values, width1);
@@ -262,10 +268,10 @@ $mq-em-base: 16px !default;
 		@error $error;
 	}
 
-	@return calculateMQ($range, $width1, $width2, $media);
+	@return calculateMQ($range, $width1, $width2, $media, $debug: $debug);
 }
 
-@function joinQueries($range, $queryString: ()){
+@function joinQueries($range, $queryString: (), $debug: $mq-debug){
 
 	$isAndStatement: false;
 	$contains_media_only_statement: false;
@@ -273,7 +279,9 @@ $mq-em-base: 16px !default;
 	@if (length($range) > 1) {
 		@for $i from 1 through length($range) {
 			$statement: nth($range,$i);
-			@debug statement $statement;
+			@if ($debug) {
+				@debug joinQueries_statement $statement;
+			}
 			@if ($statement == 'plus') {
 				$isAndStatement: true;
 				@if ($i == 2 and length(nth($range,1)) == 1) {
@@ -292,7 +300,7 @@ $mq-em-base: 16px !default;
 	//@include mq($MQ-example--single){}
 	@if (isBasicQuery($range)){
 
-		@return get_media($range) + calculateBasicQuery($range, $isAndStatement);
+		@return get_media($range) + calculateBasicQuery($range, $isAndStatement, $debug: $debug);
 
 	//Uses this functionality if using a multi level MQ variable
 	//eg:
@@ -303,14 +311,12 @@ $mq-em-base: 16px !default;
 	//@include mq($MQ-example--multiple){}
 	} @else {
 
-		@debug contains_media_only_statement $contains_media_only_statement;
-
 		@each $mqSet in $range {
 
 			@if ($mqSet != 'plus') {
 				@if (isBasicQuery($mqSet)){
 
-					$newQuery: calculateBasicQuery($mqSet, $isAndStatement);
+					$newQuery: calculateBasicQuery($mqSet, $isAndStatement, $debug: $debug);
 
 					$media: get_media($mqSet);
 
@@ -330,7 +336,7 @@ $mq-em-base: 16px !default;
 						@if ($is_media_only_statment) {
 							$queryString: $mqSet;
 						} @else {
-							$queryString: joinQueries($mqSet, $queryString);
+							$queryString: joinQueries($mqSet, $queryString, $debug);
 						}
 						@if (length($queryString) > 1){
 							$error: 'mq-scss does not support "or" statements inside "plus" statements: ' + $queryString;
@@ -340,7 +346,7 @@ $mq-em-base: 16px !default;
 						@if ($is_media_only_statment) {
 							$queryString: $mqSet;
 						} @else {
-							$queryString: append($queryString, joinQueries($mqSet), 'comma');
+							$queryString: append($queryString, joinQueries($mqSet, $debug: $debug), 'comma');
 						}
 					}
 				}
@@ -351,17 +357,18 @@ $mq-em-base: 16px !default;
 	}
 }
 
-@mixin mq($range, $setting1: null, $setting2: null, $mediaType: false) {
+@mixin mq($range, $setting1: null, $setting2: null, $mediaType: false, $debug: $mq-debug) {
 
-	//spacer
-	@debug '';
-	@debug $range;
+	@if ($debug) {
+		@debug $range;
+	}
 
 	@if (length($range) > 1) {
-
-
-		@debug '!!!!! FINAL OUTPUT: @media ' + (joinQueries($range));
-		@media #{joinQueries($range)} {
+		$finalOutput: joinQueries($range, $debug: $debug);
+		@if ($debug) {
+			@debug '!!!!! FINAL OUTPUT: @media ' + $finalOutput;
+		}
+		@media #{$finalOutput} {
 			@content;
 		}
 
@@ -371,9 +378,10 @@ $mq-em-base: 16px !default;
 	} @else {
 		//standardises the values to prevent mediaType from getting confused with setting2
 		$mediaOnly: $setting1 == null and $setting2 == null and $mediaType == false;
-		@debug mediaOnly $mediaOnly;
-		@debug range $range setting1 $setting1 setting2 $setting2 mediaType $mediaType;
-		$values: get_values(if($mediaOnly, $range, ($range $setting1 $setting2 $mediaType)));
+		@if ($debug) {
+			@debug inline_mq_settings (range: $range, setting1: $setting1, setting2: $setting2, mediaType: $mediaType, mediaOnly: $mediaOnly);
+		}
+		$values: get_values(if($mediaOnly, $range, ($range $setting1 $setting2 $mediaType)), $debug: $debug);
 
 		$newRange: map-get($values, range);
 		$newWidth1: map-get($values, width1);
@@ -382,23 +390,34 @@ $mq-em-base: 16px !default;
 
 		@if ($mediaOnly) {
 
+			@if ($debug) {
+				@debug '!!!!! FINAL OUTPUT: @media ' + $newMedia;
+			}
 
-			@debug '!!!!! FINAL OUTPUT: @media ' + $newMedia;
 			@media #{ $newMedia } {
 				@content;
 			}
 
 		} @else {
 
+			$finalMQ: $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2, $debug: $debug);
 
-			@debug '!!!!! FINAL OUTPUT: @media ' + $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2) ;
-			@media #{ $newMedia + calculateMQ($newRange, $newWidth1, $newWidth2) } {
+			@if ($debug) {
+				@debug '!!!!! FINAL OUTPUT: @media ' + $finalMQ ;
+			}
+
+			@media #{ $finalMQ } {
 				@content;
 			}
 
 		}
-
 	}
+
+	@if ($debug){
+		//spacer for seperating results
+		@debug '';
+	}
+
 }
 
 @mixin retina($density: 2) {
