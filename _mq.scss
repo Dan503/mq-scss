@@ -202,7 +202,7 @@ $mq-em-base: 16px !default;
 	@if (length($mqSet) == 3){
 		$third: nth($mqSet, 3);
 
-		@if (type-of($third) == 'number'){
+		@if (type-of($third) == 'number' or isRatio($third)){
 			$width2: $third;
 		} @else {
 			$media: $third;
@@ -223,14 +223,6 @@ $mq-em-base: 16px !default;
 		@if ($media == " and ") {
 			$media: '';
 		}
-	}
-
-	//specifically for things like this:
-	//(('screen') plus (min, 800px))
-	@if (nth($mqSet, 2) == 'plus') {
-		// $media: $range;
-		// $range: null;
-		// $width1: null;
 	}
 
 	@debug (
