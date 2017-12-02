@@ -1,10 +1,12 @@
 # mq-scss
 
-An extremely powerful but easy to use Sass media query mixin
+An extremely powerful but easy to use Sass media query mixin that allows you to create almost any media query you can imagine.
 
 This media query mixin is a powerful tool that lets you easily create far more complex media queries than you would have ever attempted to do with plain css. It also makes your code far easier to maintain through it's ability to take simple media query variables.
 
-If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-js) npm module. This allows you to use mq-scss style media queries inside your JavaScript files.
+I've set up a [test/demo site](https://dan503.github.io/mq-scss/). It primarily exists for testing but it does a pretty decent job of demoing what mq-scss can do as well.
+
+If you enjoy using mq-scss, also try out my [mq-js](https://www.npmjs.com/package/mq-js) npm module. This allows you to use mq-scss style media queries inside your JavaScript files.
 
 ## Contents
 
@@ -29,9 +31,13 @@ If you enjoy using mq-scss, try my new [mq-js](https://www.npmjs.com/package/mq-
     * [Media Query `plus` statements](#media-query-plus-statements)
         * [**!IMPORTANT!** limitations of `plus`](#important-limitations-of-plus)
 * [Defining media types](#defining-media-types)
+    * [Media only queries](#media-only-queries)
+    * [The `not` media type](#the-not-media-type)
 * [em conversion](#em-conversion)
 * [Defining breakpoints](#defining-breakpoints)
+* [Debug](#debug)
 * [Bonus retina display mixin](#bonus-retina-display-mixin)
+* [For contributors](#for-contributors)
 * [Change Log](#change-log)
 
 ## Installation
@@ -269,6 +275,8 @@ It is easiest to think of ratio based media queries as always being based more o
 There are 2 types of ratio based media queries, "aspect-ratio" (shortened to just `ratio` in the mq mixin) and "device-aspect-ratio" (shortened to `device-ratio` in the mq mixin). It is generally best to stick with "aspect-ratio" rather than "device-aspect-ratio" since "aspect-ratio" is determined by the users browser window size. "device-aspect-ratio" is based on the physical screen size of the users device. With "aspect-ratio" you can see the effects by just resizing the browser window. With "device-aspect-ratio" you will physically have to look at the site on a different screen in order to see the effect... or look at the site with the Chrome dev tools screen emulator open (Chromes screen emulator obeys "device-aspect-ratio" media queries).
 
 Ratio based media queries are mostly useful for when you have sites that have displays that take up the full screen. Displays like this tend to need media queries that understand both the users screen height and width at the same time. You may need to combine the ratio based media query with a more traditional pixel based media query for it to have the greatest effect. Read the [Media Query `plus` statements](#media-query-plus-statements) section for more details on how to do that.
+
+Unlike `min-width` and `min-height`, `min-ratio` will actually conflict with `max-ratio`. To learn how to avoid this, read through the [`not` media type](#the-not-media-type) section.
 
 ### Full list of media query ranges
 
@@ -862,7 +870,7 @@ $mq: (
 }
 `````````````
 
-An important thing to note about media types and `plus` statements. Only the media type that is defined at the start of the plus statement will be honoured. All other media types will be ignored.
+An important thing to note about media types and `plus` statements. Only the media type that is defined at the _start_ of the plus statement will be honoured. All other media types will be ignored.
 
 `````````````scss
 // SCSS
@@ -897,6 +905,93 @@ An important thing to note about media types and `plus` statements. Only the med
   }
 }
 `````````````
+
+### Media only queries
+
+This was introduced in version 2.1.0. This is now a completely valid mq-scss statement:
+
+````scss
+@include mq('print'){
+    body { color: #000; }
+}
+````
+````css
+/* output css */
+@media print {
+    body { color: #000; }
+}
+````
+
+Using it in that way is kind of counter productive since it takes more characters to type it out than the raw css version. Where the strength comes is from utilizing it in `or` and `plus` statements.
+
+Here is a `plus` statement example:
+
+````scss
+$MQ-plusExample: 'screen' plus (inside, 600px, 1000px);
+@include mq($MQ-plusExample){
+    body { color: #000; }
+}
+````
+````css
+/* output css */
+@media screen and (max-width: 1000px) and (min-width: 601px) {
+    body { color: #000; }
+}
+````
+
+This lets you place `'screen'` at the start and join it to the rest of the query with a `plus` statement. This makes it feel much closer to real css while still keeping all the advantages of the mq-scss syntax. Remember that `plus` statements are not compatible with `outside` range types though so those still need to use the v2.0.0 syntax.
+
+Here is an `or` example.
+
+````scss
+$MQ-orExample: (
+    (min, 1200px),
+    'print'
+);
+@include mq($MQ-orExample){
+    body { color: #000; }
+}
+````
+````css
+/* output css */
+@media (min-width: 1201px), print {
+    body { color: #000; }
+}
+````
+
+The use case in this example is that you always want the print styles to be based on the desktop version of the site even if printing from a mobile device. By placing `'print'` on it's own in the or statement, it will always print based on the desktop styles no matter what the current screen size is.
+
+### The `not` media type
+
+`'not'` is an interesting media type. It was introduced in v2.1.0 as a short-hand for `not screen` in mq-scss (`@media not (max-width: 600px){}` is actually invalid css).
+
+`'not'` will essentially invert the media query. You could use this for helping you write counter queries however I would caution against this. In general, using `'not'` is fine. However, if you try and nest another media query inside of it, or you nest the `'not'` statement inside a different media query, Sass can output some very odd and unexpected results. This is the reason version 1.0.0 of mq-scss couldn't support nested `outside` statements. It was essentially using `not inside` to produce the media query.
+
+There is at least one very good use case for using the `'not'` media type though. Take a look at the Ratio section of the [mq-scss test site](https://dan503.github.io/mq-js/#ratio) and resize your browser to exactly 800px wide by 400px tall. You will notice that they all return `true` since your screen is at exactly a `2 / 1` ratio and they all share that `2 / 1` ratio in their media query. Increase or decrease the size of your window by just a single pixel and you will see some of them swap to returning false.
+
+I couldn't build protection against this into the core mq-scss mixin since I couldn't just add +1 pixel to a ratio like I could with width and height. I also didn't want to use `'not'` in the core mixin since that would prevent all cases of `min-ratio` from being compatible with media query nesting. There is nothing stopping you from using `'not'` to solve this issue yourself though.
+
+In order to use a `min-ratio` that works in the same sort of way that `min-height` and `min-width` work, you actually need to use `'not'` in combination with a `max-ratio` statement.
+
+````scss
+//equivalent to (min-ratio, '2 / 1') but without the 1px sour spot
+@include mq(max-ratio, '2 / 1', 'not') {
+    body { color: #000; }
+}
+
+//same as above but formatted to place the 'not' at the start
+@include mq('not' plus (max-ratio, '2 / 1')) {
+    body { color: #000; }
+}
+
+````
+
+````css
+/* output css for both */
+@media not screen and (max-aspect-ratio: 2 / 1) {
+    body { color: #000; }
+}
+````
 
 ## em conversion
 
@@ -1020,9 +1115,26 @@ To create this css:
 }
 ````````
 
+## For contributors
+
+If you wish to contribute to mq-scss, version 2.1.0+ comes with a testing environment. To access the testing environment:
+
+1. Checking out the [GitHub repository](https://github.com/Dan503/mq-scss)
+2. Run `npm install`
+3. Run `gulp --open`
+
+I plan to eventually create proper automated unit tests. This is better than nothing though.
+
 ## Change log
 
 This change log only covers major changes to the mixin. Due to how npm works, things like edits to the readme file require releasing whole new versions of the module to publish the edits. Those sorts of releases are not listed here.
+
+### v2.1.0
+
+- Added the ability to debug mq statements by setting either the local `$debug` setting or the global `$mq-debug` setting to `true`.
+- Now supports media type only statements
+- Added a proper testing/demo environment to the repository (check out repo > `npm i` > `gulp --open`)
+- Added support for `not` as a short-hand for `not screen` media types.
 
 ### v2.0.0
 
