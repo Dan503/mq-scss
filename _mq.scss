@@ -394,7 +394,7 @@ $mq-debug: false !default;
 		//standardises the values to prevent mediaType from getting confused with breakpoint_2
 		$mediaOnly: $breakpoint_1 == null and $breakpoint_2 == null and $mediaType == false;
 		@if ($debug) {
-			@debug inline_mq_breakpoint_s (range: $range, breakpoint_1: $breakpoint_1, breakpoint_2: $breakpoint_2, mediaType: $mediaType, mediaOnly: $mediaOnly);
+			@debug inline_mq_values (range: $range, breakpoint_1: $breakpoint_1, breakpoint_2: $breakpoint_2, mediaType: $mediaType, mediaOnly: $mediaOnly);
 		}
 		$values: get_values(if($mediaOnly, $range, ($range $breakpoint_1 $breakpoint_2 $mediaType)), $debug: $debug);
 
