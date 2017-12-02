@@ -8,6 +8,7 @@ $mq-debug: false !default;
 
 @function mediaType($mediaType: false, $hasAnd: true){
 	$media: '';
+	$mediaType: if($mediaType == 'not', 'not screen', $mediaType);
 	@if ($mediaType){
 		$media: if($hasAnd, $mediaType + ' and ', $mediaType);
 	}
@@ -331,10 +332,12 @@ $mq-debug: false !default;
 					}
 
 				} @else {
+
 					$is_media_only_statment: $contains_media_only_statement and type-of($mqSet) == 'string';
+
 					@if ($isAndStatement) {
 						@if ($is_media_only_statment) {
-							$queryString: $mqSet;
+							$queryString: mediaType($mqSet, false);
 						} @else {
 							$queryString: joinQueries($mqSet, $queryString, $debug);
 						}
