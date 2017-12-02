@@ -1,0 +1,104 @@
+.demo {
+	padding: 5px;
+	border: 2px solid #000;
+
+	&__segment {
+		position: relative;
+		margin-top: 35px;
+		margin-bottom: 10px;
+		&:last-child, &.grid__cell {
+			margin-bottom: 0;
+		}
+		&:before {
+			position: absolute;
+			bottom: 100%;
+			left: 0;
+			padding: 5px 10px;
+			background: #000;
+			color: #fff;
+			border-radius: 5px 5px 0 0;
+		}
+	}
+	&__summary {
+		background-color: #CDDEC4;
+		padding: 20px;
+		margin-bottom: 10px;
+		margin-top: 60px;
+		&:before {
+			content: 'Summary';
+		}
+
+		+ .demo__result {
+			margin-top: 45px;
+		}
+	}
+	&__result {
+		&:before {
+			content: 'Example';
+
+			.-false & {
+				content: 'Not Gutter Grid'
+			}
+		}
+		.grid {
+			padding: 0;
+		}
+
+		.grid__cell, .mixin__cell {
+			min-height: 100px;
+			margin: 0;
+
+			.-noHeight & {
+				min-height: 0;
+			}
+		}
+	}
+	&__markup {
+		background-color: #282c34;
+		position: relative;
+		padding-left: 40px;
+		display: flex;
+    &.html:before {
+      content: 'HTML';
+    }
+		&.scss:before {
+			content: 'Sass';
+		}
+    &.js:before {
+      content: 'JavaScript';
+    }
+    &.json:before {
+      content: 'JSON';
+    }
+
+    pre {
+      display: flex;
+      flex-grow: 1;
+      &, &.lines {
+        margin: 0;
+      }
+
+      &.lines {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background: #000;
+        padding-top: 12px;
+      }
+    }
+
+    code {
+      margin-top: -20px;
+      padding: {bottom: 10px; top: 10px; }
+    }
+	}
+
+	.example {
+		ul, li {
+			list-style: none;
+			padding-left: 0 !important;
+		}
+	}
+}

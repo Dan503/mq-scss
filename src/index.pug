@@ -1,0 +1,12 @@
+extends _layouts/base
+
+block append includes
+  include /_modules/demo/demo
+
+block content
+  :marked
+    This is a testing/demo site for mq-scss. Full documentation can be found on [GitHub](https://github.com/Dan503/mq-scss) and [npm](https://www.npmjs.com/package/mq-scss).
+
+    This site is best viewed on desktop. Resizing the browser window will cause different media queries to activate at different screen sizes.
+
+  include /_modules/tests/tests

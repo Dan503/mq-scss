@@ -1,0 +1,18 @@
+//easily apply customizable background colors based on brand colors
+.-color {
+	@for $i from 1 through length($brand) {
+		&-#{$i} {
+			background-color: brand($i);
+
+			&, * { color: brand($i, 'text'); }
+			&, svg { fill: brand($i, 'text'); }
+		}
+
+		&-text-#{$i} {
+			&, * {
+				color: brand($i);
+				fill: brand($i);
+			}
+		}
+	}
+}

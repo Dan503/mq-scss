@@ -1,0 +1,55 @@
+
+include ../tabs/tabs
+
+-
+  function render(pugMarkup, settings, locals){
+    return compile(pugMarkup, { pretty: true, basedir: './src/' })(locals);
+  }
+
+  var defaultTo = require('default-to').default;
+
+mixin demo__tab(demoMarkup, spec)
+  -var countKeys = require('count-keys');
+  -var isObj = typeof demoMarkup === 'object' && !Array.isArray(demoMarkup);
+  -var markupString = isObj ? demoMarkup.html : demoMarkup;
+  -var html = render(markupString);
+
+  if isObj && demoMarkup.html || !isObj
+    .demo__result.demo__segment
+      !=html
+
+  //- I need to hide the TK-noDots class from users (hacky fix)
+  -
+    markupString = markupString ? markupString.replace('.TK-noDots', '') : markupString;
+    html = render(markupString);
+    var keyCount = countKeys(demoMarkup, {
+      maxDepth: 1,
+      filter: item => item.key !== 'html' && spec.showHTML,
+    });
+
+  if isObj
+    .demo__grid(style=`--cols:${keyCount}`)
+      each markup, type in demoMarkup
+        if (type === 'html' && spec.showHTML || type !== 'html')
+          - markup = type === 'html' ? html : markup;
+          .demo__gridCell.demo__markup.demo__segment(class=type)
+            pre
+              code(class=type)= markup
+  else
+    .demo__markup.demo__segment
+      pre
+        code.html= html
+
+mixin demo(demoMarkup, spec)
+  -
+    spec = defaultTo(spec, {
+      classes: '',
+      showHTML: false,
+    })
+
+  aside.demo(class=spec.classes)&attributes(attributes)
+    if block
+      .demo__summary.demo__segment
+        block
+
+    +demo__tab(demoMarkup, spec)

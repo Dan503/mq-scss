@@ -1,0 +1,41 @@
+
+//colors
+
+//red green blue etc
+@import '01-colors/0-CB-colors-base';
+//primary, secondary and tertiery brand colours
+@import '01-colors/1-brand';
+//colors based on functionality eg error colours
+@import '01-colors/2-CF-colors-functional';
+
+
+//Global values
+
+//if a class needs to be shared across multiple modules, place it here
+@import '02-values/CLG-classes-global.scss';
+//values that are used all over the place (atomic design might render this useless)
+@import '02-values/VG-values-global.scss';
+//z-index values primarily for overlays where we want to make sure they are above other elements
+@import '02-values/ZIG-z-index-global.scss';
+
+
+//Global breakpoints and media queries
+
+//The main points at which the site changes layout
+@import '03-BPs-MQs/00-bp-break-points-base.scss';
+//If multiple modules need to use the same breakpoint, place it here
+@import '03-BPs-MQs/01-BPG-break-points-global.scss';
+//Simmillar to the global breakpoints file except it lets you share the whole media query
+@import '03-BPs-MQs/02-MQG-media-queries-global.scss';
+
+
+//Global font settings
+
+//configure what the site font families are
+@import '04-fonts/font-families.scss';
+//text translation variables for google fonts numerical font weights
+@import '04-fonts/font-weights.scss';
+
+
+//all npm installs are added and configured from here
+@import 'npm-installs';

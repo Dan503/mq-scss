@@ -1,0 +1,116 @@
+
+///*******************\
+//	PURE CSS SEARCH ICON
+//*******************/
+//I'm going to publish this into npm soon. It's one of my coolest inventions :) - Dan
+@mixin searchIcon($color: #000, $glassDiameter: 20px, $lineWidth: 2px, $handleLength: if($color == 'toCross', false, round($glassDiameter * 0.45)), $handleWidth: $lineWidth, $speed: 0.25s, $pos: relative){
+
+	$invalidString: type-of($color) == 'string' and $color != 'cross' and $color != 'eye';
+	$notColor: type-of($color) != 'color' and type-of($color) != 'string';
+
+	@if ($invalidString or $notColor){
+		@error 'The first parameter "#{$color}" must either be either a color or one of these strings: "toCross", "toEye"';
+	}
+
+	//main functionality for creating the icon
+	@if (type-of($color) == 'color'){
+		$iconSize: ceil(($glassDiameter + $handleLength) * 0.75);
+
+		$transition: all $speed ease-in-out, background 0.2s ease-in-out;
+
+		height: $iconSize;
+		width: $iconSize;
+		display: block;
+		transition: $transition;
+		position: $pos;
+
+		&:before, &:after {
+			display: block;
+			content: '';
+			position: absolute;
+			transition: $transition;
+		}
+
+		//glass
+		&:before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: $glassDiameter;
+			height: $glassDiameter;
+			border-radius: 50%;
+			border: $lineWidth solid $color;
+			transform: rotate(45deg);
+			box-shadow: 0 0 0 transparent;//needed for hover
+		}
+
+		//handle
+		&:after {
+			bottom: 0;
+			right: 0;
+			margin: auto;
+			width: $handleLength;
+			height: $lineWidth;
+			background-color: $color;
+			transform: rotate(45deg) translateY(50%);
+			transform-origin: bottom right;
+			border-radius: $lineWidth * 2;
+		}
+	}
+
+	//turns the search icon into a cross icon
+	@if ($color == 'cross'){
+
+		//$glassDiameter turns into a colour setting variable
+		@if(type-of($glassDiameter) == number){
+			$glassDiameter: #000;
+		}
+		$crossColor: $glassDiameter;
+
+		transform: rotate(180deg);
+
+		//glass
+		&:before {
+			border-radius: 0;
+			width: $lineWidth;
+			border-width: 0;
+			//border-color: transparent;
+			left: 45%;
+			height: 140%;
+			top: -15%;
+			bottom: 0;
+			background-color: $crossColor;
+		}
+		//handle
+		&:after {
+			background-color: $crossColor;
+			height: $lineWidth;
+			width: 140%;
+			border-radius: 0;
+			bottom: 0;
+			right: 0;
+		}
+	}
+
+	@if ($color == 'eye'){
+		transform: rotate(90deg);
+		//glass
+		&:before {
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			border-radius: 50%;
+			border-width: $lineWidth;
+			background: transparent;
+		}
+		&:after {
+			height: 50%;
+			width: 50%;
+			bottom: 20%;
+			right: 20%;
+			border-radius: 50%;
+		}
+	}
+
+};

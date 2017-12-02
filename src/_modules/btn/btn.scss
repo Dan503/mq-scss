@@ -1,0 +1,60 @@
+
+.btn {
+  font-family: $font-2;
+  font-weight: $bold;
+  font-size: 14px;
+  background-color: $CB-red-dark;
+  color: #fff;
+  transition: 0.3s;
+  padding: 15px 20px;
+  display: inline-block;
+  transition: all 0.25s ease-in-out;
+  position: relative;
+  text-align: left;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  border: 3px solid brand(1);
+  text-decoration: none !important;
+
+  &:hover {
+    background-color: #000;
+    color: #fff;
+
+    svg {
+      fill: brand(1);
+    }
+  }
+
+	svg {
+		fill: brand(1);
+		@include centered(v);
+		right: 20px;
+		height: 10px;
+		width: 10px;
+		fill: transparent;
+		fill: brand(1, 'text');
+		fill-width: 15px;
+		transition: 0.3s;
+	}
+
+	&.-hasIcon {
+		padding-right: 55px;
+	}
+
+  &.-active {
+    background-color: brand(2);
+    color: brand(2, text);
+    &:hover {
+      background-color: brand(2, hover);
+    }
+  }
+
+  &.-inactive {
+    background-color: lightgray;
+    color: brand(2, text);
+    &:hover {
+      background-color: gray;
+    }
+  }
+
+}
