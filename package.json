@@ -22,6 +22,9 @@
   "bugs": {
     "url": "https://github.com/Dan503/mq-scss/issues"
   },
+  "scripts": {
+    "test": "jest"
+  },
   "homepage": "https://github.com/Dan503/mq-scss#readme",
   "devDependencies": {
     "autoprefixer": "^7.1.6",
