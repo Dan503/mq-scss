@@ -1138,11 +1138,18 @@ If you wish to contribute to mq-scss, it now comes with a testing environment. T
 4. If you have never used gulp before, run `npm install gulp-cli -g`
 5. Run `gulp --open`
 
-I plan to eventually create proper automated unit tests. This is better than nothing though.
+It also comes with a batch of 46 unit tests that are used to ensure that all of the functionality remains intact. To run the unit tests:
+
+1. Run `gulp compile-tests` (refreshes the css files it tests against)
+2. Run `npm test`
 
 ## Change log
 
 This change log only covers major changes to the mixin. Due to how npm works, things like edits to the readme file require releasing whole new versions of the module to publish the edits. Those sorts of releases are not listed here.
+
+### v2.1.2
+
+- Added automated unit-tests
 
 ### v2.1.0
 
