@@ -1,0 +1,27 @@
+@import '../../test-dependencies.scss';
+
+@mixin multiPlus {
+	$MQ-multiPlus: (
+		('screen') plus
+		(min-width, $BP-medium) plus
+		(min-height, 400px) plus
+		(inside, $BP-small, $BP-large) plus
+		(inside-ratio, '2/1', '1/1')
+	);
+	@include mq($MQ-multiPlus) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include multiPlus { color: #000; }
+	}
+} @else {
+	.test.-multiPlus {
+		&::before { content: 'mq($MQ-multiPlus)'; }
+		@include multiPlus {
+			@include isActive;
+		}
+	}
+}

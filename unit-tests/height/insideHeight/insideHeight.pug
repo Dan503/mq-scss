@@ -1,0 +1,11 @@
+mixin insideHeight
+  //-insideHeight
+  +demo({
+    html: `
+.test.-insideHeight
+`,
+    scss: `
+@include mq(inside-height, $BP-small, $BP-medium) {
+  background: $green;
+}`,
+  })

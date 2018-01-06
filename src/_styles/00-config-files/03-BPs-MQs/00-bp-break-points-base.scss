@@ -22,9 +22,3 @@ $breakpoints: (
 	large: $BP-large,
 	page: $BP-page,
 )
-
-:root {
-	@each $name, $value in $breakpoints {
-		--BP-#{$name}: $value;
-	}
-}

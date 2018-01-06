@@ -1,0 +1,3 @@
+import unitTest from '../../../gulp/helpers/unitTest';
+
+unitTest('ignoreMediaType', __dirname, '@media (max-width: 800px) and (min-width: 601px) and (max-aspect-ratio: 2 / 1) and (min-aspect-ratio: 1 / 1){.unitTest{color:#000}}')

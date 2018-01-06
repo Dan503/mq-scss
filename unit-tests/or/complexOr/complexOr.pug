@@ -1,0 +1,15 @@
+mixin complexOr
+  //-complexOr
+  +demo({
+    html: `
+.test.-complexOr
+`,
+    scss: `
+$MQ-complexOr: (
+  (inside, $BP-small, $BP-medium, 'screen'),
+  (outside-ratio, '2/1', '1/1')
+);
+@include mq($MQ-complexOr) {
+  background: $green;
+}`,
+  })

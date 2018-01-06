@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin exactRatioWorkAround1 {
+	$MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
+	@include mq($MQ-exactRatioWorkAround1) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include exactRatioWorkAround1 { color: #000; }
+	}
+} @else {
+	.test.-exactRatioWorkAround1 {
+		&::before { content: 'mq($MQ-exactRatioWorkAround1)'; }
+		@include exactRatioWorkAround1 {
+			@include isActive;
+		}
+	}
+}

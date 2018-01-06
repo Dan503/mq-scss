@@ -1,0 +1,11 @@
+mixin onlyMedia
+  //-onlyMedia
+  +demo({
+    html: `
+.test.-onlyMedia
+`,
+    scss: `
+@include mq('screen') {
+  background: $green;
+}`,
+  })

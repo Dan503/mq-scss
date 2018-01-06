@@ -1,0 +1,11 @@
+mixin notMedia
+  //-notMedia
+  +demo({
+    html: `
+.test.-notMedia
+`,
+    scss: `
+@include mq(min, $BP-medium, 'not') {
+  background: $green;
+}`,
+  })

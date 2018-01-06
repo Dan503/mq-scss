@@ -1,0 +1,11 @@
+mixin ratio
+  //-ratio
+  +demo({
+    html: `
+.test.-ratio
+`,
+    scss: `
+@include mq(ratio, "2 / 1") {
+  background: $green;
+}`,
+  })

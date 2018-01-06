@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin ratioVar {
+	$MQ-ratioVar: (ratio, "2 / 1");
+	@include mq($MQ-ratioVar) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include ratioVar { color: #000; }
+	}
+} @else {
+	.test.-ratioVar {
+		&::before { content: 'mq($MQ-ratioVar)'; }
+		@include ratioVar {
+			@include isActive;
+		}
+	}
+}

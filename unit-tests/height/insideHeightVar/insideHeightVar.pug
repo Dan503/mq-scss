@@ -1,0 +1,12 @@
+mixin insideHeightVar
+  //-insideHeightVar
+  +demo({
+    html: `
+.test.-insideHeightVar
+`,
+    scss: `
+$MQ-insideHeightVar: (inside-height, $BP-small, $BP-medium);
+@include mq($MQ-insideHeightVar) {
+  background: $green;
+}`,
+  })

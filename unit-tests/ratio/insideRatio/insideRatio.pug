@@ -1,0 +1,11 @@
+mixin insideRatio
+  //-insideRatio
+  +demo({
+    html: `
+.test.-insideRatio
+`,
+    scss: `
+@include mq(inside-ratio, "2 / 1", "1 / 1") {
+  background: $green;
+}`,
+  })

@@ -1,0 +1,20 @@
+@import '../../test-dependencies.scss';
+
+@mixin outsideWidth {
+	@include mq(outside-width, $BP-small, $BP-medium) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include outsideWidth { color: #000; }
+	}
+} @else {
+	.test.-outsideWidth {
+		&::before { content: 'mq(outside, #{$BP-medium}, #{$BP-small})'; }
+		@include outsideWidth {
+			@include isActive;
+		}
+	}
+}

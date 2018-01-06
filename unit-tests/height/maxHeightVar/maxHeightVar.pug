@@ -1,0 +1,13 @@
+
+mixin maxHeightVar
+  //-maxHeightVar
+  +demo({
+    html: `
+.test.-maxHeightVar
+`,
+    scss: `
+$MQ-maxHeightVar: (max-height, $BP-medium);
+@include mq($MQ-maxHeightVar) {
+  background: $green;
+}`,
+  })
