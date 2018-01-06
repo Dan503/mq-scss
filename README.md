@@ -52,7 +52,7 @@ npm install mq-scss --save
 
 ```````````
 
-Import mq-scss at the top of your main Sass file (note that the exact path will differ depending on your folder structure)
+Import mq-scss at the top of your main Sass file (note that the exact path will differ depending on your folder structure).
 
 ``````scss
 @import "../node_modules/mq-scss/mq";
@@ -66,7 +66,7 @@ Import mq-scss at the top of your main Sass file (note that the exact path will 
 
 ### Min/Max width
 
-In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than or equal to 600px wide
+In this example we state that we want the background of the element to be red by default but change to blue if the screen is less than or equal to 600px wide.
 
 `````````````scss
 // SCSS
@@ -363,7 +363,7 @@ $MQ-[element]__[property]--[state]: ([range], [breakpoint-1], [breakpoint-2]);
 
 Here is the breakdown of what each part means. I tend to use camelCase for each group to keep the grouping clear.
 
-**$MQ** - MQ at the start tells us that it's a media query variable (helps when scanning through the code)
+**$MQ** - MQ at the start tells us that it's a media query variable (helps when scanning through the code).
 
 **[element]** - The target element name. So for `.car__door` [element] would be `door`.
 
@@ -1149,21 +1149,21 @@ This change log only covers major changes to the mixin. Due to how npm works, th
 
 ### v2.1.2
 
-- Added automated unit-tests
+- Added automated unit-tests.
 
 ### v2.1.0
 
 - Added the ability to debug mq statements by setting either the local `$debug` setting or the global `$mq-debug` setting to `true`.
-- Now supports media type only statements
-- Added a proper testing/demo environment to the repository (check out repo > `npm i` > `gulp --open`)
+- Now supports media type only statements.
+- Added a proper testing/demo environment to the repository (check out repo > `npm i` > `gulp --open`).
 - Added support for `not` as a short-hand for `not screen` media types.
 
 ### v2.0.0
 
 - Added the ability to define custom media types for individual mq statements.
-- **BREAKING CHANGE:** By default, no media type is added to the media query (previously it added "screen" as the media type to all media queries)
+- **BREAKING CHANGE:** By default, no media type is added to the media query (previously it added "screen" as the media type to all media queries).
     - If upgrading from v1.x you may want to add `"screen"` to the end of all your MQ statements to retain consistency with v1.x.
-    - eg. from `@include mq(max, 800px)` to `@include mq(max, 800px, 'screen')`
+    - eg. from `@include mq(max, 800px)` to `@include mq(max, 800px, 'screen')`.
 
 ### v1.3.2
 
@@ -1175,8 +1175,8 @@ This change log only covers major changes to the mixin. Due to how npm works, th
 
 ### v1.3.0
 
-- Added the `plus` keyword for improved handling of "and" statements
-- Changed the breakpoints list example to just a list of variables
+- Added the `plus` keyword for improved handling of "and" statements.
+- Changed the breakpoints list example to just a list of variables.
 
 ### v1.2.0
 
