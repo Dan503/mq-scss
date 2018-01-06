@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin notMedia {
+	@include mq(min, $BP-medium, 'not') {
+		@content;
+	}
+}
+
+.unitTest {
+	@include notMedia {
+		color: #000;
+	}
+}

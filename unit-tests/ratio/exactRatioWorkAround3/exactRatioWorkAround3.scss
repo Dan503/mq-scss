@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin exactRatioWorkAround3 {
+	@include mq(max-ratio, '2 / 1', 'not') {
+		@content;
+	}
+}
+
+.unitTest {
+	@include exactRatioWorkAround3 {
+		color: #000;
+	}
+}

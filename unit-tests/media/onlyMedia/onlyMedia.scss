@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin onlyMedia {
+	@include mq('screen') {
+		@content;
+	}
+}
+
+.unitTest {
+	@include onlyMedia {
+		color: #000;
+	}
+}

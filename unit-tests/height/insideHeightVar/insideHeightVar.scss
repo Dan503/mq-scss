@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin insideHeightVar {
+	$MQ-insideHeightVar: (inside-height, $BP-small, $BP-medium);
+	@include mq($MQ-insideHeightVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include insideHeightVar {
+		color: #000;
+	}
+}

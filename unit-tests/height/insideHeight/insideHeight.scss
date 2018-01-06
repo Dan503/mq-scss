@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin insideHeight {
+	@include mq(inside-height, $BP-small, $BP-medium) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include insideHeight {
+		color: #000;
+	}
+}

@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin maxHeight {
+	@include mq(max-height, $BP-medium) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include maxHeight {
+		color: #000;
+	}
+}

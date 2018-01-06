@@ -1,0 +1,20 @@
+@import '../../test-dependencies.scss';
+
+@mixin multiOr {
+	$MQ-multiOr: (
+		(min-width, $BP-medium, 'screen'),
+		(min-height, 800px),
+		(inside, $BP-small, $BP-large),
+		(inside-ratio, '2/1', '1/1'),
+		('print')
+	);
+	@include mq($MQ-multiOr) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include multiOr {
+		color: #000;
+	}
+}

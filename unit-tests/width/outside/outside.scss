@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin outside {
+	@include mq(outside, $BP-medium, $BP-small) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include outside {
+		color: #000;
+	}
+}

@@ -1,0 +1,17 @@
+@import '../../test-dependencies.scss';
+
+@mixin complexOr {
+	$MQ-complexOr: (
+		(inside, $BP-small, $BP-medium, 'screen'),
+		(outside-ratio, '2/1', '1/1')
+	);
+	@include mq($MQ-complexOr) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include complexOr {
+		color: #000;
+	}
+}

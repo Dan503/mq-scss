@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin ratioVar {
+	$MQ-ratioVar: (ratio, "2 / 1");
+	@include mq($MQ-ratioVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include ratioVar {
+		color: #000;
+	}
+}

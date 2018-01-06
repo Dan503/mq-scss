@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin maxWidth {
+	@include mq(max-width, $BP-medium) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include maxWidth {
+		color: #000;
+	}
+}

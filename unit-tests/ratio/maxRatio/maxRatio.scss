@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin maxRatio {
+	@include mq(max-ratio, "2 / 1") {
+		@content;
+	}
+}
+
+.unitTest {
+	@include maxRatio {
+		color: #000;
+	}
+}

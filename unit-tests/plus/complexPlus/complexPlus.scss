@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin complexPlus {
+	$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
+	@include mq($MQ-complexPlus) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include complexPlus {
+		color: #000;
+	}
+}

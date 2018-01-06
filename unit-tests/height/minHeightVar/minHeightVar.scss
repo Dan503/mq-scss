@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin minHeightVar {
+	$MQ-minHeightVar: (min-height, $BP-medium);
+	@include mq($MQ-minHeightVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include minHeightVar {
+		color: #000;
+	}
+}

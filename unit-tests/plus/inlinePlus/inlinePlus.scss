@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin inlinePlus {
+	$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
+	@include mq((min-width, $BP-medium) plus (min-height, 600px)) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include inlinePlus {
+		color: #000;
+	}
+}

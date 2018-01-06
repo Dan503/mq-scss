@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin simpleMedia {
+	@include mq(min, $BP-medium, 'screen') {
+		@content;
+	}
+}
+
+.unitTest {
+	@include simpleMedia {
+		color: #000;
+	}
+}

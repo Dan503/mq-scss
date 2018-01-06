@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin minWidth {
+	@include mq(min-width, $BP-medium) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include minWidth {
+		color: #000;
+	}
+}

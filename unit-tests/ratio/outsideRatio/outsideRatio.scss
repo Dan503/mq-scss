@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin outsideRatio {
+	@include mq(outside-ratio, "1 / 1", "2 / 1") {
+		@content;
+	}
+}
+
+.unitTest {
+	@include outsideRatio {
+		color: #000;
+	}
+}

@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin maxRatioVar {
+	$MQ-maxRatioVar: (max-ratio, "2 / 1");
+	@include mq($MQ-maxRatioVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include maxRatioVar {
+		color: #000;
+	}
+}

@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin maxVar {
+	$MQ-maxVar: (max, $BP-medium);
+	@include mq($MQ-maxVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include maxVar {
+		color: #000;
+	}
+}

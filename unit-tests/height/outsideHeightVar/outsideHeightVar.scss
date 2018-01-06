@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin outsideHeightVar {
+	$MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
+	@include mq($MQ-outsideHeightVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include outsideHeightVar {
+		color: #000;
+	}
+}

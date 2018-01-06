@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin min {
+	@include mq(min, $BP-medium) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include min {
+		color: #000;
+	}
+}

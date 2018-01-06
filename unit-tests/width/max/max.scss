@@ -1,0 +1,13 @@
+@import '../../test-dependencies.scss';
+
+@mixin max {
+	@include mq(max, $BP-medium) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include max {
+		color: #000;
+	}
+}

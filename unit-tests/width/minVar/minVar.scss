@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin minVar {
+	$MQ-minVar: (min, $BP-medium);
+	@include mq($MQ-minVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include minVar {
+		color: #000;
+	}
+}

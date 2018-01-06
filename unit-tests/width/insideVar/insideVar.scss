@@ -1,0 +1,14 @@
+@import '../../test-dependencies.scss';
+
+@mixin insideVar {
+	$MQ-insideVar: (inside, $BP-medium, $BP-small);
+	@include mq($MQ-insideVar) {
+		@content;
+	}
+}
+
+.unitTest {
+	@include insideVar {
+		color: #000;
+	}
+}
