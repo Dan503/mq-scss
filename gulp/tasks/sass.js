@@ -20,7 +20,10 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
 
   // Sass compilation
   gulp.task('sass', () => {
-    return gulp.src(path.join(dirs.source, dirs.styles, entries.css))
+    return gulp.src([
+      [dirs.source, dirs.styles, entries.css].join('/'),
+      'unit-tests/test-styles.scss',
+    ])
       .pipe(plugins.plumber((error)=>{
         console.log(`\n ${plugins.util.colors.red.bold('Sass failed to compile:')} ${plugins.util.colors.yellow(error.message)}\n`);
         //console.error(error.stack);
