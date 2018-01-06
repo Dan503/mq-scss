@@ -87,7 +87,7 @@ $green: #004700;
 	}
 
 	&.-inside {
-		&::before { content: 'mq(inside, #{$BP-medium}, #{$BP-medium})'; }
+		&::before { content: 'mq(inside, #{$BP-medium}, #{$BP-small})'; }
 		@include mq(inside, $BP-medium, $BP-small) {
 			@include isActive;
 		}
