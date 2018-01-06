@@ -1,0 +1,12 @@
+mixin outsideVar
+  //-outsideVar
+  +demo({
+    html: `
+.test.-outsideVar
+`,
+    scss: `
+$MQ-outsideVar: (outside, $BP-medium, $BP-small);
+@include mq($MQ-outsideVar) {
+  background: $green;
+}`,
+  })

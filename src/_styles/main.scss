@@ -19,10 +19,32 @@
 @import '04-base-styles/TK-toolkit';
 
 //module imports
-@import '../_modules/pageContainer/pageContainer';
-@import '../_modules/demo/demo';
-@import '../_modules/tabs/tabs';
-@import '../_modules/bodyContent/bodyContent';
-@import '../_modules/btn/btn';
-@import '../_modules/header/header';
-@import '../_modules/tests/tests';
+@import '../_modules/**/*.scss';
+
+
+// SCSS
+
+$MQ-element__color--main: (inside, 1024px, 600px);
+$MQ-element__color--alt: (outside, 1024px, 600px);
+
+.module {
+    &__element {
+        @include mq($MQ-element__color--main){
+            background: red;
+        }
+
+        @include mq($MQ-element__color--alt){
+            background: blue;
+        }
+
+        &--green {
+            @include mq($MQ-element__color--main){
+                background: green;
+            }
+
+            @include mq($MQ-element__color--alt){
+                background: grey;
+            }
+        }
+    }
+}

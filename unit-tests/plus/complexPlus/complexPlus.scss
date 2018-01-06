@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin complexPlus {
+	$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
+	@include mq($MQ-complexPlus) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include complexPlus { color: #000; }
+	}
+} @else {
+	.test.-complexPlus {
+		&::before { content: 'mq($MQ-complexPlus)'; }
+		@include complexPlus {
+			@include isActive;
+		}
+	}
+}

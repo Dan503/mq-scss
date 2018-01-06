@@ -1,0 +1,20 @@
+@import '../../test-dependencies.scss';
+
+@mixin maxWidth {
+	@include mq(max-width, $BP-medium) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include maxWidth { color: #000; }
+	}
+} @else {
+	.test.-maxWidth {
+		&::before { content: 'mq(max-width, #{$BP-medium})'; }
+		@include maxWidth {
+			@include isActive;
+		}
+	}
+}

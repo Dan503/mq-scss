@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin ignoredMediaType {
+	$MQ-ignoredMediaType: (inside-width, $BP-small, $BP-medium) plus (inside-ratio, '2/1', '1/1', 'print');
+	@include mq($MQ-ignoredMediaType) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include ignoredMediaType { color: #000; }
+	}
+} @else {
+	.test.-ignoredMediaType {
+		&::before { content: 'mq($MQ-ignoredMediaType)'; }
+		@include ignoredMediaType {
+			@include isActive;
+		}
+	}
+}

@@ -1,0 +1,12 @@
+mixin minVar
+  //-minVar
+  +demo({
+    html: `
+.test.-minVar
+`,
+    scss: `
+$MQ-minVar: (min, $BP-medium);
+@include mq($MQ-minVar) {
+  background: $green;
+}`,
+  })

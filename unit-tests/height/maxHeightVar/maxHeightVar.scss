@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin maxHeightVar {
+	$MQ-maxHeightVar: (max-height, $BP-medium);
+	@include mq($MQ-maxHeightVar) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include maxHeightVar { color: #000; }
+	}
+} @else {
+	.test.-maxHeightVar {
+		&::before { content: 'mq($MQ-maxHeightVar)'; }
+		@include maxHeightVar {
+			@include isActive;
+		}
+	}
+}

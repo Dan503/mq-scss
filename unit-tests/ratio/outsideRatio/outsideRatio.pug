@@ -1,0 +1,11 @@
+mixin outsideRatio
+  //-outsideRatio
+  +demo({
+    html: `
+.test.-outsideRatio
+`,
+    scss: `
+@include mq(outside-ratio, "2 / 1", "1 / 1") {
+  background: $green;
+}`,
+  })

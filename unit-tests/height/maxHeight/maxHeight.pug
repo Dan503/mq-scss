@@ -1,0 +1,11 @@
+mixin maxHeight
+  //-maxHeight
+  +demo({
+    html: `
+.test.-maxHeight
+`,
+    scss: `
+@include mq(max-height, $BP-medium) {
+  background: $green;
+}`,
+  })

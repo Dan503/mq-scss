@@ -1,0 +1,19 @@
+mixin multiPlus
+  //-multiPlus
+  +demo({
+    html: `
+.test.-multiPlus
+`,
+    scss: `
+$MQ-multiPlus: (
+  ('screen') plus
+  (min-width, $BP-medium) plus
+  (min-height, 400px) plus
+  (inside, $BP-small, $BP-large) plus
+  (inside-ratio, '2/1', '1/1')
+);
+
+@include mq($MQ-multiPlus) {
+  background: $green;
+}`,
+  })

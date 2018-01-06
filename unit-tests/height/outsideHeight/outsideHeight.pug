@@ -1,0 +1,11 @@
+mixin outsideHeight
+  //-outsideHeight
+  +demo({
+    html: `
+.test.-outsideHeight
+`,
+    scss: `
+@include mq(outside-height, $BP-small, $BP-medium) {
+  background: $green;
+}`,
+  })

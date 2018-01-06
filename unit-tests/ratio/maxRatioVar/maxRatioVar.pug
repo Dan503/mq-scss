@@ -1,0 +1,12 @@
+mixin maxRatioVar
+  //-maxRatioVar
+  +demo({
+    html: `
+.test.-maxRatioVar
+`,
+    scss: `
+$MQ-maxRatioVar: (max-ratio, "2 / 1");
+@include mq($MQ-maxRatioVar) {
+  background: $green;
+}`,
+  })

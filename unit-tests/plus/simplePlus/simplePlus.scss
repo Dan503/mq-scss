@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin simplePlus {
+	$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
+	@include mq($MQ-simplePlus) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include simplePlus { color: #000; }
+	}
+} @else {
+	.test.-simplePlus {
+		&::before { content: 'mq($MQ-simplePlus)'; }
+		@include simplePlus {
+			@include isActive;
+		}
+	}
+}

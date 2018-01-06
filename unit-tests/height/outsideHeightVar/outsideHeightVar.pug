@@ -1,0 +1,12 @@
+mixin outsideHeightVar
+  //-outsideHeightVar
+  +demo({
+    html: `
+.test.-outsideHeightVar
+`,
+    scss: `
+$MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
+@include mq($MQ-outsideHeightVar) {
+  background: $green;
+}`,
+  })

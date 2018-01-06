@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin insideVar {
+	$MQ-insideVar: (inside, $BP-medium, $BP-small);
+	@include mq($MQ-insideVar) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include insideVar { color: #000; }
+	}
+} @else {
+	.test.-insideVar {
+		&::before { content: 'mq($MQ-insideVar)'; }
+		@include insideVar {
+			@include isActive;
+		}
+	}
+}

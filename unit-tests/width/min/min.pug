@@ -1,0 +1,11 @@
+mixin min
+  //-min
+  +demo({
+    html: `
+.test.-min
+`,
+    scss: `
+@include mq(min, $BP-medium) {
+  background: $green;
+}`,
+  })

@@ -1,0 +1,20 @@
+@import '../../test-dependencies.scss';
+
+@mixin outsideHeight {
+	@include mq(outside-height, $BP-small, $BP-medium) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include outsideHeight { color: #000; }
+	}
+} @else {
+	.test.-outsideHeight {
+		&::before { content: 'mq(outside-height, #{$BP-small}, #{$BP-medium})'; }
+		@include outsideHeight {
+			@include isActive;
+		}
+	}
+}

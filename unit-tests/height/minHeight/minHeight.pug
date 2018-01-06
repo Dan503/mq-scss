@@ -1,0 +1,11 @@
+mixin minHeight
+  //-minHeight
+  +demo({
+    html: `
+.test.-minHeight
+`,
+    scss: `
+@include mq(min-height, $BP-medium) {
+  background: $green;
+}`,
+  })

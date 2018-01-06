@@ -1,0 +1,20 @@
+@import '../../test-dependencies.scss';
+
+@mixin minWidth {
+	@include mq(min-width, $BP-medium) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include minWidth { color: #000; }
+	}
+} @else {
+	.test.-minWidth {
+		&::before { content: 'mq(min-width, #{$BP-medium})'; }
+		@include minWidth {
+			@include isActive;
+		}
+	}
+}

@@ -1,0 +1,12 @@
+mixin maxVar
+  //-maxVar
+  +demo({
+    html: `
+.test.-maxVar
+`,
+    scss: `
+$MQ-maxVar: (max, $BP-medium);
+@include mq($MQ-maxVar) {
+  background: $green;
+}`,
+  })

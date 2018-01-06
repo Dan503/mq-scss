@@ -1,0 +1,12 @@
+mixin insideRatioVar
+  //-insideRatioVar
+  +demo({
+    html: `
+.test.-insideRatioVar
+`,
+    scss: `
+$MQ-insideRatioVar: (inside-ratio, "2 / 1", "1 / 1");
+@include mq($MQ-insideRatioVar) {
+  background: $green;
+}`,
+  })

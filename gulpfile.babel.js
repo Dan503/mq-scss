@@ -48,6 +48,7 @@ gulp.task('compile', gulp.series(
     'pug',
     'imagemin',
     'sass',
+    'compile-tests',
     'modernizr',
     'browserify',
   )
@@ -77,6 +78,3 @@ gulp.task('build', gulp.series(
 
 // Server tasks with watch
 gulp.task('serve', gulp.series('default'));
-
-// Testing
-gulp.task('test', gulp.series('eslint'));

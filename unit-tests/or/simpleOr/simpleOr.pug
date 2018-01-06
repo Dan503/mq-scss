@@ -1,0 +1,15 @@
+mixin simpleOr
+  //-simpleOr
+  +demo({
+    html: `
+.test.-simpleOr
+`,
+    scss: `
+$MQ-simpleOr: (
+  (min-width, $BP-medium),
+  (min-height, 800px)
+);
+@include mq($MQ-simpleOr) {
+  background: $green;
+}`,
+  })

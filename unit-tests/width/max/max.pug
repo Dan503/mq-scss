@@ -1,0 +1,11 @@
+mixin max
+  //-max
+  +demo({
+    html: `
+.test.-max
+`,
+    scss: `
+@include mq(max, $BP-medium) {
+  background: $green;
+}`,
+  })

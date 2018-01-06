@@ -1,0 +1,18 @@
+mixin multiOr
+  //-multiOr
+  +demo({
+    html: `
+.test.-multiOr
+`,
+    scss: `
+$MQ-multiOr: (
+  (min-width, $BP-medium, 'screen'),
+  (min-height, 800px),
+  (inside, $BP-small, $BP-large),
+  (inside-ratio, '2/1', '1/1'),
+  ('print')
+);
+@include mq($MQ-multiOr) {
+  background: $green;
+}`,
+  })

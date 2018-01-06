@@ -1,0 +1,20 @@
+@import '../../test-dependencies.scss';
+
+@mixin onlyMedia {
+	@include mq('screen') {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include onlyMedia { color: #000; }
+	}
+} @else {
+	.test.-onlyMedia {
+		&::before { content: "mq('screen')"; }
+		@include onlyMedia {
+			@include isActive;
+		}
+	}
+}

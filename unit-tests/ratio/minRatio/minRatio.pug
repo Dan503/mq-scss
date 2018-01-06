@@ -1,0 +1,11 @@
+mixin minRatio
+  //-minRatio
+  +demo({
+    html: `
+.test.-minRatio
+`,
+    scss: `
+@include mq(min-ratio, "2 / 1") {
+  background: $green;
+}`,
+  })

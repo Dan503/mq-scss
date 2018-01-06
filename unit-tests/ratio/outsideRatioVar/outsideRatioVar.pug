@@ -1,0 +1,12 @@
+mixin outsideRatioVar
+  //-outsideRatioVar
+  +demo({
+    html: `
+.test.-outsideRatioVar
+`,
+    scss: `
+$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
+@include mq($MQ-outsideRatioVar) {
+  background: $green;
+}`,
+  })

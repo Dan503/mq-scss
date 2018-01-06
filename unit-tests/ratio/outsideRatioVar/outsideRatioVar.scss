@@ -1,0 +1,21 @@
+@import '../../test-dependencies.scss';
+
+@mixin outsideRatioVar {
+	$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
+	@include mq($MQ-outsideRatioVar) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include outsideRatioVar { color: #000; }
+	}
+} @else {
+	.test.-outsideRatioVar {
+		&::before { content: 'mq($MQ-outsideRatioVar)'; }
+		@include outsideRatioVar {
+			@include isActive;
+		}
+	}
+}

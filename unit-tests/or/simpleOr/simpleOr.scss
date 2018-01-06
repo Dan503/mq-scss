@@ -1,0 +1,24 @@
+@import '../../test-dependencies.scss';
+
+@mixin simpleOr {
+	$MQ-simpleOr: (
+		(min-width, $BP-medium),
+		(min-height, 800px)
+	);
+	@include mq($MQ-simpleOr) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include simpleOr { color: #000; }
+	}
+} @else {
+	.test.-simpleOr {
+		&::before { content: 'mq($MQ-simpleOr)'; }
+		@include simpleOr {
+			@include isActive;
+		}
+	}
+}

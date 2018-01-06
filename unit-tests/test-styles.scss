@@ -1,0 +1,39 @@
+$test-only: false;
+
+$red: #6D0808;
+$green: #004700;
+
+.test {
+	padding: 30px;
+	border: 2px solid #000;
+	background: $red;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 20px;
+
+	h3 {
+		margin-bottom: 0;
+	}
+
+	&::before, &::after {
+		color: #fff;
+		white-space: pre;
+	}
+
+	&::before {
+		font-size: 20px;
+		//Use "\A" to create new lines
+	}
+
+	&::after {
+		content: ' = false';
+	}
+}
+
+@mixin isActive {
+	background: $green;
+	&::after { content: ' = true'; }
+}
+
+@import '*/*/*.scss';

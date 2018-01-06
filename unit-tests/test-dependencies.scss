@@ -1,0 +1,6 @@
+//loads the configuration settings for the site
+@import '../src/_styles/00-config-files/03-BPs-MQs/00-bp-break-points-base.scss';
+
+@import '../_mq.scss';
+
+$test-only: true !default;

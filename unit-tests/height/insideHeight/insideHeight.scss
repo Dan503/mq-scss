@@ -1,0 +1,20 @@
+@import '../../test-dependencies.scss';
+
+@mixin insideHeight {
+	@include mq(inside-height, $BP-small, $BP-medium) {
+		@content;
+	}
+}
+
+@if ($test-only) {
+	.unitTest {
+		@include insideHeight { color: #000; }
+	}
+} @else {
+	.test.-insideHeight {
+		&::before { content: 'mq(inside-height, #{$BP-small}, #{$BP-medium})'; }
+		@include insideHeight {
+			@include isActive;
+		}
+	}
+}

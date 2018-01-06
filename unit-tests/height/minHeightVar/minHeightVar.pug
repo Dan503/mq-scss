@@ -1,0 +1,12 @@
+mixin minHeightVar
+  //-minHeightVar
+  +demo({
+    html: `
+.test.-minHeightVar
+`,
+    scss: `
+$MQ-minHeightVar: (min-height, $BP-medium);
+@include mq($MQ-minHeightVar) {
+  background: $green;
+}`,
+  })
