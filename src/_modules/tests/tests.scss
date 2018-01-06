@@ -57,8 +57,8 @@ $green: #004700;
 	}
 
 	&.-maxVar {
-		$MQ-maxVar: (max, $BP-medium);
 		&::before { content: 'mq($MQ-maxVar)'; }
+		$MQ-maxVar: (max, $BP-medium);
 		@include mq($MQ-maxVar) {
 			@include isActive;
 		}
@@ -79,8 +79,8 @@ $green: #004700;
 	}
 
 	&.-minVar {
-		$MQ-minVar: (min, $BP-medium);
 		&::before { content: 'mq($MQ-minVar)'; }
+		$MQ-minVar: (min, $BP-medium);
 		@include mq($MQ-minVar) {
 			@include isActive;
 		}
@@ -101,8 +101,8 @@ $green: #004700;
 	}
 
 	&.-insideVar {
-		$MQ-insideVar: (inside, $BP-medium, $BP-small);
 		&::before { content: 'mq($MQ-insideVar)'; }
+		$MQ-insideVar: (inside, $BP-medium, $BP-small);
 		@include mq($MQ-insideVar) {
 			@include isActive;
 		}
@@ -123,8 +123,8 @@ $green: #004700;
 	}
 
 	&.-outsideVar {
-		$MQ-outsideVar: (outside, $BP-medium, $BP-small);
 		&::before { content: 'mq($MQ-outsideVar)'; }
+		$MQ-outsideVar: (outside, $BP-medium, $BP-small);
 		@include mq($MQ-outsideVar) {
 			@include isActive;
 		}
@@ -142,8 +142,8 @@ $green: #004700;
 	}
 
 	&.-maxHeightVar {
-		$MQ-maxHeightVar: (max-height, $BP-medium);
 		&::before { content: 'mq($MQ-maxHeightVar)'; }
+		$MQ-maxHeightVar: (max-height, $BP-medium);
 		@include mq($MQ-maxHeightVar) {
 			@include isActive;
 		}
@@ -157,8 +157,8 @@ $green: #004700;
 	}
 
 	&.-minHeightVar {
-		$MQ-minHeightVar: (min-height, $BP-medium);
 		&::before { content: 'mq($MQ-minHeightVar)'; }
+		$MQ-minHeightVar: (min-height, $BP-medium);
 		@include mq($MQ-minHeightVar) {
 			@include isActive;
 		}
@@ -172,8 +172,8 @@ $green: #004700;
 	}
 
 	&.-insideHeightVar {
-		$MQ-insideHeightVar: (inside-height, $BP-small, $BP-medium);
 		&::before { content: 'mq($MQ-insideHeightVar)'; }
+		$MQ-insideHeightVar: (inside-height, $BP-small, $BP-medium);
 		@include mq($MQ-insideHeightVar) {
 			@include isActive;
 		}
@@ -187,8 +187,8 @@ $green: #004700;
 	}
 
 	&.-outsideHeightVar {
-		$MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
 		&::before { content: 'mq($MQ-outsideHeightVar)'; }
+		$MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
 		@include mq($MQ-outsideHeightVar) {
 			@include isActive;
 		}
@@ -206,8 +206,8 @@ $green: #004700;
 	}
 
 	&.-ratioVar {
-		$MQ-ratioVar: (ratio, "2 / 1");
 		&::before { content: 'mq($MQ-ratioVar)'; }
+		$MQ-ratioVar: (ratio, "2 / 1");
 		@include mq($MQ-ratioVar) {
 			@include isActive;
 		}
@@ -221,8 +221,8 @@ $green: #004700;
 	}
 
 	&.-minRatioVar {
-		$MQ-minRatioVar: (min-ratio, "2 / 1");
 		&::before { content: 'mq($MQ-minRatioVar)'; }
+		$MQ-minRatioVar: (min-ratio, "2 / 1");
 		@include mq($MQ-minRatioVar) {
 			@include isActive;
 		}
@@ -236,8 +236,8 @@ $green: #004700;
 	}
 
 	&.-maxRatioVar {
-		$MQ-maxRatioVar: (max-ratio, "2 / 1");
 		&::before { content: 'mq($MQ-minRatioVar)'; }
+		$MQ-maxRatioVar: (max-ratio, "2 / 1");
 		@include mq($MQ-maxRatioVar) {
 			@include isActive;
 		}
@@ -251,8 +251,8 @@ $green: #004700;
 	}
 
 	&.-insideRatioVar {
-		$MQ-insideRatioVar: (inside-ratio, "2 / 1", "1 / 1");
 		&::before { content: 'mq($MQ-insideRatioVar)'; }
+		$MQ-insideRatioVar: (inside-ratio, "2 / 1", "1 / 1");
 		@include mq($MQ-insideRatioVar) {
 			@include isActive;
 		}
@@ -266,8 +266,8 @@ $green: #004700;
 	}
 
 	&.-outsideRatioVar {
-		$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
 		&::before { content: 'mq($MQ-outsideRatioVar)'; }
+		$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
 		@include mq($MQ-outsideRatioVar) {
 			@include isActive;
 		}
@@ -275,8 +275,8 @@ $green: #004700;
 
 	&.-exactRatioWorkAround1 {
 		//equivalent to (min-ratio, '2 / 1') but without the 1px sour spot
-		$MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
 		&::before { content: 'mq($MQ-exactRatioWorkAround1)'; }
+		$MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
 		@include mq($MQ-exactRatioWorkAround1) {
 			@include isActive;
 		}
@@ -284,8 +284,8 @@ $green: #004700;
 
 	&.-exactRatioWorkAround2 {
 		//Exactly the same as above but formatted differently
-		$MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
 		&::before { content: 'mq($MQ-exactRatioWorkAround2)'; }
+		$MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
 		@include mq($MQ-exactRatioWorkAround2) {
 			@include isActive;
 		}
@@ -330,16 +330,16 @@ $green: #004700;
 	//- =====
 
 	&.-simplePlus {
-		$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
 		&::before { content: "mq($MQ-simplePlus)"; }
+		$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
 		@include mq($MQ-simplePlus) {
 			@include isActive;
 		}
 	}
 
 	&.-inlinePlus {
-		$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
 		&::before { content: "mq((min-width, #{$BP-medium}) plus (min-height, 600px))"; }
+		$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
 		@include mq((min-width, $BP-medium) plus (min-height, 600px)) {
 			@include isActive;
 		}
@@ -353,22 +353,23 @@ $green: #004700;
 	}
 
 	&.-complexPlus {
-		$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
 		&::before { content: "mq($MQ-complexPlus)"; }
+		$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
 		@include mq($MQ-complexPlus) {
 			@include isActive;
 		}
 	}
 
 	&.-ignoredMediaType {
-		$MQ-ignoredMediaType: (inside-width, $BP-small, $BP-medium) plus (inside-ratio, '2/1', '1/1', 'print');
 		&::before { content: "mq($MQ-ignoredMediaType)"; }
+		$MQ-ignoredMediaType: (inside-width, $BP-small, $BP-medium) plus (inside-ratio, '2/1', '1/1', 'print');
 		@include mq($MQ-ignoredMediaType) {
 			@include isActive;
 		}
 	}
 
 	&.-multiPlus {
+		&::before { content: "mq($MQ-multiPlus)"; }
 		$MQ-multiPlus: (
 			('screen') plus
 			(min-width, $BP-medium) plus
@@ -376,8 +377,6 @@ $green: #004700;
 			(inside, $BP-small, $BP-large) plus
 			(inside-ratio, '2/1', '1/1')
 		);
-		&::before { content: "mq($MQ-multiPlus)"; }
-
 		@include mq($MQ-multiPlus) {
 					@include isActive;
 		}
@@ -388,12 +387,13 @@ $green: #004700;
 	//- =====
 
 	&.-simpleOr {
+		&::before { content: "mq($MQ-simpleOr)"; }
 		$MQ-simpleOr: (
 			(min-width, $BP-medium),
 			(min-height, 800px)
 		);
-		&::before { content: "mq($MQ-simpleOr)"; }
 		@include mq($MQ-simpleOr) {
+			@include isActive;
 		}
 	}
 
@@ -434,11 +434,6 @@ $green: #004700;
 	}
 
 }
-
-@include mq('not' plus (max-ratio, '2 / 1')) {
-	body { color: #000; }
-}
-
 
 .breakpoints {
 	padding: 20px;
