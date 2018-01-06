@@ -1,0 +1,3 @@
+import unitTest from '../../../gulp/helpers/unitTest';
+
+unitTest('outsideWidth', __dirname, '@media (max-width: 600px), (min-width: 801px){.unitTest{color:#000}}')
