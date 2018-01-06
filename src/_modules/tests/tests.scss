@@ -1,0 +1,5 @@
+.tests {
+	display: grid;
+	grid-template-columns: minmax(0,1fr);
+	grid-gap: 20px;
+}

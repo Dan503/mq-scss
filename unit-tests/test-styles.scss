@@ -37,29 +37,3 @@ $green: #004700;
 }
 
 @import '*/*/*.scss';
-
-.tests {
-	display: grid;
-	grid-template-columns: minmax(0,1fr);
-	grid-gap: 20px;
-}
-
-.breakpoints {
-	padding: 20px;
-	border: 2px solid #000;
-
-	&__size {
-		@each $name, $value in $breakpoints {
-			&.-#{$name} {
-				&::before {
-					content: 'BP-#{$name}: ';
-				}
-				&::after {
-					content: '#{$value}';
-					font-weight: bold;
-					font-size: 1.2em;
-				}
-			}
-		}
-	}
-}
