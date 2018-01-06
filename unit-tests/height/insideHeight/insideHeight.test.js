@@ -1,7 +1,3 @@
-import readFile from '../../../gulp/helpers/readFile';
+import unitTest from '../../../gulp/helpers/unitTest';
 
-test('inside-height', ()=>{
-	return readFile(__dirname+'/insideHeight.css').then(css => {
-		expect( css ).toBe('@media (max-height: 800px) and (min-height: 601px){.unitTest{color:#000}}\n');
-	})
-})
+unitTest('insideHeight', __dirname, '@media (max-height: 800px) and (min-height: 601px){.unitTest{color:#000}}')
