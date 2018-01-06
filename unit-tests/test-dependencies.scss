@@ -2,3 +2,5 @@
 @import '../src/_styles/00-config-files/config-loader';
 
 @import '../_mq.scss';
+
+$test-only: true !default;

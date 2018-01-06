@@ -1,3 +1,6 @@
+
+include ../../../unit-tests/height/insideHeight/insideHeight
+
 .breakpoints
   h2 Breakpoints
   .breakpoints__size.-minimum
@@ -228,16 +231,7 @@ $MQ-minHeightVar: (min-height, $BP-medium);
 }`,
   })
 
-  //-insideHeight
-  +demo({
-    html: `
-.test.-insideHeight
-`,
-    scss: `
-@include mq(inside-height, $BP-small, $BP-medium) {
-  background: $green;
-}`,
-  })
+  +insideHeight
 
   //-insideHeightVar
   +demo({

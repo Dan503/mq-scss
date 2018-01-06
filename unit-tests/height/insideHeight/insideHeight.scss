@@ -6,8 +6,17 @@
 	}
 }
 
-.unitTest {
-	@include insideHeight {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include insideHeight {
+			color: #000;
+		}
+	}
+} @else {
+	.test.-insideHeight {
+		&::before { content: 'mq(inside-height, #{$BP-small}, #{$BP-medium})'; }
+		@include insideHeight {
+			@include isActive;
+		}
 	}
 }
