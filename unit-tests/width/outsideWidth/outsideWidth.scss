@@ -12,7 +12,7 @@
 	}
 } @else {
 	.test.-outsideWidth {
-		&::before { content: 'mq($MQ-outsideWidth)'; }
+		&::before { content: 'mq(outside, #{$BP-medium}, #{$BP-small})'; }
 		@include outsideWidth {
 			@include isActive;
 		}
