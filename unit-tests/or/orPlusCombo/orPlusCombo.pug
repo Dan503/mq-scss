@@ -1,0 +1,15 @@
+mixin orPlusCombo
+  //-orPlusCombo
+  +demo({
+    html: `
+.test.-orPlusCombo
+`,
+    scss: `
+$MQ-orPlusCombo: (
+  (min-width, $BP-medium, 'screen') plus (min-height, 800px),
+  'screen' plus (inside, $BP-small, $BP-large) plus (inside-ratio, '2/1', '1/1')
+);
+@include mq($MQ-orPlusCombo) {
+  background: $green;
+}`,
+  })

@@ -1,0 +1,12 @@
+mixin minRatioVar
+  //-minRatioVar
+  +demo({
+    html: `
+.test.-minRatioVar
+`,
+    scss: `
+$MQ-minRatioVar: (min-ratio, "2 / 1");
+@include mq($MQ-minRatioVar) {
+  background: $green;
+}`,
+  })

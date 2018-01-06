@@ -1,0 +1,12 @@
+mixin inlinePlus
+  //-inlinePlus
+  +demo({
+    html: `
+.test.-inlinePlus
+`,
+    scss: `
+//inline plus statement
+@include mq((min-width, $BP-medium) plus (min-height, 600px)) {
+  background: $green;
+}`,
+  })

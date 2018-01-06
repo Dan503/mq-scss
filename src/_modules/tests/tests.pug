@@ -1,5 +1,61 @@
 
+//-width
+include ../../../unit-tests/width/max/max
+include ../../../unit-tests/width/maxWidth/maxWidth
+include ../../../unit-tests/width/maxVar/maxVar
+include ../../../unit-tests/width/min/min
+include ../../../unit-tests/width/minWidth/minWidth
+include ../../../unit-tests/width/minVar/minVar
+include ../../../unit-tests/width/inside/inside
+include ../../../unit-tests/width/insideWidth/insideWidth
+include ../../../unit-tests/width/insideVar/insideVar
+include ../../../unit-tests/width/outside/outside
+include ../../../unit-tests/width/outsideWidth/outsideWidth
+include ../../../unit-tests/width/outsideVar/outsideVar
+
+//-height
+include ../../../unit-tests/height/maxHeight/maxHeight
+include ../../../unit-tests/height/maxHeightVar/maxHeightVar
+include ../../../unit-tests/height/minHeight/minHeight
+include ../../../unit-tests/height/minHeightVar/minHeightVar
 include ../../../unit-tests/height/insideHeight/insideHeight
+include ../../../unit-tests/height/insideHeightVar/insideHeightVar
+include ../../../unit-tests/height/outsideHeight/outsideHeight
+include ../../../unit-tests/height/outsideHeightVar/outsideHeightVar
+
+//-ratio
+include ../../../unit-tests/ratio/ratio/ratio
+include ../../../unit-tests/ratio/ratioVar/ratioVar
+include ../../../unit-tests/ratio/minRatio/minRatio
+include ../../../unit-tests/ratio/minRatioVar/minRatioVar
+include ../../../unit-tests/ratio/maxRatio/maxRatio
+include ../../../unit-tests/ratio/maxRatioVar/maxRatioVar
+include ../../../unit-tests/ratio/insideRatio/insideRatio
+include ../../../unit-tests/ratio/insideRatioVar/insideRatioVar
+include ../../../unit-tests/ratio/outsideRatio/outsideRatio
+include ../../../unit-tests/ratio/outsideRatioVar/outsideRatioVar
+include ../../../unit-tests/ratio/exactRatioWorkAround1/exactRatioWorkAround1
+include ../../../unit-tests/ratio/exactRatioWorkAround2/exactRatioWorkAround2
+include ../../../unit-tests/ratio/exactRatioWorkAround3/exactRatioWorkAround3
+
+//-Media statements
+include ../../../unit-tests/media/simpleMedia/simpleMedia
+include ../../../unit-tests/media/notMedia/notMedia
+include ../../../unit-tests/media/onlyMedia/onlyMedia
+
+//- Plus statements
+include ../../../unit-tests/plus/simplePlus/simplePlus
+include ../../../unit-tests/plus/inlinePlus/inlinePlus
+include ../../../unit-tests/plus/mediaOnlyPlus/mediaOnlyPlus
+include ../../../unit-tests/plus/complexPlus/complexPlus
+include ../../../unit-tests/plus/ignoredMediaType/ignoredMediaType
+include ../../../unit-tests/plus/multiPlus/multiPlus
+
+//- Or statements
+include ../../../unit-tests/or/simpleOr/simpleOr
+include ../../../unit-tests/or/complexOr/complexOr
+include ../../../unit-tests/or/multiOr/multiOr
+include ../../../unit-tests/or/orPlusCombo/orPlusCombo
 
 h2#tests Tests
 
@@ -36,583 +92,82 @@ ol
 h3#width Width
 
 .tests
-  //-max
-  +demo({
-    html: `
-.test.-max
-`,
-    scss: `
-@include mq(max, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-maxWidth
-  +demo({
-    html: `
-.test.-maxWidth
-`,
-    scss: `
-@include mq(max-width, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-maxVar
-  +demo({
-    html: `
-.test.-maxVar
-`,
-    scss: `
-$MQ-maxVar: (max, $BP-medium);
-@include mq($MQ-maxVar) {
-  background: $green;
-}`,
-  })
-
-  //-min
-  +demo({
-    html: `
-.test.-min
-`,
-    scss: `
-@include mq(min, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-minWidth
-  +demo({
-    html: `
-.test.-minWidth
-`,
-    scss: `
-@include mq(min-width, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-minVar
-  +demo({
-    html: `
-.test.-minVar
-`,
-    scss: `
-$MQ-minVar: (min, $BP-medium);
-@include mq($MQ-minVar) {
-  background: $green;
-}`,
-  })
-
-  //-inside
-  +demo({
-    html: `
-.test.-inside
-`,
-    scss: `
-@include mq(inside, $BP-medium, $BP-small) {
-  background: $green;
-}`,
-  })
-
-  //-insideWidth
-  +demo({
-    html: `
-.test.-insideWidth
-`,
-    scss: `
-@include mq(inside-width, $BP-small, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-insideVar
-  +demo({
-    html: `
-.test.-insideVar
-`,
-    scss: `
-$MQ-insideVar: (inside, $BP-medium, $BP-small);
-@include mq($MQ-insideVar) {
-  background: $green;
-}`,
-  })
-
-  //-outside
-  +demo({
-    html: `
-.test.-outside
-`,
-    scss: `
-@include mq(outside, $BP-medium, $BP-small) {
-  background: $green;
-}`,
-  })
-
-  //-outsideWidth
-  +demo({
-    html: `
-.test.-outsideWidth
-`,
-    scss: `
-@include mq(outside-width, $BP-small, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-outsideVar
-  +demo({
-    html: `
-.test.-outsideVar
-`,
-    scss: `
-$MQ-outsideVar: (outside, $BP-medium, $BP-small);
-@include mq($MQ-outsideVar) {
-  background: $green;
-}`,
-  })
+  +max
+  +maxWidth
+  +maxVar
+  +min
+  +minWidth
+  +minVar
+  +inside
+  +insideWidth
+  +insideVar
+  +outside
+  +outsideWidth
+  +outsideVar
 
   //- ======
   //- HEIGHT
   //- ======
   h3#height Height
 
-  //-maxHeight
-  +demo({
-    html: `
-.test.-maxHeight
-`,
-    scss: `
-@include mq(max-height, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-maxHeightVar
-  +demo({
-    html: `
-.test.-maxHeightVar
-`,
-    scss: `
-$MQ-maxHeightVar: (max-height, $BP-medium);
-@include mq($MQ-maxHeightVar) {
-  background: $green;
-}`,
-  })
-
-  //-minHeight
-  +demo({
-    html: `
-.test.-minHeight
-`,
-    scss: `
-@include mq(min-height, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-minHeightVar
-  +demo({
-    html: `
-.test.-minHeightVar
-`,
-    scss: `
-$MQ-minHeightVar: (min-height, $BP-medium);
-@include mq($MQ-minHeightVar) {
-  background: $green;
-}`,
-  })
-
+  +maxHeight
+  +maxHeightVar
+  +minHeight
+  +minHeightVar
   +insideHeight
-
-  //-insideHeightVar
-  +demo({
-    html: `
-.test.-insideHeightVar
-`,
-    scss: `
-$MQ-insideHeightVar: (inside-height, $BP-small, $BP-medium);
-@include mq($MQ-insideHeightVar) {
-  background: $green;
-}`,
-  })
-
-  //-outsideHeight
-  +demo({
-    html: `
-.test.-outsideHeight
-`,
-    scss: `
-@include mq(outside-height, $BP-small, $BP-medium) {
-  background: $green;
-}`,
-  })
-
-  //-outsideHeightVar
-  +demo({
-    html: `
-.test.-outsideHeightVar
-`,
-    scss: `
-$MQ-outsideHeightVar: (outside-height, $BP-small, $BP-medium);
-@include mq($MQ-outsideHeightVar) {
-  background: $green;
-}`,
-  })
-
+  +insideHeightVar
+  +outsideHeight
+  +outsideHeightVar
 
   //- =====
   //- RATIO
   //- =====
   h3#ratio Ratio
 
-  //-ratio
-  +demo({
-    html: `
-.test.-ratio
-`,
-    scss: `
-@include mq(ratio, "2 / 1") {
-  background: $green;
-}`,
-  })
-
-  //-ratioVar
-  +demo({
-    html: `
-.test.-ratioVar
-`,
-    scss: `
-$MQ-ratioVar: (ratio, "2 / 1");
-@include mq($MQ-ratioVar) {
-  background: $green;
-}`,
-  })
-
-  //-minRatio
-  +demo({
-    html: `
-.test.-minRatio
-`,
-    scss: `
-@include mq(min-ratio, "2 / 1") {
-  background: $green;
-}`,
-  })
-
-  //-minRatioVar
-  +demo({
-    html: `
-.test.-minRatioVar
-`,
-    scss: `
-$MQ-minRatioVar: (min-ratio, "2 / 1");
-@include mq($MQ-minRatioVar) {
-  background: $green;
-}`,
-  })
-
-  //-maxRatio
-  +demo({
-    html: `
-.test.-maxRatio
-`,
-    scss: `
-@include mq(max-ratio, "2 / 1") {
-  background: $green;
-}`,
-  })
-
-  //-maxRatioVar
-  +demo({
-    html: `
-.test.-maxRatioVar
-`,
-    scss: `
-$MQ-maxRatioVar: (max-ratio, "2 / 1");
-@include mq($MQ-maxRatioVar) {
-  background: $green;
-}`,
-  })
-
-  //-insideRatio
-  +demo({
-    html: `
-.test.-insideRatio
-`,
-    scss: `
-@include mq(inside-ratio, "2 / 1", "1 / 1") {
-  background: $green;
-}`,
-  })
-
-  //-insideRatioVar
-  +demo({
-    html: `
-.test.-insideRatioVar
-`,
-    scss: `
-$MQ-insideRatioVar: (inside-ratio, "2 / 1", "1 / 1");
-@include mq($MQ-insideRatioVar) {
-  background: $green;
-}`,
-  })
-
-  //-outsideRatio
-  +demo({
-    html: `
-.test.-outsideRatio
-`,
-    scss: `
-@include mq(outside-ratio, "2 / 1", "1 / 1") {
-  background: $green;
-}`,
-  })
-
-  //-outsideRatioVar
-  +demo({
-    html: `
-.test.-outsideRatioVar
-`,
-    scss: `
-$MQ-outsideRatioVar: (outside-ratio, "2 / 1", "1 / 1");
-@include mq($MQ-outsideRatioVar) {
-  background: $green;
-}`,
-  })
+  +ratio
+  +ratioVar
+  +minRatio
+  +minRatioVar
+  +maxRatio
+  +maxRatioVar
+  +insideRatio
+  +insideRatioVar
+  +outsideRatio
+  +outsideRatioVar
 
   p A Note on these next three examples. If you set your screen size to exactly 800px width by 400px height, you will see that every single ratio so far returns true. The following 2 examples show a work around for this 1px sour spot issue. FYI, using this technique will make the media query incompatible with Sass media query nesting. #[code not] produces unexpected results when nesting media queries in Sass.
 
-  //-exactRatioWorkAround1
-  +demo({
-    html: `
-.test.-exactRatioWorkAround1
-`,
-    scss: `
-//equivalent to (min-ratio, '2 / 1') but without the 1px sour spot
-$MQ-exactRatioWorkAround1: (max-ratio, '2 / 1', 'not');
-@include mq($MQ-exactRatioWorkAround1) {
-  background: $green;
-}`,
-  })
-
-  //-exactRatioWorkAround2
-  +demo({
-    html: `
-.test.-exactRatioWorkAround2
-`,
-    scss: `
-//Exactly the same as above but formatted differently
-$MQ-exactRatioWorkAround2: 'not' plus (max-ratio, '2 / 1');
-@include mq($MQ-exactRatioWorkAround2) {
-  background: $green;
-}`,
-  })
-
-  //-exactRatioWorkAround3
-  +demo({
-    html: `
-.test.-exactRatioWorkAround3
-`,
-    scss: `
-//The same again this time inline
-@include mq(max-ratio, '2 / 1', 'not') {
-  background: $green;
-}
-`,
-  })
-
+  +exactRatioWorkAround1
+  +exactRatioWorkAround2
+  +exactRatioWorkAround3
 
   //- =====
   //- MEDIA
   //- =====
   h3#media Media statements
 
-  //-simpleMedia
-  +demo({
-    html: `
-.test.-simpleMedia
-`,
-    scss: `
-@include mq(min, $BP-medium, 'screen') {
-  background: $green;
-}`,
-  })
-
-  //-notMedia
-  +demo({
-    html: `
-.test.-notMedia
-`,
-    scss: `
-@include mq(min, $BP-medium, 'not') {
-  background: $green;
-}`,
-  })
-
-  //-onlyMedia
-  +demo({
-    html: `
-.test.-onlyMedia
-`,
-    scss: `
-@include mq('screen') {
-  background: $green;
-}`,
-  })
-
+  +simpleMedia
+  +notMedia
+  +onlyMedia
 
   //- =====
   //- PLUS
   //- =====
   h3#plus #[code plus] statements
 
-  //-simplePlus
-  +demo({
-    html: `
-.test.-simplePlus
-`,
-    scss: `
-$MQ-simplePlus: (min-width, $BP-medium) plus (min-height, 600px);
-@include mq($MQ-simplePlus) {
-  background: $green;
-}`,
-  })
-
-  //-inlinePlus
-  +demo({
-    html: `
-.test.-inlinePlus
-`,
-    scss: `
-//inline plus statement
-@include mq((min-width, $BP-medium) plus (min-height, 600px)) {
-  background: $green;
-}`,
-  })
-
-  //-mediaOnlyPlus
-  +demo({
-    html: `
-.test.-mediaOnlyPlus
-`,
-    scss: `
-@include mq('screen' plus (min, $BP-medium)) {
-  background: $green;
-}`,
-  })
-
-  //-complexPlus
-  +demo({
-    html: `
-.test.-complexPlus
-`,
-    scss: `
-//note that 'print' appplies to the full plus statement
-$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
-@include mq($MQ-complexPlus) {
-  background: $green;
-}`,
-  })
-
-  //-ignoredMediaType
-  +demo({
-    html: `
-.test.-ignoredMediaType
-`,
-    scss: `
-//The media type in the second plus statement is ignored
-//Only media types in the first definition are honoured in a plus statement
-$MQ-ignoredMediaType: (inside-width, $BP-small, $BP-medium) plus (inside-ratio, '2/1', '1/1', 'print');
-@include mq($MQ-ignoredMediaType) {
-  background: $green;
-}`,
-  })
-
-  //-multiPlus
-  +demo({
-    html: `
-.test.-multiPlus
-`,
-    scss: `
-$MQ-multiPlus: (
-  ('screen') plus
-  (min-width, $BP-medium) plus
-  (min-height, 400px) plus
-  (inside, $BP-small, $BP-large) plus
-  (inside-ratio, '2/1', '1/1')
-);
-
-@include mq($MQ-multiPlus) {
-  background: $green;
-}`,
-  })
-
+  +simplePlus
+  +inlinePlus
+  +mediaOnlyPlus
+  +complexPlus
+  +ignoredMediaType
+  +multiPlus
 
   //- =====
   //- OR
   //- =====
   h3#or #[code or] statements
 
-  //-simpleOr
-  +demo({
-    html: `
-.test.-simpleOr
-`,
-    scss: `
-$MQ-simpleOr: (
-  (min-width, $BP-medium),
-  (min-height, 800px)
-);
-@include mq($MQ-simpleOr) {
-  background: $green;
-}`,
-  })
-
-  //-complexOr
-  +demo({
-    html: `
-.test.-complexOr
-`,
-    scss: `
-$MQ-complexOr: (
-  (inside, $BP-small, $BP-medium, 'screen'),
-  (outside-ratio, '2/1', '1/1')
-);
-@include mq($MQ-complexOr) {
-  background: $green;
-}`,
-  })
-
-  //-multiOr
-  +demo({
-    html: `
-.test.-multiOr
-`,
-    scss: `
-$MQ-multiOr: (
-  (min-width, $BP-medium, 'screen'),
-  (min-height, 800px),
-  (inside, $BP-small, $BP-large),
-  (inside-ratio, '2/1', '1/1'),
-  ('print')
-);
-@include mq($MQ-multiOr) {
-  background: $green;
-}`,
-  })
-
-  //-orPlusCombo
-  +demo({
-    html: `
-.test.-orPlusCombo
-`,
-    scss: `
-$MQ-orPlusCombo: (
-  (min-width, $BP-medium, 'screen') plus (min-height, 800px),
-  'screen' plus (inside, $BP-small, $BP-large) plus (inside-ratio, '2/1', '1/1')
-);
-@include mq($MQ-orPlusCombo) {
-  background: $green;
-}`,
-  })
+  +simpleOr
+  +complexOr
+  +multiOr
+  +orPlusCombo

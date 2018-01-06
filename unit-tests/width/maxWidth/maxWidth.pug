@@ -1,0 +1,11 @@
+mixin maxWidth
+  //-maxWidth
+  +demo({
+    html: `
+.test.-maxWidth
+`,
+    scss: `
+@include mq(max-width, $BP-medium) {
+  background: $green;
+}`,
+  })

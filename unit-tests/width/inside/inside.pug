@@ -1,0 +1,11 @@
+mixin inside
+  //-inside
+  +demo({
+    html: `
+.test.-inside
+`,
+    scss: `
+@include mq(inside, $BP-medium, $BP-small) {
+  background: $green;
+}`,
+  })

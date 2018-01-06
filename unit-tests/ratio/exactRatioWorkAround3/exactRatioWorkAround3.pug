@@ -1,0 +1,13 @@
+mixin exactRatioWorkAround3
+  //-exactRatioWorkAround3
+  +demo({
+    html: `
+.test.-exactRatioWorkAround3
+`,
+    scss: `
+//The same again this time inline
+@include mq(max-ratio, '2 / 1', 'not') {
+  background: $green;
+}
+`,
+  })

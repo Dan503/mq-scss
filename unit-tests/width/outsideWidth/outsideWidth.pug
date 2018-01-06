@@ -1,0 +1,11 @@
+mixin outsideWidth
+  //-outsideWidth
+  +demo({
+    html: `
+.test.-outsideWidth
+`,
+    scss: `
+@include mq(outside-width, $BP-small, $BP-medium) {
+  background: $green;
+}`,
+  })

@@ -1,0 +1,14 @@
+mixin ignoredMediaType
+  //-ignoredMediaType
+  +demo({
+    html: `
+.test.-ignoredMediaType
+`,
+    scss: `
+//The media type in the second plus statement is ignored
+//Only media types in the first definition are honoured in a plus statement
+$MQ-ignoredMediaType: (inside-width, $BP-small, $BP-medium) plus (inside-ratio, '2/1', '1/1', 'print');
+@include mq($MQ-ignoredMediaType) {
+  background: $green;
+}`,
+  })

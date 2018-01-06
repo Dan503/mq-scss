@@ -1,0 +1,13 @@
+mixin complexPlus
+  //-complexPlus
+  +demo({
+    html: `
+.test.-complexPlus
+`,
+    scss: `
+//note that 'print' appplies to the full plus statement
+$MQ-complexPlus: (inside-width, $BP-small, $BP-medium, 'print') plus (inside-ratio, '2/1', '1/1');
+@include mq($MQ-complexPlus) {
+  background: $green;
+}`,
+  })

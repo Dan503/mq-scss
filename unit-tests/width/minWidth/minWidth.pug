@@ -1,0 +1,11 @@
+mixin minWidth
+  //-minWidth
+  +demo({
+    html: `
+.test.-minWidth
+`,
+    scss: `
+@include mq(min-width, $BP-medium) {
+  background: $green;
+}`,
+  })

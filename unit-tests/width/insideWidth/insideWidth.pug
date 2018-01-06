@@ -1,0 +1,11 @@
+mixin insideWidth
+  //-insideWidth
+  +demo({
+    html: `
+.test.-insideWidth
+`,
+    scss: `
+@include mq(inside-width, $BP-small, $BP-medium) {
+  background: $green;
+}`,
+  })

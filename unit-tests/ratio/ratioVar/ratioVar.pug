@@ -1,0 +1,12 @@
+mixin ratioVar
+  //-ratioVar
+  +demo({
+    html: `
+.test.-ratioVar
+`,
+    scss: `
+$MQ-ratioVar: (ratio, "2 / 1");
+@include mq($MQ-ratioVar) {
+  background: $green;
+}`,
+  })

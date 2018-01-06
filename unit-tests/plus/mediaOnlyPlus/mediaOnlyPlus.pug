@@ -1,0 +1,11 @@
+mixin mediaOnlyPlus
+  //-mediaOnlyPlus
+  +demo({
+    html: `
+.test.-mediaOnlyPlus
+`,
+    scss: `
+@include mq('screen' plus (min, $BP-medium)) {
+  background: $green;
+}`,
+  })

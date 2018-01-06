@@ -1,0 +1,11 @@
+mixin outside
+  //-outside
+  +demo({
+    html: `
+.test.-outside
+`,
+    scss: `
+@include mq(outside, $BP-medium, $BP-small) {
+  background: $green;
+}`,
+  })

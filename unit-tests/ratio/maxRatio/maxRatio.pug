@@ -1,0 +1,11 @@
+mixin maxRatio
+  //-maxRatio
+  +demo({
+    html: `
+.test.-maxRatio
+`,
+    scss: `
+@include mq(max-ratio, "2 / 1") {
+  background: $green;
+}`,
+  })

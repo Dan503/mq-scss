@@ -1,0 +1,12 @@
+mixin insideVar
+  //-insideVar
+  +demo({
+    html: `
+.test.-insideVar
+`,
+    scss: `
+$MQ-insideVar: (inside, $BP-medium, $BP-small);
+@include mq($MQ-insideVar) {
+  background: $green;
+}`,
+  })
