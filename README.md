@@ -42,8 +42,14 @@ If you enjoy using mq-scss, also try out my [mq-js](https://www.npmjs.com/packag
 
 ## Installation
 
+If you have never used npm before, install [Node.js](https://nodejs.org). Then set a command line interface to your project folder (`cd C:/path/to/folder`). Then run `npm init` and follow the prompts.
+
+Everyone needs to do these next two steps:
+
 ```````````
+
 npm install mq-scss --save
+
 ```````````
 
 Import mq-scss at the top of your main Sass file (note that the exact path will differ depending on your folder structure)
@@ -290,41 +296,41 @@ Also, `orientation` only accepts the strings `'portrait'` and `'landscape'`.
 
 #### Single value ranges
 
-- **min** : `screen and (min-width: XXX)`
-- **max** : `screen and (max-width: XXX)`
+- **min** : `(min-width: XXX)`
+- **max** : `(max-width: XXX)`
 
 - **min-width** : (same as `min`)
 - **max-width** : (same as `max`)
 
-- **min-height** : `screen and (min-height: XXX)`
-- **max-height** : `screen and (max-height: XXX)`
+- **min-height** : `(min-height: XXX)`
+- **max-height** : `(max-height: XXX)`
 
-- **ratio** : `screen and (aspect-ratio: XXX)`
-- **min-ratio** : `screen and (min-aspect-ratio: XXX)`
-- **max-ratio** : `screen and (max-aspect-ratio: XXX)`
+- **ratio** : `(aspect-ratio: XXX)`
+- **min-ratio** : `(min-aspect-ratio: XXX)`
+- **max-ratio** : `(max-aspect-ratio: XXX)`
 
-- **device-ratio** : `screen and (device-aspect-ratio: XXX)`
-- **min-device-ratio** : `screen and (min-device-aspect-ratio: XXX)`
-- **max-device-ratio** : `screen and (max-device-aspect-ratio: XXX)`
+- **device-ratio** : `(device-aspect-ratio: XXX)`
+- **min-device-ratio** : `(min-device-aspect-ratio: XXX)`
+- **max-device-ratio** : `(max-device-aspect-ratio: XXX)`
 
-- **orientation** : `screen and (orientation: XXX)`
+- **orientation** : `(orientation: XXX)`
 
 #### Double value ranges
 
-- **inside** : `screen and (max-width: XXX) and (min-width: YYY)`
-- **outside** : `screen and (max-width: YYY), (min-width: XXX)`
+- **inside** : `(max-width: XXX) and (min-width: YYY)`
+- **outside** : `(max-width: YYY), (min-width: XXX)`
 
 - **inside-width** : (same as `inside`)
 - **outside-width** : (same as `outside`)
 
-- **inside-height** : `screen and (max-height: XXX) and (min-height: YYY)`
-- **outside-height** : `screen and (max-height: YYY), (min-height: XXX)`
+- **inside-height** : `(max-height: XXX) and (min-height: YYY)`
+- **outside-height** : `(max-height: YYY), (min-height: XXX)`
 
-- **inside-ratio** : `screen and (max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)`
-- **outside-ratio** : `screen and (max-aspect-ratio: YYY), (min-aspect-ratio: XXX)`
+- **inside-ratio** : `(max-aspect-ratio: XXX) and (min-aspect-ratio: YYY)`
+- **outside-ratio** : `(max-aspect-ratio: YYY), (min-aspect-ratio: XXX)`
 
-- **inside-device-ratio** : `screen and (max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
-- **outside-device-ratio** : `screen and (max-device-aspect-ratio: YYY), (min-device-aspect-ratio: XXX)`
+- **inside-device-ratio** : `(max-device-aspect-ratio: XXX) and (min-device-aspect-ratio: YYY)`
+- **outside-device-ratio** : `(max-device-aspect-ratio: YYY), (min-device-aspect-ratio: XXX)`
 
 
 ## MQ variables
@@ -403,20 +409,28 @@ $MQ-element__color--alt: (outside, 1024px, 600px);
 `````````````css
 /* outputted css: */
 
-@media not screen and (max-width: 1024px) and (min-width: 601px) {
-    .module__element { background: red; }
+@media (max-width: 1024px) and (min-width: 601px) {
+    .module__element {
+      background: red;
+    }
+}
+
+@media (max-width: 600px), (min-width: 1025px) {
+    .module__element {
+      background: blue;
+    }
 }
 
 @media (max-width: 1024px) and (min-width: 601px) {
-    .module__element { background: blue; }
+    .module__element--green {
+      background: green;
+    }
 }
 
-@media not screen and (max-width: 1024px) and (min-width: 601px) {
-    .module__element--green { background: green; }
-}
-
-@media (max-width: 1024px) and (min-width: 601px) {
-    .module__element--green { background: grey; }
+@media (max-width: 600px), (min-width: 1025px) {
+    .module__element--green {
+      background: grey;
+    }
 }
 `````````````
 
@@ -1053,8 +1067,7 @@ That example would produce a log in your console that looks like this:
 
 ````
 mq-scss/_mq.scss:378 DEBUG: inside
-mq-scss/_mq.scss:397 DEBUG: inline_mq_values (range: inside, breakpoint_1: 600px, breakpoint_2: 1000px, mediaType: false, mediaO
-nly: false)
+mq-scss/_mq.scss:397 DEBUG: inline_mq_values (range: inside, breakpoint_1: 600px, breakpoint_2: 1000px, mediaType: false, mediaOnly: false)
 mq-scss/_mq.scss:248 DEBUG: get_values_result (range: inside, breakpoint_1: 600px, breakpoint_2: 1000px, media: "")
 mq-scss/_mq.scss:90 DEBUG: calculateMQ (range: inside, breakpoint_1: 1000px, breakpoint_2: 600px, mediaType: false)
 mq-scss/_mq.scss:421 DEBUG: !!!!! FINAL OUTPUT: @media (max-width: 1000px) and (min-width: 601px)
@@ -1117,11 +1130,13 @@ To create this css:
 
 ## For contributors
 
-If you wish to contribute to mq-scss, version 2.1.0+ comes with a testing environment. To access the testing environment:
+If you wish to contribute to mq-scss, it now comes with a testing environment. To access the testing environment:
 
 1. Checking out the [GitHub repository](https://github.com/Dan503/mq-scss)
-2. Run `npm install`
-3. Run `gulp --open`
+2. Set a command line interface current directory to the project folder (`cd C:/path/to/folder`)
+3. Run `npm install`
+4. If you have never used gulp before, run `npm install gulp-cli -g`
+5. Run `gulp --open`
 
 I plan to eventually create proper automated unit tests. This is better than nothing though.
 
