@@ -1,5 +1,8 @@
 $test-only: false;
 
+$red: #6D0808;
+$green: #004700;
+
 .test {
 	padding: 30px;
 	border: 2px solid #000;
@@ -33,10 +36,7 @@ $test-only: false;
 	&::after { content: ' = true'; }
 }
 
-@import '*/**/*.scss';
-
-$red: #6D0808;
-$green: #004700;
+@import '*/*/*.scss';
 
 .tests {
 	display: grid;

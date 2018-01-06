@@ -6,8 +6,15 @@
 	}
 }
 
-.unitTest {
-	@include simpleMedia {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include simpleMedia { color: #000; }
+	}
+} @else {
+	.test.-simpleMedia {
+		&::before { content: "mq(min, #{$BP-medium}, 'screen')"; }
+		@include simpleMedia {
+			@include isActive;
+		}
 	}
 }

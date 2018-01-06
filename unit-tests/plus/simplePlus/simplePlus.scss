@@ -7,8 +7,15 @@
 	}
 }
 
-.unitTest {
-	@include simplePlus {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include simplePlus { color: #000; }
+	}
+} @else {
+	.test.-simplePlus {
+		&::before { content: 'mq($MQ-simplePlus)'; }
+		@include simplePlus {
+			@include isActive;
+		}
 	}
 }

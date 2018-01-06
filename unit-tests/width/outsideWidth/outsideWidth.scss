@@ -6,8 +6,15 @@
 	}
 }
 
-.unitTest {
-	@include outsideWidth {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include outsideWidth { color: #000; }
+	}
+} @else {
+	.test.-outsideWidth {
+		&::before { content: 'mq($MQ-outsideWidth)'; }
+		@include outsideWidth {
+			@include isActive;
+		}
 	}
 }

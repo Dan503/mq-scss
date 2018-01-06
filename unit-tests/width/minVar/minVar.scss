@@ -7,8 +7,15 @@
 	}
 }
 
-.unitTest {
-	@include minVar {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include minVar { color: #000; }
+	}
+} @else {
+	.test.-minVar {
+		&::before { content: 'mq($MQ-minVar)'; }
+		@include minVar {
+			@include isActive;
+		}
 	}
 }

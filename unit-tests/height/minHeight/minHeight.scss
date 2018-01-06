@@ -6,8 +6,15 @@
 	}
 }
 
-.unitTest {
-	@include minHeight {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include minHeight { color: #000; }
+	}
+} @else {
+	.test.-minHeight {
+		&::before { content: 'mq(min-height, #{$BP-medium})'; }
+		@include minHeight {
+			@include isActive;
+		}
 	}
 }

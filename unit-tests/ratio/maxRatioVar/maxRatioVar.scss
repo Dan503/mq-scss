@@ -7,8 +7,15 @@
 	}
 }
 
-.unitTest {
-	@include maxRatioVar {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include maxRatioVar { color: #000; }
+	}
+} @else {
+	.test.-maxRatioVar {
+		&::before { content: 'mq($MQ-maxRatioVar)'; }
+		@include maxRatioVar {
+			@include isActive;
+		}
 	}
 }

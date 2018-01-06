@@ -6,8 +6,15 @@
 	}
 }
 
-.unitTest {
-	@include maxHeight {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include maxHeight { color: #000; }
+	}
+} @else {
+	.test.-maxHeight {
+		&::before { content: 'mq(max-height, #{$BP-medium})'; }
+		@include maxHeight {
+			@include isActive;
+		}
 	}
 }

@@ -7,8 +7,15 @@
 	}
 }
 
-.unitTest {
-	@include outsideHeightVar {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include outsideHeightVar { color: #000; }
+	}
+} @else {
+	.test.-outsideHeightVar {
+		&::before { content: 'mq($MQ-outsideHeightVar)'; }
+		@include outsideHeightVar {
+			@include isActive;
+		}
 	}
 }

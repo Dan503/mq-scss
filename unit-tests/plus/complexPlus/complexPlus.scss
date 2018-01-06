@@ -7,8 +7,15 @@
 	}
 }
 
-.unitTest {
-	@include complexPlus {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include complexPlus { color: #000; }
+	}
+} @else {
+	.test.-complexPlus {
+		&::before { content: 'mq($MQ-complexPlus)'; }
+		@include complexPlus {
+			@include isActive;
+		}
 	}
 }

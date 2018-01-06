@@ -8,9 +8,7 @@
 
 @if ($test-only) {
 	.unitTest {
-		@include insideHeight {
-			color: #000;
-		}
+		@include insideHeight { color: #000; }
 	}
 } @else {
 	.test.-insideHeight {

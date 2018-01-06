@@ -6,8 +6,15 @@
 	}
 }
 
-.unitTest {
-	@include outside {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include outside { color: #000; }
+	}
+} @else {
+	.test.-outside {
+		&::before { content: 'mq(outside, #{$BP-medium}, #{$BP-small})'; }
+		@include outside {
+			@include isActive;
+		}
 	}
 }

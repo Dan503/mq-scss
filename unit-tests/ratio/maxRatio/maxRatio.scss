@@ -6,8 +6,15 @@
 	}
 }
 
-.unitTest {
-	@include maxRatio {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include maxRatio { color: #000; }
+	}
+} @else {
+	.test.-maxRatio {
+		&::before { content: 'mq(max-ratio, "2 / 1")'; }
+		@include maxRatio {
+			@include isActive;
+		}
 	}
 }

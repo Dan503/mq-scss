@@ -10,8 +10,15 @@
 	}
 }
 
-.unitTest {
-	@include orPlusCombo {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include orPlusCombo { color: #000; }
+	}
+} @else {
+	.test.-orPlusCombo {
+		&::before { content: 'mq($MQ-orPlusCombo)'; }
+		@include orPlusCombo {
+			@include isActive;
+		}
 	}
 }

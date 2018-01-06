@@ -7,8 +7,15 @@
 	}
 }
 
-.unitTest {
-	@include ignoredMediaType {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include ignoredMediaType { color: #000; }
+	}
+} @else {
+	.test.-ignoredMediaType {
+		&::before { content: 'mq($MQ-ignoredMediaType)'; }
+		@include ignoredMediaType {
+			@include isActive;
+		}
 	}
 }

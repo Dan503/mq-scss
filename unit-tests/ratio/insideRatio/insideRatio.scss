@@ -6,8 +6,15 @@
 	}
 }
 
-.unitTest {
-	@include insideRatio {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include insideRatio { color: #000; }
+	}
+} @else {
+	.test.-insideRatio {
+		&::before { content: 'mq(inside-ratio, "2 / 1", "1 / 1")'; }
+		@include insideRatio {
+			@include isActive;
+		}
 	}
 }

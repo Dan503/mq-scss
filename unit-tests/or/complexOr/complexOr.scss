@@ -10,8 +10,15 @@
 	}
 }
 
-.unitTest {
-	@include complexOr {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include complexOr { color: #000; }
+	}
+} @else {
+	.test.-complexOr {
+		&::before { content: 'mq($MQ-complexOr)'; }
+		@include complexOr {
+			@include isActive;
+		}
 	}
 }

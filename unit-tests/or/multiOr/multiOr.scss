@@ -13,8 +13,15 @@
 	}
 }
 
-.unitTest {
-	@include multiOr {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include multiOr { color: #000; }
+	}
+} @else {
+	.test.-multiOr {
+		&::before { content: 'mq($MQ-multiOr)'; }
+		@include multiOr {
+			@include isActive;
+		}
 	}
 }

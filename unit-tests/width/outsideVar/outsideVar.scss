@@ -7,8 +7,15 @@
 	}
 }
 
-.unitTest {
-	@include outsideVar {
-		color: #000;
+@if ($test-only) {
+	.unitTest {
+		@include outsideVar { color: #000; }
+	}
+} @else {
+	.test.-outsideVar {
+		&::before { content: 'mq($MQ-outsideVar)'; }
+		@include outsideVar {
+			@include isActive;
+		}
 	}
 }
