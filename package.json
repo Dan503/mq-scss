@@ -1,6 +1,6 @@
 {
   "name": "mq-scss",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "An extremely powerful but easy to use Sass media query mixin that allows you to create almost any media query you can imagine.",
   "main": "_mq.scss",
   "repository": {
