@@ -977,7 +977,7 @@ The use case in this example is that you always want the print styles to be base
 
 ### The `not` media type
 
-`'not'` is an interesting media type. It was introduced in v2.1.0 as a short-hand for `not screen` in mq-scss (`@media not (max-width: 600px){}` is actually invalid css).
+`'not'` is an interesting media type. It was introduced in v2.1.0 as a short-hand for `not screen` (then updated in v2.1.3 to output `not all`).
 
 `'not'` will essentially invert the media query. You could use this for helping you write counter queries however I would caution against this. In general, using `'not'` is fine. However, if you try and nest another media query inside of it, or you nest the `'not'` statement inside a different media query, Sass can output some very odd and unexpected results. This is the reason version 1.0.0 of mq-scss couldn't support nested `outside` statements. It was essentially using `not inside` to produce the media query.
 
@@ -1002,7 +1002,7 @@ In order to use a `min-ratio` that works in the same sort of way that `min-heigh
 
 ````css
 /* output css for both */
-@media not screen and (max-aspect-ratio: 2 / 1) {
+@media not all and (max-aspect-ratio: 2 / 1) {
     body { color: #000; }
 }
 ````
@@ -1146,6 +1146,10 @@ It also comes with a batch of 46 unit tests that are used to ensure that all of 
 ## Change log
 
 This change log only covers major changes to the mixin. Due to how npm works, things like edits to the readme file require releasing whole new versions of the module to publish the edits. Those sorts of releases are not listed here.
+
+### v2.1.3
+
+- `'not'` is now short hand for `not all` instead of `not screen`. This is more what I was trying to go with originally but I wasn't sure what the proper syntax was.
 
 ### v2.1.2
 
