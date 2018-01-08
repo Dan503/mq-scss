@@ -8,7 +8,7 @@ $mq-debug: false !default;
 
 @function mediaType($mediaType: false, $hasAnd: true){
 	$media: '';
-	$mediaType: if($mediaType == 'not', 'not screen', $mediaType);
+	$mediaType: if($mediaType == 'not', 'not all', $mediaType);
 	@if ($mediaType){
 		$media: if($hasAnd, $mediaType + ' and ', $mediaType);
 	}

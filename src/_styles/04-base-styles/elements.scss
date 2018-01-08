@@ -124,10 +124,6 @@ a {
     cursor: default;
     pointer-events: none;
     opacity: 0.2;
-
-    .no-csspointerevents & {
-      display: none;
-    }
   }
 }
 
@@ -198,10 +194,6 @@ pre {
   code {
     padding: 10px 5px;
     font-size: 1em;
-  }
-
-  .no-flexbox & {
-    max-width: 780px;
   }
 }
 
