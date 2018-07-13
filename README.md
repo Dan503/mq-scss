@@ -6,39 +6,44 @@ This media query mixin is a powerful tool that lets you easily create far more c
 
 I've set up a [test/demo site](https://dan503.github.io/mq-scss/). It primarily exists for testing but it does a pretty decent job of demoing what mq-scss can do as well.
 
-If you enjoy using mq-scss, also try out my [mq-js](https://www.npmjs.com/package/mq-js) npm module. This allows you to use mq-scss style media queries inside your JavaScript files.
+## mq-scss family <!-- omit in toc -->
 
-## Contents
+If you enjoy using mq-scss, you may also enjoy using these:
 
-* [Installation](#installation)
-* [Basic usage](#basic-usage)
-    * [Min/Max width](#minmax-width)
-        * [Min/Max width long hand](#minmax-width-long-hand)
-    * [Inside/Outside](#insideoutside)
-        * [Changing which value comes first](#changing-which-value-comes-first)
-    * [Ratio based media queries](#ratio-based-media-queries)
-    * [Full list of media query ranges](#full-list-of-media-query-ranges)
-        * [Single value ranges](#single-value-ranges)
-        * [Double value ranges](#double-value-ranges)
-* [MQ variables](#mq-variables)
-    * [Why name your media queries?](#why-name-your-media-queries)
-    * [Enhanced maintainability](#enhanced-maintainability)
-    * [How to use an MQ variable](#how-to-use-an-mq-variable)
-        * [Naming your MQ variables](#naming-your-mq-variables)
-        * [Creating your MQ variables](#creating-your-mq-variables)
-* [Combining media queries](#combining-media-queries)
-    * [Media query `or` statements](#media-query-or-statements)
-    * [Media Query `plus` statements](#media-query-plus-statements)
-        * [**!IMPORTANT!** limitations of `plus`](#important-limitations-of-plus)
-* [Defining media types](#defining-media-types)
-    * [Media only queries](#media-only-queries)
-    * [The `not` media type](#the-not-media-type)
-* [em conversion](#em-conversion)
-* [Defining breakpoints](#defining-breakpoints)
-* [Debug](#debug)
-* [Bonus retina display mixin](#bonus-retina-display-mixin)
-* [For contributors](#for-contributors)
-* [Change Log](#change-log)
+- [mq-js:](https://www.npmjs.com/package/mq-js) Allows you to use mq-scss style media queries in your JavaScript files.
+- [query-list:](https://www.npmjs.com/package/query-list) An mq-scss style work around for the lack of container queries in CSS.
+
+## Contents <!-- omit in toc -->
+
+- [Installation](#installation)
+- [Basic usage](#basic-usage)
+    - [Min/Max width](#minmax-width)
+        - [Min/Max width long hand](#minmax-width-long-hand)
+    - [Inside/Outside](#insideoutside)
+        - [Changing which value comes first](#changing-which-value-comes-first)
+    - [Ratio based media queries](#ratio-based-media-queries)
+    - [Full list of media query ranges](#full-list-of-media-query-ranges)
+        - [Single value ranges](#single-value-ranges)
+        - [Double value ranges](#double-value-ranges)
+- [MQ variables](#mq-variables)
+    - [Why name your media queries?](#why-name-your-media-queries)
+    - [Enhanced maintainability](#enhanced-maintainability)
+    - [How to use an MQ variable](#how-to-use-an-mq-variable)
+        - [Naming your MQ variables](#naming-your-mq-variables)
+        - [Creating your MQ variables](#creating-your-mq-variables)
+- [Combining media queries](#combining-media-queries)
+    - [Media query `or` statements](#media-query-or-statements)
+    - [Media Query `plus` statements](#media-query-plus-statements)
+    - [!IMPORTANT! limitations of `plus`](#important-limitations-of-plus)
+- [Defining media types](#defining-media-types)
+    - [Media only queries](#media-only-queries)
+    - [The `not` media type](#the-not-media-type)
+- [em conversion](#em-conversion)
+- [Defining breakpoints](#defining-breakpoints)
+- [Debug](#debug)
+- [Bonus retina display mixin](#bonus-retina-display-mixin)
+- [For contributors](#for-contributors)
+- [Change log](#change-log)
 
 ## Installation
 
@@ -684,7 +689,7 @@ $MQ-c: ($MQ-a plus $MQ-b plus (min-ratio, '2 / 1'));
 
 You should note that `plus` does not work in all situations. There are some restrictions around using the `plus` keyword that you should be aware of.
 
-#### It can not be used in conjunction with any `outside` range type
+#### It can not be used in conjunction with any `outside` range type <!-- omit in toc -->
 
 The following code **will not work** and will throw an error stating that all `outside` range types (`outside`, `outside-height`, `outside-ratio`, `outside-device-ratio`) are incompatible with `plus` statements.
 
@@ -703,7 +708,7 @@ $MQ-c: ($MQ-a plus $MQ-b);
 }
 `````````````
 
-#### `plus` statements can not contain any `or` statements
+#### `plus` statements can not contain any `or` statements <!-- omit in toc -->
 
 `or` statements can contain `plus` statements however `plus` statements can not contain `or` statements.
 
@@ -728,7 +733,7 @@ $MQ-c: ($MQ-a plus $MQ-b);
 `````````````
 
 
-#### Work arounds
+#### Work arounds <!-- omit in toc -->
 
 You can generally get around these issues by placing the `plus` statement inside `or` statements.
 
@@ -1145,49 +1150,4 @@ It also comes with a batch of 46 unit tests that are used to ensure that all of 
 
 ## Change log
 
-This change log only covers major changes to the mixin. Due to how npm works, things like edits to the readme file require releasing whole new versions of the module to publish the edits. Those sorts of releases are not listed here.
-
-### v2.1.3
-
-- `'not'` is now short hand for `not all` instead of `not screen`. This is more what I was trying to go with originally but I wasn't sure what the proper syntax was.
-
-### v2.1.2
-
-- Added automated unit-tests.
-
-### v2.1.0
-
-- Added the ability to debug mq statements by setting either the local `$debug` setting or the global `$mq-debug` setting to `true`.
-- Now supports media type only statements.
-- Added a proper testing/demo environment to the repository (check out repo > `npm i` > `gulp --open`).
-- Added support for `not` as a short-hand for `not screen` media types.
-
-### v2.0.0
-
-- Added the ability to define custom media types for individual mq statements.
-- **BREAKING CHANGE:** By default, no media type is added to the media query (previously it added "screen" as the media type to all media queries).
-    - If upgrading from v1.x you may want to add `"screen"` to the end of all your MQ statements to retain consistency with v1.x.
-    - eg. from `@include mq(max, 800px)` to `@include mq(max, 800px, 'screen')`.
-
-### v1.3.2
-
-- Made `inside-width` and `outside-width` valid range types that can be used instead of `inside` and `outside`.
-
-### v1.3.1
-
-- Made `min-width` and `max-width` valid range types that can be used instead of `min` and `max`.
-
-### v1.3.0
-
-- Added the `plus` keyword for improved handling of "and" statements.
-- Changed the breakpoints list example to just a list of variables.
-
-### v1.2.0
-
-- Removed the need for the `$mq-largest-first` variable. You can now state double value breakpoint values in any order.
-- Outside range types can now be safely nested and take advantage of the Sass nested media queries functionality.
-- Updated the MQ variable syntax to what I currently use.
-
-### v1.1.0
-
-- Added the ability to state the smaller value first by setting an `$mq-largest-first` variable to `false`.
+The change log has been moved to the [mq-scss GitHub releases page](https://github.com/Dan503/mq-scss/releases).
