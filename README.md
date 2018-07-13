@@ -8,37 +8,37 @@ I've set up a [test/demo site](https://dan503.github.io/mq-scss/). It primarily 
 
 If you enjoy using mq-scss, also try out my [mq-js](https://www.npmjs.com/package/mq-js) npm module. This allows you to use mq-scss style media queries inside your JavaScript files.
 
-## Contents
+## Contents <!-- omit in toc -->
 
-* [Installation](#installation)
-* [Basic usage](#basic-usage)
-    * [Min/Max width](#minmax-width)
-        * [Min/Max width long hand](#minmax-width-long-hand)
-    * [Inside/Outside](#insideoutside)
-        * [Changing which value comes first](#changing-which-value-comes-first)
-    * [Ratio based media queries](#ratio-based-media-queries)
-    * [Full list of media query ranges](#full-list-of-media-query-ranges)
-        * [Single value ranges](#single-value-ranges)
-        * [Double value ranges](#double-value-ranges)
-* [MQ variables](#mq-variables)
-    * [Why name your media queries?](#why-name-your-media-queries)
-    * [Enhanced maintainability](#enhanced-maintainability)
-    * [How to use an MQ variable](#how-to-use-an-mq-variable)
-        * [Naming your MQ variables](#naming-your-mq-variables)
-        * [Creating your MQ variables](#creating-your-mq-variables)
-* [Combining media queries](#combining-media-queries)
-    * [Media query `or` statements](#media-query-or-statements)
-    * [Media Query `plus` statements](#media-query-plus-statements)
-        * [**!IMPORTANT!** limitations of `plus`](#important-limitations-of-plus)
-* [Defining media types](#defining-media-types)
-    * [Media only queries](#media-only-queries)
-    * [The `not` media type](#the-not-media-type)
-* [em conversion](#em-conversion)
-* [Defining breakpoints](#defining-breakpoints)
-* [Debug](#debug)
-* [Bonus retina display mixin](#bonus-retina-display-mixin)
-* [For contributors](#for-contributors)
-* [Change Log](#change-log)
+- [Installation](#installation)
+- [Basic usage](#basic-usage)
+    - [Min/Max width](#minmax-width)
+        - [Min/Max width long hand](#minmax-width-long-hand)
+    - [Inside/Outside](#insideoutside)
+        - [Changing which value comes first](#changing-which-value-comes-first)
+    - [Ratio based media queries](#ratio-based-media-queries)
+    - [Full list of media query ranges](#full-list-of-media-query-ranges)
+        - [Single value ranges](#single-value-ranges)
+        - [Double value ranges](#double-value-ranges)
+- [MQ variables](#mq-variables)
+    - [Why name your media queries?](#why-name-your-media-queries)
+    - [Enhanced maintainability](#enhanced-maintainability)
+    - [How to use an MQ variable](#how-to-use-an-mq-variable)
+        - [Naming your MQ variables](#naming-your-mq-variables)
+        - [Creating your MQ variables](#creating-your-mq-variables)
+- [Combining media queries](#combining-media-queries)
+    - [Media query `or` statements](#media-query-or-statements)
+    - [Media Query `plus` statements](#media-query-plus-statements)
+    - [!IMPORTANT! limitations of `plus`](#important-limitations-of-plus)
+- [Defining media types](#defining-media-types)
+    - [Media only queries](#media-only-queries)
+    - [The `not` media type](#the-not-media-type)
+- [em conversion](#em-conversion)
+- [Defining breakpoints](#defining-breakpoints)
+- [Debug](#debug)
+- [Bonus retina display mixin](#bonus-retina-display-mixin)
+- [For contributors](#for-contributors)
+- [Change log](#change-log)
 
 ## Installation
 
@@ -684,7 +684,7 @@ $MQ-c: ($MQ-a plus $MQ-b plus (min-ratio, '2 / 1'));
 
 You should note that `plus` does not work in all situations. There are some restrictions around using the `plus` keyword that you should be aware of.
 
-#### It can not be used in conjunction with any `outside` range type
+#### It can not be used in conjunction with any `outside` range type <!-- omit in toc -->
 
 The following code **will not work** and will throw an error stating that all `outside` range types (`outside`, `outside-height`, `outside-ratio`, `outside-device-ratio`) are incompatible with `plus` statements.
 
@@ -703,7 +703,7 @@ $MQ-c: ($MQ-a plus $MQ-b);
 }
 `````````````
 
-#### `plus` statements can not contain any `or` statements
+#### `plus` statements can not contain any `or` statements <!-- omit in toc -->
 
 `or` statements can contain `plus` statements however `plus` statements can not contain `or` statements.
 
@@ -728,7 +728,7 @@ $MQ-c: ($MQ-a plus $MQ-b);
 `````````````
 
 
-#### Work arounds
+#### Work arounds <!-- omit in toc -->
 
 You can generally get around these issues by placing the `plus` statement inside `or` statements.
 
