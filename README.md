@@ -6,7 +6,12 @@ This media query mixin is a powerful tool that lets you easily create far more c
 
 I've set up a [test/demo site](https://dan503.github.io/mq-scss/). It primarily exists for testing but it does a pretty decent job of demoing what mq-scss can do as well.
 
-If you enjoy using mq-scss, also try out my [mq-js](https://www.npmjs.com/package/mq-js) npm module. This allows you to use mq-scss style media queries inside your JavaScript files.
+## mq-scss family <!-- omit in toc -->
+
+If you enjoy using mq-scss, you may also enjoy using these:
+
+- [mq-js:](https://www.npmjs.com/package/mq-js) Allows you to use mq-scss style media queries in your JavaScript files.
+- [query-list:](https://www.npmjs.com/package/query-list) An mq-scss style work around for the lack of container queries in CSS.
 
 ## Contents <!-- omit in toc -->
 
@@ -1145,4 +1150,4 @@ It also comes with a batch of 46 unit tests that are used to ensure that all of 
 
 ## Change log
 
-The change log has been moved to the [mq-scss GitHub releases page](https://github.com/Dan503/mq-scss/releases)
+The change log has been moved to the [mq-scss GitHub releases page](https://github.com/Dan503/mq-scss/releases).
