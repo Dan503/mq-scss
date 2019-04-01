@@ -304,7 +304,7 @@ $mq-debug: false !default;
 	}
 
 	@if ($isAndStatement and not $media_statement_at_start) {
-		@error 'Media type definitions must be specified at the start of plus statements: (#{$range)})';
+		@error 'Media type definitions must be specified at the start of plus statements: (#{$range})';
 	}
 
 	//Uses this functionality if using a single level MQ variable
