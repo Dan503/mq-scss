@@ -3,6 +3,17 @@
 //loads the configuration settings for the site
 @import '00-config-files/config-loader';
 
+// MQ-SCSS input
+$MQ-variable: (inside, 600px, 1000px);
+
+@include mq($MQ-variable) {
+  /*
+    styles for screens
+    between 600px and 1000px
+  */
+}
+
+
 @import '02-mixins/clearfix';
 @import '02-mixins/centered';
 @import '02-mixins/searchIcon';

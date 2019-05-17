@@ -6,7 +6,7 @@
 a:active, a:hover { outline-width: 1px; }
 
 //mq-scss
-$mq-ems: true;
+// $mq-ems: true;
 @import 'mq-scss/mq';
 
 //Set what color gutters will be in IE8

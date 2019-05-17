@@ -1,26 +1,31 @@
 
 +a-mobileWarning
 :marked
-  mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass mixin. I wanted to use media queries in JavaScript in a similar sort of way to how I was using media queries in my Sass code.
+  MQ-SCSS is a powerful media query mixin that lets you easily create far more complex media queries than you would have ever attempted to do with plain css. It also makes your code far easier to maintain through it's ability to take simple media query variables.
 
 
 +o-demo({
-  js: {
-    basic: `
-// MQ-JS
+  scss: `
+// MQ-SCSS input
+$MQ-variable: (inside, 1000px, 600px);
 
-if (mq.inside(600, 1000)) {
-  // functionality for screens
-  // between 600px and 1000px
+@include mq($MQ-variable) {
+  /*
+    styles for screens
+    between 1000px and 601px
+   (extra px to prevent overlap)
+  */
 }
 `,
-  },
-  scss: `
-// MQ-SCSS
+  css: `
+/* CSS output */
 
-@include mq(inside, 600px, 1000px) {
-  // styles for screens
-  // between 600px and 1000px
+@media (max-width: 1000px) and (min-width: 601px) {
+  /*
+    styles for screens
+    between 1000px and 601px
+   (extra px to prevent overlap)
+  */
 }
 `,
 })

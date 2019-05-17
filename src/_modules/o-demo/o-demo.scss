@@ -87,6 +87,9 @@
 		&.scss:before {
 			content: 'Sass';
 		}
+		&.css:before {
+			content: 'CSS';
+		}
 		&.js { margin-bottom: 0; }
 		&.js:before {
 			content: 'JavaScript (ES6)';
