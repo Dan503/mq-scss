@@ -5,7 +5,7 @@ $V-hoverModifier: 60%;
 //Greys do not belong in this list unless it is a MAJOR brand color
 $brand: (
 	//*Main color*/
-	color: $CB-blue-light,
+	color: $CB-pink-dim,
 
 	//*Most likely hover state color for the main color*/
 	hover: $CB-blue-light--hover,
@@ -16,7 +16,7 @@ $brand: (
 
 //*Second most prominent brand color etc. */
 (
-	color: $CB-lime-light,
+	color: $CB-green-dark,
 	hover: $CB-lime-light--hover,
 	text: #000,
 ),

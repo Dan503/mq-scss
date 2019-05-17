@@ -1,6 +1,7 @@
 
 .m-revealer {
 	$this: &;
+	box-shadow: 0 0 5px $brand--primary;
 
 	+ #{$this} {
 		margin-top: 1em;
@@ -23,7 +24,7 @@
 	&__trigger {
 		display: flex;
 		align-items: center;
-		background: #000;
+		background: $CB-grey-pale;
 		border: 0;
 		width: 100%;
 		padding: 10px 20px;
@@ -36,7 +37,7 @@
 			#{$this}__triggerHex {
 				transform: none;
 				&.-two {
-					fill: #fff;
+					fill: $brand--primary;
 				}
 			}
 		}
@@ -58,13 +59,14 @@
 	}
 
 	&__triggerHex {
-		$stroke: 4px;
+		$stroke: 8px;
 		transition: 0.5s;
 		grid-column: 1 / 3;
 		grid-row: 1 / 3;
 		height: $iconSize;
 		width: $iconSize;
 		stroke: $brand--primary;
+		fill: #fff;
 		stroke-width: $stroke;
 
 		&.-one {
@@ -104,10 +106,11 @@
 
 	&__content {
 		position: relative;
-		background-color: rgba(#000, 0.25);
+		background-color: rgba(#fff, 0.5);
 		padding: 2em 20px 3em;
+		border-top: 1px solid $brand--primary;
 		// padding-bottom: 2em;
-		border-left: 40px solid #000;
+		border-left: 40px solid #fff;
 
 		&::before {
 			content: '';

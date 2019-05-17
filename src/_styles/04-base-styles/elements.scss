@@ -110,7 +110,7 @@ body {
 
   &::after {
     z-index: 1;
-    background: radial-gradient(circle at top, rgba(#000, 0.8), transparent);
+    background: radial-gradient(circle at top, rgba($brand--primary, 0.3), transparent);
   }
 
   > * {
@@ -247,11 +247,11 @@ code {
 
 p, li, h1, h2, h3, h4, h5 {
   code {
-    background-color: #c5c7cc;
+    background-color: $CB-grey-pale;
     // background-color: #000;
     // color: #fff;
     color: #000;
-    padding: 1px 3px;
+    padding: 1px 3px 3px;
     font-size: .85em;
     font-weight: bold;
     border-radius: 5px;

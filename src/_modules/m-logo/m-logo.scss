@@ -27,6 +27,7 @@
 		height: 18rem;
 		stroke-width: 7%;
 		stroke: $brand--primary;
+		fill: $CF-body__bg;
 		overflow: visible !important;
 		display: none;
 
@@ -69,6 +70,7 @@
 		color: $brand--secondary;
 		text-align: center;
 		padding-bottom: 0.5em;
+		font-weight: $bold;
 
 		@supports (display: grid) {
 			position: absolute;

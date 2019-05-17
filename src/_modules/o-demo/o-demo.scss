@@ -14,6 +14,8 @@
 
 .o-demo {
 	margin: 2.5em 0 3em;
+	filter: drop-shadow(0 0 3px #{$brand--primary});
+	font-weight: $bold;
 
 	&:last-child {
 		margin-bottom: 0;
@@ -31,11 +33,11 @@
 			bottom: 100%;
 			left: 0;
 			padding: 5px 10px;
-			background: #000;
-			color: #fff;
+			background: #d6d6d6;
 			border-radius: 5px 5px 0 0;
 			font-family: $font-2;
 			font-size: 16px;
+			letter-spacing: 1px;
 			color: $brand--secondary;
 			// box-shadow: 0 -1px 2px 0px $brand--primary;
 		}
@@ -113,11 +115,17 @@
 	}
 
 	&__details {
-		background: #000;
-		color: #fff;
+		background: $CB-grey-light;
+		color: $brand--secondary;
 		margin: 0;
+		box-shadow: none;
+
 		> summary {
 			padding: 0.5em 1em;
+		}
+
+		.m-revealer__trigger {
+			border: 1px dashed $brand--primary;
 		}
 	}
 

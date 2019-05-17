@@ -18,7 +18,7 @@ $hoverModifier--small: 20%;
 //green
 $CB-green-light: #98f181;
 $CB-green-bright: #29eb29;
-$CB-green-dark: #08705e;//quaternary
+$CB-green-dark: #1c5757;//secondary
 	//green hover states
 	$CB-green-light--hover: shade($CB-green-light, 20%);
 	$CB-green-dark--hover: shade($CB-green-dark, $hoverModifier);
@@ -47,6 +47,8 @@ $CB-blue-light: #5adef5;
 $CB-yellow-light: #f5e35a;
 $CB-yellow-light--hover: tint($CB-yellow-light, $hoverModifier);
 
+$CB-pink-dim: #9e366a;//primary
+
 //red
 //$CB-red-pale: #FFD1D1;
 $CB-red-light: #ff5151;
@@ -62,12 +64,12 @@ $CB-red-dark: #5B1223;
 
 //grey
 //$CB-grey-paler: #FAFAFA;
-$CB-grey-pale: #F0F0F0;
+$CB-grey-pale: #efecf4;
 $CB-grey-light: #cbcbce;
 $CB-grey-mid: #898989;
 $CB-grey-dim: #555555;
 $CB-grey-dark: #19191b;
-$CB-grey-x-dark: #000;//secondary
+$CB-grey-x-dark: #000;
 	//grey hover states
 	$CB-grey-pale--hover: shade($CB-grey-pale, $hoverModifier);
 	$CB-grey-light--hover: shade($CB-grey-light, $hoverModifier);

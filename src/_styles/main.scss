@@ -11,7 +11,8 @@
 
 //Styles from 3rd party plugins
 @import '03-plugins/normalize.altered';
-@import '03-plugins/highlight.theme.atom-one-dark';
+@import '../../node_modules/highlightjs/styles/atelier-cave-light';
+@import '03-plugins/code-theme-overides';
 
 // Base styles
 @import '04-base-styles/elements';
