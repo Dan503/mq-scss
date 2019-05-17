@@ -1,15 +1,15 @@
 ﻿
-@import url('https://fonts.googleapis.com/css?family=Cabin:400,400i,700,700i|Montserrat:400,700');
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
 
 //font families
 //Don't create variables like $openSans for custom fonts
 //Use generic variable names for better maintainability
-$sans-serif:	'Cabin', Arial, sans-serif;
-$serif:			Times New Roman, Times, serif;
-$cursive:		cursive;
-$code:			"Courier New", Courier, monospace;
+$sans-serif: Arial, sans-serif;
+$serif:      Times New Roman, Times, serif;
+$cursive:    'Audiowide', cursive;
+$code:       "Courier New", Courier, monospace;
 
 //1 = primary
 //2 = secondary etc
 $font-1: $sans-serif;
-$font-2: 'Montserrat', sans-serif;
+$font-2: $cursive;

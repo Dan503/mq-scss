@@ -1,0 +1,100 @@
+
++m-revealer('Creating media query variables')
+  :marked
+    One of the major features found in [mq-scss](https://www.npmjs.com/package/mq-scss) is that you can [easily create meaningful media query variables](https://www.npmjs.com/package/mq-scss#mq-variables).
+
+  +o-demo({
+      scss: `
+///////////////////////////////////////
+// Creating MQ variables in MQ-SCSS //
+/////////////////////////////////////
+
+// Set up MQ-SCSS media query variables
+$MQ-btn--active: (max, $bp-medium);
+$MQ-btn--inactive: (min, $bp-medium);
+
+.btn {
+  // Using the "active" variable
+  @include mq($MQ-btn--active) {
+    // Active styles
+  }
+
+  // Using the "inactive" variable
+  @include mq($MQ-btn--inactive) {
+    // Inactive styles
+  }
+}
+`,
+  })
+
+  :marked
+    Here is how to do a similar sort of thing in mq-js:
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-mqVar'})
+    | when clicked, turns green at and below a 980px screen width, turns grey above 980px`,
+        js: { es6: `
+////////////////////////
+// Component js file //
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//set up the mq-js media query variables
+const MQ_btn = {
+  active: ()=> mq.max('medium'),
+  inactive: ()=> mq.min('medium'),
+};
+
+document.querySelector('.btn.-mqVar').onclick = function(e){
+  e.preventDefault();
+
+  // Using the "active" variable
+  if (MQ_btn.active()){
+    this.classList.toggle('-active');
+  }
+
+  // Using the "inactive" variable
+  if (MQ_btn.inactive()){
+    this.classList.toggle('-inactive');
+  }
+
+})`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//set up the mq-js media query variables
+const MQ_btn = {
+  active: function() {
+    return mq.max('medium');
+  },
+  inactive: function() {
+    return mq.min('medium');
+  }
+};
+
+document.querySelector('.btn.-mqVar').onclick = function(e){
+  e.preventDefault();
+
+  // Using the "active" variable
+  if (MQ_btn.active()){
+    this.classList.toggle('-active');
+  }
+
+  // Using the "inactive" variable
+  if (MQ_btn.inactive()){
+    this.classList.toggle('-inactive');
+  }
+
+})`}
+    })

@@ -1,0 +1,62 @@
+
+.a-btn {
+  font-family: $font-2;
+  font-weight: normal;
+  font-size: 1.2em;
+  background-color: #000;
+  color: $brand--primary;
+  transition: 0.3s;
+  padding: 15px 20px;
+  display: inline-block;
+  transition: all 0.25s ease-in-out;
+  position: relative;
+  text-align: left;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  border: 3px solid currentColor;
+  text-decoration: none !important;
+  outline: 1px solid transparent;
+
+  &:hover {
+    background-color: hsl(0, 0%, 10%);
+  }
+
+  &:hover, &:focus {
+    color: #fff;
+    outline: 1px solid $brand--primary;
+    outline-offset: 5px;
+  }
+
+	svg {
+		fill: currentColor;
+		@include centered(v);
+		right: 20px;
+		height: 10px;
+		width: 10px;
+		fill: transparent;
+		fill: brand(1, 'text');
+		fill-width: 15px;
+		transition: 0.3s;
+	}
+
+	&.-hasIcon {
+		padding-right: 55px;
+	}
+
+  &.-active {
+    background-color: brand(2);
+    color: brand(2, text) !important;
+    &:hover {
+      background-color: brand(2, hover);
+    }
+  }
+
+  &.-inactive {
+    background-color: lightgray;
+    color: brand(2, text);
+    &:hover {
+      background-color: gray;
+    }
+  }
+
+}

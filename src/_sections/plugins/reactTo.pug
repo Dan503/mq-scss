@@ -1,0 +1,80 @@
+
++m-revealer('reactTo plugin', {h:3})
+  :marked
+    This plugin is a bit different to the others. The primary purpose of this plugin is to fire off functions when a media query either enters or leaves a defined screen size range.
+
+    It takes a function that returns an mq-js screen-check result as it's first parameter and a callback function as it's second parameter. It will then call the callback function every time the screen-check result changes from `true` to `false` or `false` to `true`.
+
+  +o-demo({
+        html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-reactTo'})(disabled="true")
+    | Toggles active state when mq changes truthfulness
+`,
+        js: { es6: `
+////////////////////////
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//Enables the use of reactTo
+//(unnecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/reactTo";
+
+const button = document.querySelector('.btn.-reactTo');
+
+mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
+
+  // Add the "-active" class when active, remove it when inactive
+  button.classList.toggle('-active', is_active);
+
+  // is_active = did "mq.inside(800, 1000)" return true?
+  // screen_size = an object holding the screen height, width,
+  //   and ratio (ratio in both string and number format) at the
+  //   point when the screen crossed an mq boundary
+  console.log(is_active, screen_size);
+});
+
+button.onclick = e => e.preventDefault();
+  `,
+
+    es5: `
+////////////////////////
+// Component js file //
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//Enables the use of reactTo
+//(unnecessary if it has been loaded in the mq.js file)
+require("mq-js/plugins/reactTo");
+
+var button = document.querySelector('.btn.-reactTo');
+
+function is_inside(val1, val2) {
+  return function(){
+    return mq.inside(val1, val2);
+  }
+}
+
+mq.reactTo(is_inside(800, 1000), function(is_active, screen_size) {
+
+  // Add the "-active" class when active, remove it when inactive
+  button.classList.toggle('-active', is_active);
+
+  // is_active = did "mq.inside(800, 1000)" return true?
+  // screen_size = an object holding the screen height, width,
+  //   and ratio (ratio in both string and number format) at the
+  //   point when the screen crossed an mq boundary
+  console.log(is_active, screen_size);
+});
+
+button.onclick = function(e) {
+  e.preventDefault()
+};
+`},
+    })

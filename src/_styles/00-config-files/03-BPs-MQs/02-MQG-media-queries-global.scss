@@ -1,4 +1,12 @@
 
 //$MQG = Media Query global
 
-$MQG-interactives--have-hoverState: (min, $BP-medium);
+$MQG-interactives--have-hoverState: (min, bp('tablet'));
+
+//IE 11 and especially 10 have buggy flexbox support.
+//This controlls the point at which the pixel based max-widths are active
+$MQG-IEfixes: (min, bp('tablet'));
+
+//Determines if the header is in the standard desktop look or the mobile toolbar look
+$MQG-headerMode--standard: (min, bp('phablet'));
+$MQG-headerMode--toolbar: (max, bp('phablet'));

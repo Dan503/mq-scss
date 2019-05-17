@@ -1,0 +1,6 @@
+
+@include mq(max, $bp-large) {
+	&.max {
+		@include active();
+	}
+}

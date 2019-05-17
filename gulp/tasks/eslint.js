@@ -11,10 +11,10 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   // ESLint
   gulp.task('eslint', () => {
     return gulp.src([
-      path.join('gulpfile.js'),
-      path.join(dirs.source, '**/*.js'),
+      ['gulpfile.js'].join('/'),
+      [dirs.source, '**/*.js'].join('/'),
       // Ignore all vendor folder files
-      '!' + path.join('**/vendor/**', '*')
+      '!' + ['**/vendor/**', '*'].join('/')
     ])
     .pipe(browserSync.reload({stream: true, once: true}))
     .pipe(plugins.eslint({

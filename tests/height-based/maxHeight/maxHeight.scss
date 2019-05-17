@@ -1,0 +1,6 @@
+
+@include mq(max-height, $bp-large) {
+	&.maxHeight {
+		@include active();
+	}
+}

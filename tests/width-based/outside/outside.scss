@@ -1,0 +1,6 @@
+
+@include mq(outside, $bp-small, $bp-large) {
+	&.outside {
+		@include active();
+	}
+}

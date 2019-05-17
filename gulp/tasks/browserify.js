@@ -29,7 +29,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
         debug: true,
         paths: [
           './src/_modules',
-          './src/_scripts'
+          './src/_scripts',
+          './tests/',
         ],
         transform: [
           babelify, // Enable ES6 features
@@ -95,7 +96,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
 
   // Browserify Task
   gulp.task('browserify', (done) => {
-    return glob('./' + path.join(dirs.source, dirs.scripts, entries.js), function(err, files) {
+    return glob('./' + [dirs.source, dirs.scripts, `{${entries.js},run_tests.js,polyfills.js}`].join('/'), function(err, files) {
       if (err) {
         done(err);
       }

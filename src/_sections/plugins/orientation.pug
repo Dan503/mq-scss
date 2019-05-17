@@ -1,0 +1,64 @@
+
++m-revealer('orientation plugin', {h:3})
+  :marked
+    This one is even simpler. One little gotcha is that there is no "square" orientation type in css. There is only portrait and landscape types. Square screen types seem to fall under `portrait` in css so I've made square screen types fall under `portrait` in mq-js as well.
+
+  +o-demo({
+        html: `
+include /_modules/a-btn/a-btn
+.example
+  ul
+    li
+      +a-btn({classes:'-landscape'})
+        | Clickable on landscape screens
+    li
+      +a-btn({classes:'-portrait'})
+        | Clickable on portrait and square screens
+`,
+        js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//enables the use of mq.orientation
+//(unnecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/orientation";
+
+document.querySelector('.btn.-landscape').onclick = function(e){
+  e.preventDefault();
+  mq.orientation('landscape', ()=> this.classList.toggle('-active'));
+});
+
+document.querySelector('.btn.-portrait').onclick = function(e){
+  e.preventDefault();
+  mq.orientation('portrait', ()=> this.classList.toggle('-active'));
+});
+`,
+
+    es5: `
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//enables the use of mq.orientation
+require("mq-js/plugins/orientation");
+
+document.querySelector('.btn.-landscape').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.orientation('landscape', function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-portrait').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.orientation('portrait', function(){
+    self.classList.toggle('-active');
+  });
+});
+`},
+    })

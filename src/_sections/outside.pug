@@ -1,0 +1,69 @@
+
++m-revealer('mq.outside')
+  :marked
+    `mq.outside` does what you would expect. It is the opposite of `mq.inside`. It will only fire if the screen width is outside of the two breakpoint values.
+
+  +o-demo({
+        html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-outside'})
+    | Clickable outside of 980px to 601px screen widths`,
+        js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+document.querySelector('.btn.-outside').onclick = function(e){
+  e.preventDefault();
+
+  mq.outside('medium', 'small', (screen_size)=>{
+    this.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-outside').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.outside('medium', 'small', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`},
+    })
+  :marked
+    It can also be written as `mq.outsideWidth` if you prefer.
+
+  +o-demo({
+        js: { es6: `
+// This code has identical functionality...
+mq.outside('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.outsideWidth('medium', ()=> { /* ... */ });`,
+
+    es5: `
+// This code has identical functionality...
+mq.outside('medium', function() { /* ... */ });
+
+// ...to this code
+mq.outsideWidth('medium', function() { /* ... */ });`,
+    }
+  })

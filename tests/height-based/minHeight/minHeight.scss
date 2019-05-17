@@ -1,0 +1,6 @@
+
+@include mq(min-height, $bp-large) {
+	&.minHeight {
+		@include active();
+	}
+}

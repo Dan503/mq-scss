@@ -1,0 +1,145 @@
+
+//this module wraps around text spat out by a CMS editor.
+//Elements inside this module can't have classes attatched
+
+$C-numbers: brand(1);//$CB-blue-dim;
+$C-dots: $C-numbers;
+
+.m-bodyContent {
+	&, & td {
+
+		text-align: left;
+
+		strong, b { font-weight: $bold; }
+
+		sup, sub {
+			font-size: 0.6em;
+		}
+
+		a:not(.btn) {
+			font-weight: $normal;
+			text-decoration: underline;
+			color: $CF-links;
+			&:hover, &:focus {
+				text-decoration: none;
+			}
+		}
+
+		//custom dot points do not appear in IE8 or print
+		// @media screen and (min-width: 0px) {
+			ul, ol {
+				ul, ol {
+					margin: 0;
+				}
+				li {
+					margin-top: 10px;
+				}
+			}
+
+			> ul, > ol {
+				&:not(.TK-noDots) {
+					&:not(:first-child){
+						margin-top: $VG-p__spacing;
+					}
+					> li {
+						margin: 0;
+						padding-bottom: 1.1rem;
+						&:first-child {
+							border-top: none;
+							padding-top: 0;
+						}
+						&:last-child {
+							padding-bottom: 0;
+						}
+					}
+				}
+			}
+
+			ul:not(.TK-noDots) {
+				padding: 0;
+				li {
+					list-style: none;
+					padding-left: 25px;
+					//padding: 5px 5px 5px 25px;
+					position: relative;
+					&:before {
+						content: '';
+						display: block;
+						position: absolute;
+						top: 1.6rem;
+						left: 0;
+					}
+				}
+			}
+
+			> ul:not(.TK-noDots) {
+				> li {
+					&:before {
+						border-radius: 50%;
+						height: 1rem;
+						width: 1rem;
+						border: 2px solid $C-dots;
+						top: 1.5rem;
+					}
+					> ul > li {
+						&:before {
+							height: 0;
+							width: 10px;
+							border-bottom: 2px solid $C-dots;
+							top: 1.9rem;
+						}
+
+						> ul > li {
+							&:before {
+								border-radius: 50%;
+								height: 1rem;
+								width: 1rem;
+								border: 2px solid $brand--secondary;
+								top: 1.5rem;
+							}
+						}
+					}
+				}
+			}
+
+			ol:not(.TK-noDots) {
+				counter-reset: li;
+				list-style: none;
+				padding-left: 0;
+				li {
+					padding-left: 25px;
+					position: relative;
+
+					&:before {
+						content:counter(li)'.'; //* Use the counter as content */
+						counter-increment:li; //* Increment the counter by 1 */
+						position: absolute;
+						left: 0;
+						font-weight: $bold;
+						color: $C-numbers;
+					}
+					ol li {
+						&:before {
+							content:counter(li,lower-alpha)'.';
+						}
+						ol li {
+							&:before {
+								content:counter(li,lower-roman)'.';
+								left: auto;
+								right: 100%;
+								margin-right: -15px;
+							}
+						}
+					}
+				}
+			}
+		// }
+
+		> blockquote {
+
+		}
+
+		img { display: inline-block; }
+
+	}
+}

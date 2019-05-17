@@ -1,0 +1,248 @@
+@mixin clickable {
+	color: $CB-green-bright;
+	pointer-events: auto;
+
+	&::after {
+		content: '(currently clickable)';
+	}
+
+	&:hover, &:focus {
+		color: #fff;
+	}
+}
+
+
+.o-demo {
+	margin: 2.5em 0 3em;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&__segment {
+		position: relative;
+		margin-top: 4rem;
+		margin-bottom: 1.5em;
+		&:last-child, &.grid__cell {
+			margin-bottom: 0;
+		}
+		&:before {
+			position: absolute;
+			bottom: 100%;
+			left: 0;
+			padding: 5px 10px;
+			background: #000;
+			color: #fff;
+			border-radius: 5px 5px 0 0;
+			font-family: $font-2;
+			font-size: 16px;
+			color: $brand--secondary;
+			// box-shadow: 0 -1px 2px 0px $brand--primary;
+		}
+	}
+	&__summary {
+		background-color: #CDDEC4;
+		padding: 20px;
+		margin-bottom: 10px;
+		margin-top: 60px;
+		&:before {
+			content: 'Summary';
+		}
+
+		+ .demo__result {
+			margin-top: 45px;
+		}
+	}
+	&__result {
+		margin-top: 65px;
+		&:before {
+			content: 'Example';
+
+			.-false & {
+				content: 'Not Gutter Grid'
+			}
+		}
+		.grid {
+			padding: 0;
+		}
+
+		.grid__cell, .mixin__cell {
+			min-height: 100px;
+			margin: 0;
+
+			.-noHeight & {
+				min-height: 0;
+			}
+		}
+	}
+	&__markup {
+		background-color: $CB-grey-dark;
+		position: relative;
+		display: flex;
+		&.html:before {
+			content: 'HTML';
+		}
+		&.scss:before {
+			content: 'Sass';
+		}
+		&.js { margin-bottom: 0; }
+		&.js:before {
+			content: 'JavaScript (ES6)';
+		}
+		&.js.basic:before {
+			content: 'JavaScript';
+		}
+		&.json:before {
+			content: 'JSON';
+		}
+
+		code {
+			margin-top: -23px;
+		}
+	}
+
+	&__es5 {
+		.m-revealer__content {
+			padding: 0;
+			border: 0;
+
+			&::before {
+				display: none;
+			}
+		}
+	}
+
+	&__details {
+		background: #000;
+		color: #fff;
+		margin: 0;
+		> summary {
+			padding: 0.5em 1em;
+		}
+	}
+
+	.example {
+		ul, li {
+			list-style: none;
+			padding-left: 0 !important;
+		}
+	}
+
+	.a-btn {
+		color: $CB-red-light;
+
+		&::after {
+			content: '(currently not clickable)';
+			display: block;
+			margin-top: 0.3em;
+			font-family: $code;
+			font-size: 0.9em;
+		}
+
+		&.-max, &.-maxIf, &.-mqVar {
+			@include mq(max, bp('medium')){
+				@include clickable;
+			}
+		}
+
+		&.-min {
+			@include mq(min, bp('medium')){
+				@include clickable;
+			}
+		}
+	
+		&.-inside {
+			@include mq(inside, bp('medium'), bp('small')){
+				@include clickable;
+			}
+		}
+	
+		&.-outside {
+			@include mq(outside, bp('medium'), bp('small')){
+				@include clickable;
+			}
+		}
+	
+		&.-pxVal {
+			@include mq(max, 1000px){
+				@include clickable;
+			}
+		}
+	
+		&.-pxValMin {
+			@include mq(min, 1000px){
+				@include clickable;
+			}
+		}
+	
+		&.-bpVar {
+			@include mq(min, bp('medium') + 30){
+				@include clickable;
+			}
+		}
+	
+		&.-onResize, &.-reactTo {
+			// never activates
+			pointer-events: none;
+			&::after { content: "(does not activate on click)" }
+		}
+
+		&.-maxHeight {
+			@include mq(max-height, 600){
+				@include clickable;
+			}
+		}
+		&.-minHeight {
+			@include mq(min-height, 600){
+				@include clickable;
+			}
+		}
+		&.-insideHeight {
+			@include mq(inside-height, 800, 400){
+				@include clickable;
+			}
+		}
+		&.-outsideHeight {
+			@include mq(outside-height, 800, 400){
+				@include clickable;
+			}
+		}
+	
+		&.-landscape {
+			@include mq(orientation, 'landscape'){
+				@include clickable;
+			}
+		}
+		&.-portrait {
+			@include mq(orientation, 'portrait'){
+				@include clickable;
+			}
+		}
+	
+		&.-exactRatio {
+			@include mq(ratio, '1 / 2'){
+				@include clickable;
+			}
+		}
+		&.-minRatio {
+			@include mq(min-ratio, '1 / 2'){
+				@include clickable;
+			}
+		}
+		&.-maxRatio, &.-maxRatioString {
+			@include mq(max-ratio, '1 / 2'){
+				@include clickable;
+			}
+		}
+		&.-insideRatio {
+			@include mq(inside-ratio, '1 / 2', '3 / 2'){
+				@include clickable;
+			}
+		}
+		&.-outsideRatio {
+			@include mq(outside-ratio, '1 / 2', '3 / 2'){
+				@include clickable;
+			}
+		}
+	}
+}

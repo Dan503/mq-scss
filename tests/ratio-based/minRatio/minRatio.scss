@@ -1,0 +1,6 @@
+
+@include mq(min-ratio, ' 1 / 2 ') {
+	&.minRatio {
+		@include active();
+	}
+}

@@ -4,21 +4,21 @@ import path from 'path';
 
 export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   let dirs = config.directories;
-  let dest = path.join(taskTarget);
+  let dest = [taskTarget].join('/');
 
   gulp.task('copy:icomoon', () => {
     return gulp.src([
-      path.join(dirs.source, '_icomoon/fonts/**/*'),
+      [dirs.source, '_icomoon/fonts/**/*'].join('/'),
     ])
-    .pipe(gulp.dest(path.join(taskTarget, dirs.assets, 'icomoon')));
+    .pipe(gulp.dest([taskTarget, dirs.assets, 'icomoon'].join('/')));
   });
 
   // Copy
   gulp.task('copy', gulp.parallel('copy:icomoon', () => {
     return gulp.src([
-      path.join(dirs.source, '**/*'),
-      '!' + path.join(dirs.source, '{**/\_*,**/\_*/**}'),
-      '!' + path.join(dirs.source, '**/*.pug')
+      [dirs.source, '**/*'].join('/'),
+      '!' + [dirs.source, '{**/\_*,**/\_*/**}'].join('/'),
+      '!' + [dirs.source, '**/*.pug'].join('/')
     ])
     .pipe(plugins.changed(dest))
     .pipe(gulp.dest(dest));

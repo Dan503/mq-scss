@@ -1,13 +1,17 @@
-# Logs
-logs
 *.log
-npm-debug.log*
-
+.grunt
+.gulp
+.DS_Store
+docs
+gulp
 node_modules
 src
 tmp
-gulp
 .babelrc
+.editorconfig
+.eslintrc
+.gitattributes
 .gitignore
+.yo-rc.json
+gulp-start-up.txt
 gulpfile.babel.js
-unit-tests

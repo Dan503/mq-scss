@@ -1,0 +1,6 @@
+
+@include mq(orientation, 'portrait') {
+	&.portrait {
+		@include active();
+	}
+}

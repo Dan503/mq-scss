@@ -4,17 +4,17 @@
 
 //CF- for color-functional-
 
-$CF-body__text: $CB-grey-x-dark;
-$CF-body__bg: #fff;
+$CF-body__text: #fff;
+$CF-body__bg: #292929;
 
 $CF-border-1: $CB-grey-light;
 $CF-border-2: $CF-body__bg;
 $CF-border-3: #d2d2d2;
 
-$CF-links: brand(1);
+$CF-links: brand(2);
 $CF-links--hover: brand(2);
 
-$CF-heading: $CF-body__text;
+$CF-heading: brand(1);
 
 $CF-error__text: $CB-red-dim;
 $CF-error__bg: $CB-grey-pale;

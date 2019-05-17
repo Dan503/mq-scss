@@ -5,12 +5,12 @@ import autoprefixer from 'autoprefixer';
 import px2rem from 'postcss-pxtorem';
 import gulpif from 'gulp-if';
 import notifier from 'node-notifier';
-import { notification_icon_location, plugins } from '../config/shared-vars';
+import { notification_icon_location } from '../config/shared-vars';
 
 export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   let dirs = config.directories;
   let entries = config.entries;
-  let dest = path.join(taskTarget, dirs.assets, dirs.styles.replace(/^_/, ''));
+  let dest = [taskTarget, dirs.assets, dirs.styles.replace(/^_/, '')].join('/');
 
   const px2rem_settings = {
     rootValue: 10,
@@ -21,8 +21,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   // Sass compilation
   gulp.task('sass', () => {
     return gulp.src([
-      [dirs.source, dirs.styles, entries.css].join('/'),
-      'unit-tests/test-styles.scss',
+      [dirs.source, dirs.styles, '*.scss'].join('/'),
+      '!'+[dirs.source, dirs.styles, '_*.scss'].join('/'),
     ])
       .pipe(plugins.plumber((error)=>{
         console.log(`\n ${plugins.util.colors.red.bold('Sass failed to compile:')} ${plugins.util.colors.yellow(error.message)}\n`);
@@ -36,13 +36,13 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
         outputStyle: 'expanded',
         precision: 10,
         includePaths: [
-          path.join(dirs.source, dirs.styles),
-          path.join(dirs.source, dirs.modules),
-          path.join('node_modules')
+          [dirs.source, dirs.styles].join('/'),
+          [dirs.source, dirs.modules].join('/'),
+          ['node_modules'].join('/')
         ]
       }).on('error', plugins.sass.logError))
       .pipe(plugins.postcss([
-        autoprefixer({browsers: ['last 2 version', '> 1%', 'ie >= 11'], grid: true }),
+        autoprefixer({browsers: ['> 1%'], grid: true}),
         px2rem(px2rem_settings)
       ]))
       .pipe(plugins.rename(function(path) {

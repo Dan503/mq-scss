@@ -1,0 +1,6 @@
+
+@include mq(max-ratio, ' 1 / 2 ') {
+	&.maxRatio {
+		@include active();
+	}
+}

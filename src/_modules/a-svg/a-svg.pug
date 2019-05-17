@@ -1,0 +1,6 @@
+
+mixin a-svg(id, title)
+	svg(focusable="false")&attributes(attributes)
+		if title
+			title= title
+		use(xlink:href=`#${id}`)

@@ -1,0 +1,74 @@
++m-revealer('mq.min')
+  :marked
+    In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-min'})
+    | Clickable at 981px screen width and above`,
+        js: {es6:`
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+document.querySelector('.btn.-min').onclick = function(e){
+  e.preventDefault();
+
+  mq.min('medium', (screen_size)=>{
+    this.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-min').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.min('medium', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`},
+    })
+
+  :marked
+    You might be wondering why 981px instead of 980px. While `mq.max` is _**inclusive**_ of the breakpoint value, `mq.min` is _**exclusive**_ of the breakpoint value. This serves two important purposes:
+
+    1. It prevents bugs from occurring in that 1px sweet spot where both would otherwise return true.
+
+    2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where JavaScript is firing but the styles aren't there to support it (or vice versa).
+
+    Also, like with `mq.max`, it can be written like `mq.minWidth` instead if you prefer.
+
+  +o-demo({
+        js: { es6: `
+// This code has identical functionality...
+mq.min('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.minWidth('medium', ()=> { /* ... */ });`,
+
+    es5: `
+// This code has identical functionality...
+mq.min('medium', function() { /* ... */ });
+
+// ...to this code
+mq.minWidth('medium', function() { /* ... */ });`},
+    })

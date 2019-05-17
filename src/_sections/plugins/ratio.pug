@@ -1,0 +1,139 @@
+
++m-revealer('ratio plugin', {h:3})
+  :marked
+    This one is a little more complex. The ratio's for mq-js are always formatted as `[width] / [height]`. Ratios work off of width more so than height in CSS so mq-js does as well. So a ratio of `2 / 3` is counted as being _larger_ than a ratio of `1 / 3` since `2 / 3` is wider than `1 / 3`.
+
+    With this in mind, the ratio plugin provides you with all the typical ranges but for ratios.
+
+  +o-demo({
+        html: `
+include /_modules/a-btn/a-btn
+.example
+  ul
+    li
+      +a-btn({classes:'-exactRatio'})
+        | Clickable at exactly ratio "1 / 2"
+    li
+      +a-btn({classes:'-minRatio'})
+        | Clickable at ratios wider than "1 / 2" (exclusive)
+    li
+      +a-btn({classes:'-maxRatio'})
+        | Clickable at ratios thinner than "1 / 2" (inclusive)
+    li
+      +a-btn({classes:'-insideRatio'})
+        | Clickable at widths between ratios "1 / 2" and "3 / 2"
+    li
+      +a-btn({classes:'-outsideRatio'})
+        | Clickable at widths outside ratios "1 / 2" and "3 / 2"
+`,
+        js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//Enables the use of ratio, minRatio, maxRatio, insideRatio and outsideRatio
+//(unnecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/ratio";
+
+document.querySelector('.btn.-exactRatio').onclick = function(e){
+  e.preventDefault();
+  mq.ratio(1 / 2, ()=> this.classList.toggle('-active'));
+});
+document.querySelector('.btn.-minRatio').onclick = function(e){
+  e.preventDefault();
+  mq.minRatio(1 / 2, ()=> this.classList.toggle('-active'));
+});
+document.querySelector('.btn.-maxRatio').onclick = function(e){
+  e.preventDefault();
+  mq.maxRatio(1 / 2, ()=> this.classList.toggle('-active'));
+});
+document.querySelector('.btn.-insideRatio').onclick = function(e){
+  e.preventDefault();
+  mq.insideRatio(1 / 2, 3 / 2, ()=> this.classList.toggle('-active'));
+});
+document.querySelector('.btn.-outsideRatio').onclick = function(e){
+  e.preventDefault();
+  mq.outsideRatio(1 / 2, 3 / 2, ()=> this.classList.toggle('-active'));
+});
+`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//Enables the use of ratio, minRatio, maxRatio, insideRatio and outsideRatio
+//(unnecessary if it has been loaded in the mq.js file)
+require("mq-js/plugins/ratio");
+
+document.querySelector('.btn.-exactRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.ratio(1 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
+document.querySelector('.btn.-minRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.minRatio(1 / 2, function(){
+    self.classList.toggle('-active')
+  });
+});
+document.querySelector('.btn.-maxRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.maxRatio(1 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
+document.querySelector('.btn.-insideRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.insideRatio(1 / 2, 3 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
+document.querySelector('.btn.-outsideRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.outsideRatio(1 / 2, 3 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
+`},
+    })
+
+  :marked
+    You can also provide the ratio as a string instead.
+
+  +o-demo({
+        html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-maxRatio'})
+    | Clickable at ratios thinner than "1 / 2" (inclusive)
+`,
+        js: { es6: `
+document.querySelector('.btn.-maxRatioString').onclick = function(e){
+  e.preventDefault();
+  mq.maxRatio('1 / 2', ()=> this.classList.toggle('-active'));
+});
+`,
+
+    es5: `
+document.querySelector('.btn.-maxRatioString').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.maxRatio('1 / 2', function(){
+    self.classList.toggle('-active');
+  });
+});
+`},
+      })

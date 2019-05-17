@@ -1,0 +1,6 @@
+
+@include mq(ratio, ' 1 / 2 ') {
+	&.ratio {
+		@include active();
+	}
+}

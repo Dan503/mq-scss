@@ -1,0 +1,120 @@
++m-revealer('mq.max')
+  :marked
+    In the following example, the button will only turn green if you click it when the browser window is at a maximum width of 980px wide (ie. at or below the "medium" breakpoint).
+
+    To help you figure out when the button is able to be clicked, the border of the button will turn green when it is clickable.
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-max'})
+    | Clickable at and below 980px screen width`,
+        js: {
+          es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+document.querySelector('.btn.-max').onclick = function(e){
+  e.preventDefault();
+
+  //Use your breakpoints by parsing in a string
+  mq.max('medium', (screen_size)=>{
+    this.classList.toggle('-active');
+
+    //logs the screen height, width, and ratio at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+    es5: `
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-max').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  //Use your breakpoints by parsing in a string
+  mq.max('medium', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //logs the screen height, width, and ratio at the time the button was clicked
+    console.log(screen_size);
+  })
+})`
+      },
+    })
+
+  :marked
+    As you can see, you can easily access the `"medium"` breakpoint that you defined earlier by simply parsing a string as the breakpoint value. There is no need to import the `breakpoints` variable from the `mq.js` file to use the `"medium"` breakpoint.
+
+    You can also use it in an if statement sort of format as shown below. All mq-js functions can be used in this `if` statement format. For the sake of brevity though, I'm just showing the `callback` format in the rest of these examples.
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-maxIf'})
+    | Clickable at and below 980px screen width`,
+        js: {es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+document.querySelector('.btn.-maxIf').onclick = function(e){
+  e.preventDefault();
+
+  if (mq.max('medium')){
+    this.classList.toggle('-active');
+  }
+})`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-maxIf').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  if (mq.max('medium')){
+    self.classList.toggle('-active');
+  }
+})`},
+    })
+
+  :marked
+    Notice that using the callback method gives you access to the screen size data at the time the button is clicked. The if statement format does not (or at least not without custom code).
+
+    Also notice that I'm not binding and unbinding the click function on screen resize. By placing `mq` _**inside**_ the click function, it behaves very similarly to how media queries behave in css.
+
+    One last thing. If you prefer to explicitly state that the media query is targeting "width", `mq.max` can also be written as `mq.maxWidth`. It has identical functionality, it's just personal preference.
+
+  +o-demo({
+        js: {es6: `
+// This code has identical functionality...
+mq.max('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.maxWidth('medium', ()=> { /* ... */ });`,
+
+    es5: `
+// This code has identical functionality...
+mq.max('medium', function() { /* ... */ });
+
+// ...to this code
+mq.maxWidth('medium', function() { /* ... */ });`,
+  },
+    })

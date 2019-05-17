@@ -1,0 +1,95 @@
++m-revealer('Plugins intro', {h:3, open: true})
+  :marked
+    As of version 2.0.0, mq-js supports various plugins that allow it to fully replicate everything that mq-scss can do.
+
+    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
+
+  +o-demo({
+        js: { es6: `
+///////////////////
+// "mq.js" file //
+/////////////////
+
+//Loading plugins in the mq.js file for global usage
+
+import MQ from "mq-js";
+
+//Enables the height plugin globally
+import "mq-js/plugins/height";
+
+//Enables the orientation plugin globally
+import "mq-js/plugins/orientation";
+
+//Enables the ratio plugin globally
+import "mq-js/plugins/ratio";
+
+//Enables the reactTo plugin globally
+import "mq-js/plugins/reactTo";
+
+//Define your Site break points here
+const breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+//Creates the media query functions
+const mq = new MQ(breakpoints);
+
+//Export mq by default
+export default mq;
+
+//Gives easy access to your site breakpoints
+export { mq, breakpoints }`,
+
+      es5: `
+///////////////////
+// "mq.js" file //
+/////////////////
+
+var MQ = require('mq-js');
+
+//Enables the height plugin globally
+require('mq-js/plugins/height');
+
+//Enables the orientation plugin globally
+require("mq-js/plugins/orientation");
+
+//Enables the ratio plugin globally
+require("mq-js/plugins/ratio");
+
+//Enables the reactTo plugin globally
+require("mq-js/plugins/reactTo");
+
+//Define your Site break points here
+var breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+//Creates the media query functions
+var mq = new MQ(breakpoints);
+
+//Export mq by default
+module.exports.default = mq;
+
+//Gives easy access to your site breakpoints
+module.exports.bp = bp;
+module.exports.mq = mq;
+`},
+      })
+
+  :marked
+    Alternatively, you can load all of the plugins in one statement by simply importing `mq-js/ultimate`;
+  +o-demo({
+        js: { es6: `
+//import all plugins at once by importing "mq-js/ultimate" instead of "mq-js"
+import MQ from "mq-js/ultimate";
+`,
+
+  es5: `
+//import all plugins at once by importing "mq-js/ultimate" instead of "mq-js"
+var MQ = require("mq-js/ultimate");
+`},
+      })

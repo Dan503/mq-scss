@@ -6,4 +6,43 @@
 a:active, a:hover { outline-width: 1px; }
 
 //mq-scss
-@import '../../../_mq.scss';
+$mq-ems: true;
+@import 'mq-scss/mq';
+
+//Set what color gutters will be in IE8
+$grid-gutter-ie-fallback: $CF-body__bg;
+
+//Edit the screen size at which point the switch happens
+$grid-page-width: bp('page');
+
+//These are the default breakpoints
+$grid-break-points: (
+  2 :(
+    100%: bp('mobile'),//* At the "mobile" screen size, make the columns 100% width */
+  ),
+
+  3: (
+    50% : bp('tablet'),
+    100% : bp('mobile'),
+  ),
+
+  4: (
+    50% : bp('tablet'),
+    100% : bp('small'),
+  ),
+
+  5: (
+    33.33% : bp('tablet'),
+    50% : bp('mobile'),
+    100% : bp('small'),
+  ),
+
+  6: (
+    33.33% : bp('tablet'),
+    50% : bp('mobile'),
+    100% : bp('small'),
+  )
+);
+
+//gutter-grid
+@import 'gutter-grid/grid-classes';

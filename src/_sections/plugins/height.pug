@@ -1,0 +1,101 @@
++m-revealer('height plugin', {h:3})
+  :marked
+    This one is pretty straight forward, it works in pretty much the same way as `min`, `max`, `inside` and `outside` except it targets height instead of width. Available functions are `mq.minHeight`, `mq.maxHeight`, `mq.insideHeight` and `mq.outsideHeight`.
+
+  +o-demo({
+        html: `
+include /_modules/a-btn/a-btn
+.example
+  ul
+    li
+      +a-btn({classes:'-maxHeight'})
+        | Clickable at and below 600px screen height
+    li
+      +a-btn({classes:'-minHeight'})
+        | Clickable at and above 601px screen height
+    li
+      +a-btn({classes:'-insideHeight'})
+        | Clickable between 401px and 800px screen height
+    li
+      +a-btn({classes:'-outsideHeight'})
+        | Clickable outside of 401px and 800px screen height
+`,
+        js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
+//(unnecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/height";
+
+document.querySelector('.btn.-maxHeight').onclick = function(e){
+  e.preventDefault();
+  mq.maxHeight(600, ()=> this.classList.toggle('-active'));
+});
+
+document.querySelector('.btn.-minHeight').onclick = function(e){
+  e.preventDefault();
+  mq.minHeight(600, ()=> this.classList.toggle('-active'));
+});
+
+document.querySelector('.btn.-insideHeight').onclick = function(e){
+  e.preventDefault();
+  mq.insideHeight(800, 400, ()=> this.classList.toggle('-active'));
+});
+
+document.querySelector('.btn.-outsideHeight').onclick = function(e){
+  e.preventDefault();
+  mq.outsideHeight(800, 400, ()=> this.classList.toggle('-active'));
+});`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
+//(unnecessary if it has been loaded in the mq.js file)
+require("mq-js/plugins/height");
+
+document.querySelector('.btn.-maxHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.maxHeight(600, function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-minHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.minHeight(600, function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-insideHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.insideHeight(800, 400, function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-outsideHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.outsideHeight(800, 400, function(){
+    self.classList.toggle('-active');
+  });
+});`},
+    })
+
+  :markdown
+    The height plugin is the main reason why I have provided the alternate names for the width based commands. When you are combining height and width media queries in an if statement it can be easier to read `mq.minWidth(800) && mq.minHeight(400)` than `mq.min(800) && mq.minHeight(400)`.

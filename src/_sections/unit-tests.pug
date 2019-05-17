@@ -1,0 +1,23 @@
+
++m-revealer('Unit tests')
+  :marked
+    mq-js has a lot of complicated functionality that I needed to be able to test effectively. Doing it with demos by eye wasn't cutting it.
+
+    I built a custom unit testing framework to do this.
+
+    I needed the testing framework to do the following:
+    - Open 2 new windows when it starts.
+    - One window needed it's media queries to be sized using em units and the other needed to be sized using px units.
+    - Every test needed to be able to resize those windows to an _exact_ pixel size.
+    - The em window needed to factor font size into it's window size calculation.
+    - Each test needed to occur one at a time and not get affected by any other tests.
+
+    I'm pretty happy with the testing framework that I came up with. If you would like to see it in action, open **Firefox** and press the button below.
+
+    To view the detailed test results, click on one of the windows that appear and press the F12 key to bring up dev tools. Click on the "console" tab to view the test results.
+
+    The tests don't work properly in Chrome because `window.outerWidth - window.innerWidth` does not have a stable value in Chrome.
+
+  +a-btn(id="testingBtn")
+    | Unleash the unit tests! (Use Firefox)
+

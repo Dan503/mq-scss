@@ -2,10 +2,18 @@
 block config
 
 block includes
-  include /_modules/pageContainer/pageContainer
-  include /_modules/demo/demo
-  include /_modules/bodyContent/bodyContent
-  include /_modules/header/header
+  include /_modules/a-svg/a-svg
+  include /_modules/a-installation/a-installation
+  include /_modules/a-safetyPadding/a-safetyPadding
+  include /_modules/a-btn/a-btn
+  include /_modules/a-mobileWarning/a-mobileWarning
+  include /_modules/a-restrictor/a-restrictor
+  include /_modules/m-bodyContent/m-bodyContent
+  include /_modules/m-pageContainer/m-pageContainer
+  include /_modules/m-revealer/m-revealer
+  include /_modules/m-logo/m-logo
+  include /_modules/o-demo/o-demo
+  include /_modules/o-header/o-header
 
 doctype html
 
@@ -18,32 +26,63 @@ doctype html
 head
   meta(charset='utf-8')
   meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
-  title mq-scss demo/test page
-  meta(name='description', content= pkg.description)
+  title mq-js
+  meta(name='description', content=pkg.description)
   meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  link(href="favicon.ico", rel="shortcut icon")
+
+  // Favicon code
+  link(rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png')
+  link(rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png')
+  link(rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png')
+  link(rel='manifest' href='/site.webmanifest')
+  link(rel='mask-icon' href='/safari-pinned-tab.svg' color='#5bbad5')
+  meta(name='msapplication-TileColor' content='#2b5797')
+  meta(name='theme-color' content='#ffffff')
+
+  // Open Graph code
+  meta(property='og:image:width' content='1200')
+  meta(property='og:image:height' content='628')
+  meta(property='og:description' content=pkg.description)
+  meta(property='og:url' content='https://dan503.github.io/mq-scss/')
+  meta(property='og:image' content='https://dan503.github.io/mq-scss/assets/images/og-image.jpg')
+  meta(property='og:title' content='mq-js')
+
+  // Twitter code
+  meta(name='twitter:card' content='summary_large_image')
+  meta(name='twitter:creator' content='@Daniel_Tonon')
+  meta(name='twitter:title' content='mq-js')
+  meta(name='twitter:description' content=pkg.description)
+  meta(name='twitter:image' content='https://dan503.github.io/mq-scss/assets/images/og-image.jpg')
+  meta(name='twitter:image:alt' content='mq-js logo')
 
   block stylesheets
     link(rel='stylesheet', href= 'assets/styles/main.css')
-    link(rel='stylesheet', href= 'assets/styles/test-styles.css')
 
   //- Google Analytics
-  script.
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-90397907-3', 'auto');
-    ga('send', 'pageview');
+  if args.production
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-90397907-3', 'auto');
+      ga('send', 'pageview');
 
 body
-  <!--[if IE]>
+  <!--[if lt IE 10]>
   p.browsehappy You are using an #[strong outdated] browser. Please #[a(href='http://browsehappy.com/') upgrade your browser] to improve your experience.
   <![endif]-->
 
-  +pageContainer()
-    +header()
-    +bodyContent()
+
+  .svg-sprite(style="display: none")
+    svg(xmlns='http://www.w3.org/2000/svg')
+      defs
+        symbol(id='hex' viewBox="0 0 115.57 133.45")
+          polygon(points="5.79 36.7 5.79 96.75 57.78 126.77 109.78 96.75 109.78 36.7 57.78 6.68 5.79 36.7")
+
+  +m-pageContainer
+    +o-header
+    +m-bodyContent()
       block content
 
   block scripts

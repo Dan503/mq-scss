@@ -1,0 +1,75 @@
++m-revealer('mq.inside')
+  :marked
+    `mq.inside` works in much the same way as it does in [mq-scss](https://www.npmjs.com/package/mq-scss).
+
+    Instead of stating one value then calling the function, you state two values then call the function.
+
+    You can state the breakpoint values in any order but the function needs to be called last (if at all). The function will be triggered if the screen width sits between the two breakpoint values when it is called.
+
+    The smaller value always gets +1 for consistency with the mq-scss mixin and to prevent 1px overlap issues.
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-inside'})
+    | Clickable at and between 980px and 601px screen width`,
+        js: { es6: `
+////////////////////////
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+document.querySelector('.btn.-inside').onclick = function(e){
+  e.preventDefault();
+
+  mq.inside('medium', 'small', (screen_size)=>{
+    this.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-inside').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.inside('medium', 'small', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`},
+    })
+
+  :marked
+    It can also be written as `mq.insideWidth` if you prefer.
+
+  +o-demo({
+        js: { es6: `
+// This code has identical functionality...
+mq.inside('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.insideWidth('medium', ()=> { /* ... */ });`,
+
+    es5: `
+// This code has identical functionality...
+mq.inside('medium', function() { /* ... */ });
+
+// ...to this code
+mq.insideWidth('medium', function() { /* ... */ });`,
+    }
+  })

@@ -1,0 +1,59 @@
+
++m-revealer('Running on window resize')
+  :marked
+    mq-js is just a simple function that checks the current window size when it is called. It doesn't do anything fancy when you resize the window. With a little extra code though, you can easily make it run on window resize.
+
+    The following example uses [Debounce](https://www.npmjs.com/package/debounce) to prevent the function from firing until the window has finished resizing. This improves performance and can avoid odd bugs from occurring.
+
+    The button will activate when the screen is at the correct width and deactivate when not. Clicking the button does nothing.
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-onResize'})
+    | Activates at and between 980px and 601px screen width`,
+        js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import debounce from npm for better performance
+//https://www.npmjs.com/package/debounce
+//(needs installing with "npm i debounce")
+import debounce from 'debounce';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+const button = document.querySelector('.btn.-onResize');
+
+function toggleBtn(){
+  button.classList.toggle('-active', mq.inside('medium', 'small'));
+};
+
+toggleBtn();
+window.onresize = debounce(toggleBtn, 200);`,
+
+    es5: `
+////////////////////////
+// Component js file //
+//////////////////////
+
+//import debounce from npm for better performance
+//https://www.npmjs.com/package/debounce
+//(needs installing with "npm i debounce")
+var debounce = require("debounce");
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+var button = document.querySelector('.btn.-onResize');
+
+function toggleBtn(){
+  button.classList.toggle('-active', mq.inside('medium', 'small'));
+};
+
+toggleBtn()
+window.onresize = debounce(toggleBtn, 200);`},
+    })

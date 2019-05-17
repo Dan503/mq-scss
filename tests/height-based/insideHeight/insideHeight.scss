@@ -1,0 +1,6 @@
+
+@include mq(inside-height, $bp-small, $bp-large) {
+	&.insideHeight {
+		@include active();
+	}
+}

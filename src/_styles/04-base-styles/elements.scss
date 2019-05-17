@@ -26,17 +26,17 @@ html, body {
   //unless set otherwise, all elements will recieve border box box sizing
   box-sizing: border-box;
 
-  //required for best scroll animation results
-  height: 100%;
-
   //removes default spacing around the edges of the web page
   margin: 0;
   padding: 0;
 }
 
 html {
-  //Makes it easier to alter font size with rem's. 1.3rem = 13px
+  // Makes it easier to alter font size with rem's. 1.3rem = 13px
   font-size: 62.5%;
+
+  // Smooth scrolling to position
+  scroll-behavior: smooth;
 }
 
 //counteracts * margin styling
@@ -66,16 +66,68 @@ body {
   background-color: $CF-body__bg;
   position: relative;
   margin: 0;
-  font-size: 16px;
-  line-height: 1.5;
+  padding-top: 1px;
+  font-size: 16px; // This must remain set to 16px or the em based unit tests break
+  line-height: 2;
   color: $CF-body__text;
   font-family: $font-1;
   font-weight: $normal;
+  padding-bottom: 100px;
+
+  > * {
+    // Increasing font size to 20px on the first child elements instead
+    // (This is only an issue with the testing framework, the plugin itself has no issue with this)
+    font-size: 20px;
+  }
+
+  &::before, &::after {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  &::before {
+    z-index: 2;
+    opacity: 0.15;
+
+    $hex-size-x: 24px;
+    $hex-size-y: $hex-size-x * 1.5;
+
+    /* http://lea.verou.me/css3patterns/#honeycomb */
+    background:
+    radial-gradient(circle farthest-side at 0% 50%,$CF-body__bg 23.5%,rgba(240,166,17,0) 0) ($hex-size-x * 0.5 + 1) ($hex-size-y * 0.5),
+    radial-gradient(circle farthest-side at 0% 50%,$brand--primary 24%,rgba(240,166,17,0) 0) ($hex-size-x * 0.5 - 1) ($hex-size-y * 0.5),
+    linear-gradient($CF-body__bg 14%,rgba(240,166,17,0) 0, rgba(240,166,17,0) 85%,$CF-body__bg 0)0 0,
+    linear-gradient(150deg,$CF-body__bg 24%,$brand--primary 0,$brand--primary 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,$brand--primary 0,$brand--primary 76%,$CF-body__bg 0) 0 0,
+    linear-gradient(30deg,$CF-body__bg 24%,$brand--primary 0,$brand--primary 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,$brand--primary 0,$brand--primary 76%,$CF-body__bg 0) 0 0,
+    linear-gradient(90deg,$brand--primary 2%,$CF-body__bg 0,$CF-body__bg 98%,$brand--primary 0%)0 0 $CF-body__bg;
+    background-size: $hex-size-x $hex-size-y;
+  }
+
+  &::after {
+    z-index: 1;
+    background: radial-gradient(circle at top, rgba(#000, 0.8), transparent);
+  }
+
+  > * {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 p, ul, ol {
   //margin top becomes the default paragraph spacer
-  margin: $VG-p__spacing 0;
+  margin: $VG-p__spacing auto;
+  max-width: 70ch;
+
+  .ie & {
+    //IE backup
+    max-width: 78rem;
+  }
 
   //allows body elements to sit hard up against their parent element top and bottom sides
   &:first-child { margin-top: 0; }
@@ -85,24 +137,21 @@ p, ul, ol {
 /*HEADINGS*/
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-2;
-  font-weight: $bold;
+  font-weight: normal;
   line-height: 1;
   letter-spacing: -0.5px;
   margin-bottom: 15px;
   margin-top: $VG-p__spacing;
+  color: brand(1);
 
   &:first-child { margin-top: 0; }
   &:last-child { margin-bottom: 0; }
   + {
     p, ul, ol { margin-top: 0; }
   }
-  .-theme--dark & {
-    color: brand(2);
-  }
-
 }
 h1 {
-  font-size: 30px;
+  font-size: 50px;
   text-align: center;
   + h2 { margin-top: 30px; }
 }
@@ -118,12 +167,17 @@ a {
 
   &:hover, &:focus {
     text-decoration: underline;
+    color: $CF-links--hover;
   }
 
   &[disabled] {
     cursor: default;
     pointer-events: none;
     opacity: 0.2;
+
+    .no-csspointerevents & {
+      display: none;
+    }
   }
 }
 
@@ -170,30 +224,20 @@ pre {
   box-shadow: inset 0 0 5px #000;
   word-wrap: break-word;
   color: #d6d6d6;
-  background-color: #282c34;
+  background-color: #19191b;
   padding: 0;
-
-  &, &.lines {
-    margin: 0;
-    padding:{left: 0; right: 0;}
-  }
-
-  &.lines {
-    font-size: 12px;
-    padding: 10px;
-    float:  left;
-    display: block !important;
-    box-shadow: none;
-    color: #d6d6d6;
-    background-color: #000;
-    width: 40px;
-    padding: {top: 7px; bottom: 7px;}
-    text-align: center !important;
-  }
+  margin: 0;
+  padding:{left: 0; right: 0;}
 
   code {
     padding: 10px 5px;
-    font-size: 1em;
+    font-size: 1.2em;
+    line-height: 1.5;
+    font-family: $code;
+  }
+
+  .no-flexbox & {
+    max-width: 780px;
   }
 }
 
@@ -204,7 +248,16 @@ code {
 p, li, h1, h2, h3, h4, h5 {
   code {
     background-color: #c5c7cc;
-    padding: 3px 4px;
+    // background-color: #000;
+    // color: #fff;
+    color: #000;
+    padding: 1px 3px;
     font-size: .85em;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid currentColor;
+    // border: 1px solid $brand--primary;
+    box-shadow: 0 0 0 1px $brand--primary;
+    white-space: nowrap;
   }
 }

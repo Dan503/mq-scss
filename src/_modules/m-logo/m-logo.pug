@@ -1,0 +1,8 @@
+
+mixin m-logo
+	.m-logo
+		h1.m-logo__heading
+			+a-svg('hex')(class="m-logo__hex")
+			span.m-logo__mq mq
+			span.m-logo__js js
+		p.m-logo__version= 'v'+pkg.version

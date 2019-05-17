@@ -1,0 +1,6 @@
+
+mixin m-pageContainer(spec)
+	.m-pageContainer&attributes(attributes)
+		+a-safetyPadding(class="m-pageContainer__padding")
+			+a-restrictor(class="m-pageContainer__restrictor")
+				block

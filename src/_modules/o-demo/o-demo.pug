@@ -1,0 +1,66 @@
+
+-
+  function render(pugMarkup, settings, locals){
+    return compile(pugMarkup, { pretty: true, basedir: './src/' })(locals);
+  }
+
+  var defaultTo = require('default-to').default;
+
+mixin o-demo__tab(demoMarkup, spec)
+  -var countKeys = require('count-keys');
+  -var isObj = typeof demoMarkup === 'object' && !Array.isArray(demoMarkup);
+  -var markupString = isObj ? demoMarkup.html : demoMarkup;
+  -var html = render(markupString);
+
+  if isObj && demoMarkup.html || !isObj
+    .o-demo__result.o-demo__segment
+      !=html
+
+  //- I need to hide the TK-noDots class from users (hacky fix)
+  -
+    markupString = markupString ? markupString.replace('.TK-noDots', '') : markupString;
+    html = render(markupString);
+    var keyCount = countKeys(demoMarkup, {
+      maxDepth: 1,
+      filter: (item)=> item.key !== 'html' && spec.showHTML,
+    });
+
+  if isObj
+    - const colsClass = keyCount > 0 ? `grid--cols-${keyCount}` : '';
+    .o-demo__grid.grid(class=colsClass)
+      each markup, type in demoMarkup
+        if type === 'js'
+          .grid__cell(class=type)
+            each js, jsType in markup
+              if (jsType === 'es5')
+                +m-revealer('ES5 Syntax', {h:0})(class="o-demo__details o-demo__es5")
+                  .o-demo__markup
+                    pre
+                      code(class=type)= js
+              else
+                .o-demo__markup.o-demo__segment.js(class=jsType)
+                  pre
+                    code(class=type)= js
+        else if (type === 'html' && spec.showHTML || type !== 'html')
+          - markup = type === 'html' ? html : markup;
+          .grid__cell.o-demo__markup.o-demo__segment(class=type)
+            pre
+              code(class=type)= markup
+  else
+    .o-demo__markup.o-demo__segment
+      pre
+        code.html= html
+
+mixin o-demo(demoMarkup, spec)
+  -
+    spec = defaultTo(spec, {
+      classes: '',
+      showHTML: false,
+    })
+
+  figure.o-demo(class=spec.classes)
+    if block
+      .o-demo__summary.o-demo__segment
+        block
+
+    +o-demo__tab(demoMarkup, spec)

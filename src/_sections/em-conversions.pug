@@ -1,0 +1,69 @@
++m-revealer('em unit conversions')
+  :marked
+    If you are using [mq-scss](https://www.npmjs.com/package/mq-scss) in your project and [have enabled em-conversions](https://www.npmjs.com/package/mq-scss#em-conversion), you will need to enable them in mq-js as well.
+
+  +o-demo({
+        js: { es6: `
+///////////////////
+// "mq.js" file //
+/////////////////
+
+import MQ from "mq-js";
+
+// Define your Site break points here
+const bp = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+// Creates the media query functions
+const mq = new MQ(bp, {
+
+  // Enable this setting to stay in sync with mq-scss em conversions
+  ems: true, //Defaults to false
+
+  // Defaults to a base conversion value of 16px since that is the typical browser default
+  // It is unlikely that you will ever need to change this setting
+  emBase: 16,
+
+})
+
+// Export mq by default
+export default mq;
+
+// Gives easy access to your site breakpoints
+export { mq, bp }
+`,
+
+    es5: `
+///////////////////
+// "mq.js" file //
+/////////////////
+
+var MQ = require("mq-js");
+
+// Define your Site break points here
+var bp = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+// Creates the media query functions
+var mq = new MQ(bp, {
+
+  // Enable this setting to stay in sync with mq-scss em conversions
+  ems: true, //Defaults to false
+
+  // Defaults to a base conversion value of 16px since that is the typical browser default
+  // It is unlikely that you will ever need to change this setting
+  emBase: 16,
+
+})
+
+// Export mq and bp variables
+module.exports.mq = mq;
+module.exports.bp = bp;
+`},
+    })

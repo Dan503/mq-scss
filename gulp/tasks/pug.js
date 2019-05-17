@@ -10,8 +10,8 @@ import { notification_icon_location, pjson } from '../config/shared-vars';
 
 export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   let dirs = config.directories;
-  let dest = path.join(taskTarget);
-  let dataPath = path.join(dirs.source, dirs.data);
+  let dest = [taskTarget].join('/');
+  let dataPath = [dirs.source, dirs.data].join('/');
 
   // Jade template compile
   gulp.task('pug:compile', (done) => {
@@ -56,8 +56,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
     let itteration = 0;
 
     return gulp.src([
-      path.join(dirs.source, '**/*.pug'),
-      '!' + path.join(dirs.source, '{**/\_*,**/\_*/**}')
+      [dirs.source, '**/*.pug'].join('/'),
+      '!' + [dirs.source, '{**/\_*,**/\_*/**}'].join('/')
     ])
     .pipe(plugins.changed(dest))
     .pipe(plugins.plumber((error)=>{
@@ -76,6 +76,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       basedir: './'+[dirs.source].join('/'),
       filters: pugFilters,
       locals: {
+        args,
         require,
         pkg: pjson,
         config,

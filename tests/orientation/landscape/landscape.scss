@@ -1,0 +1,6 @@
+
+@include mq(orientation, 'landscape') {
+	&.landscape {
+		@include active();
+	}
+}

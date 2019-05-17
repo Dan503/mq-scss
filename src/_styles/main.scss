@@ -19,32 +19,14 @@
 @import '04-base-styles/TK-toolkit';
 
 //module imports
-@import '../_modules/**/*.scss';
-
-
-// SCSS
-
-$MQ-element__color--main: (inside, 1024px, 600px);
-$MQ-element__color--alt: (outside, 1024px, 600px);
-
-.module {
-    &__element {
-        @include mq($MQ-element__color--main){
-            background: red;
-        }
-
-        @include mq($MQ-element__color--alt){
-            background: blue;
-        }
-
-        &--green {
-            @include mq($MQ-element__color--main){
-                background: green;
-            }
-
-            @include mq($MQ-element__color--alt){
-                background: grey;
-            }
-        }
-    }
-}
+@import '../_modules/m-bodyContent/m-bodyContent';
+@import '../_modules/a-restrictor/a-restrictor';
+@import '../_modules/a-safetyPadding/a-safetyPadding';
+@import '../_modules/a-installation/a-installation';
+@import '../_modules/a-codeNumbers/a-codeNumbers';
+@import '../_modules/a-mobileWarning/a-mobileWarning';
+@import '../_modules/m-revealer/m-revealer';
+@import '../_modules/m-logo/m-logo';
+@import '../_modules/o-header/o-header';
+@import '../_modules/o-demo/o-demo';
+@import '../_modules/a-btn/a-btn';

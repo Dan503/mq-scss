@@ -1,7 +1,8 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-
 node_modules
+node_modules.new
+node_modules.old
+*.log
+build
 tmp
+.grunt
+.DS_Store

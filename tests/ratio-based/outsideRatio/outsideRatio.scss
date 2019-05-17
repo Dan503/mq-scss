@@ -1,0 +1,7 @@
+
+// TO DO: Bug in mq-scss that will not accept ' 1 / 1 ' here
+@include mq(outside-ratio, '1 / 1', '1/2') {
+	&.outsideRatio {
+		@include active();
+	}
+}

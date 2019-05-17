@@ -1,0 +1,151 @@
++m-revealer('Using pure pixel values')
+  :marked
+    Just because you have access to the breakpoint values, it doesn't mean that you have to use them. mq-js still works if you just parse solid numbers into it.
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-pxVal'})
+    | Clickable at and below 1000px screen width`,
+        js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+document.querySelector('.btn.-pxVal').onclick = function(e){
+  e.preventDefault();
+
+  mq.max(1000, (screen_size)=>{
+    this.classList.toggle('-active');
+
+    //log the screen size at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-pxVal').onclick = function(e){
+  e.preventDefault();
+
+  mq.max(1000, function(screen_size) {
+    this.classList.toggle('-active');
+
+    //log the screen size at the time the button was clicked
+    console.log(screen_size);
+  })
+})`},
+    })
+
+  :marked
+    Remember that if you use `mq.min` it will be like adding 1 pixel to the value that you provide.
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-pxValMin'})
+    | Clickable at 1001px screen width and above`,
+      js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+document.querySelector('.btn.-pxValMin').onclick = function(e){
+  e.preventDefault();
+
+  mq.min(1000, (screen_size)=>{
+    this.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+    es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-pxValMin').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.min(1000, function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`},
+    })
+
+  :marked
+    What if you only want to tweak one of the normal breakpoint values so that it is just a few pixels larger than the base break point? That is when it is useful to import the `breakpoint` variable.
+
+    In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.
+
+  +o-demo({
+      html: `
+include /_modules/a-btn/a-btn
+.example
+  +a-btn({classes:'-bpVar'})
+    | Clickable at 1011px screen width and above`,
+      js: { es6: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+// import BOTH the mq variable AND the breakpoints variable
+import { mq , breakpoints } from "./mq";
+
+document.querySelector('.btn.-bpVar').onclick = function(e){
+  e.preventDefault();
+
+  //Adding 30px to the base "medium" breakpoint
+  mq.min(breakpoints.medium + 30, (screen_size)=>{
+    this.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+  es5: `
+//////////////////////// 
+// Component js file // 
+//////////////////////
+
+// import BOTH the mq variable AND the breakpoints variable
+var mq = require("./mq").mq;
+var bp = require("./mq").bp;
+
+document.querySelector('.btn.-bpVar').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  //Adding 30px to the base "medium" breakpoint
+  mq.min(bp.medium + 30, function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`},
+    })

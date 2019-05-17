@@ -1,0 +1,17 @@
+
+$bp-large: 600px;
+$bp-small: 300px;
+
+@mixin active() {
+	background-color: hsl(120, 35%, 81%);
+}
+
+body {
+	background: transparent;
+	overflow: hidden;
+	color: #000;
+}
+
+header {
+	display: none;
+}

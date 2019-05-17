@@ -16,12 +16,16 @@ $hoverModifier--large: 80%;
 $hoverModifier--small: 20%;
 
 //green
-$CB-green-light: #b9d48b;
-$CB-green-bright: #00C000;
+$CB-green-light: #98f181;
+$CB-green-bright: #29eb29;
 $CB-green-dark: #08705e;//quaternary
 	//green hover states
 	$CB-green-light--hover: shade($CB-green-light, 20%);
 	$CB-green-dark--hover: shade($CB-green-dark, $hoverModifier);
+
+// lime
+$CB-lime-light: #d7ef68;
+$CB-lime-light--hover: tint($CB-lime-light, $hoverModifier);
 
 //aqua
 $CB-aqua-light: #7FD6CD;//tertiary
@@ -36,13 +40,17 @@ $CB-aqua-light: #7FD6CD;//tertiary
 	//$CB-aqua-dark--hover: shade($CB-aqua-dark, $hoverModifier);
 
 //blue
-$CB-blue-light: #0CCBEE;
+$CB-blue-light: #5adef5;
 	$CB-blue-light--hover: tint($CB-blue-light, $hoverModifier);
+
+//yellow
+$CB-yellow-light: #f5e35a;
+$CB-yellow-light--hover: tint($CB-yellow-light, $hoverModifier);
 
 //red
 //$CB-red-pale: #FFD1D1;
-//$CB-red-light: #D76860;
-$CB-red-mid: #CF1730; //primary
+$CB-red-light: #ff5151;
+$CB-red-mid: #CF1730;
 $CB-red-dim: #B11235;
 $CB-red-dark: #5B1223;
 	//red hover states
@@ -58,7 +66,7 @@ $CB-grey-pale: #F0F0F0;
 $CB-grey-light: #cbcbce;
 $CB-grey-mid: #898989;
 $CB-grey-dim: #555555;
-$CB-grey-dark: #231f20;
+$CB-grey-dark: #19191b;
 $CB-grey-x-dark: #000;//secondary
 	//grey hover states
 	$CB-grey-pale--hover: shade($CB-grey-pale, $hoverModifier);

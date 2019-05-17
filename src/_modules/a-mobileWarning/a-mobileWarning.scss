@@ -1,0 +1,19 @@
+
+.a-mobileWarning {
+	padding: 20px;
+	background: rgba(0,0,0,0.5);
+	border: 1px solid $brand--primary;
+	margin-bottom: 1em;
+
+	@media (hover: hover) {
+		display: none;
+
+		+ p {
+			margin-top: 0;
+		}
+	}
+
+	.ie & {
+		display: none;
+	}
+}

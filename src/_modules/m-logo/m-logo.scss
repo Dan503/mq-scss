@@ -1,0 +1,82 @@
+
+.m-logo {
+	position: relative;
+	padding-top: 50px;
+
+	@supports (display: grid) {
+		padding-top: 0;
+	}
+
+	&__heading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 7rem;
+		line-height: 1;
+
+		@supports (display: grid) {
+			display: grid;
+			grid-template-columns: 1fr auto auto 1fr;
+			grid-template-areas: ".. mq js ..";
+		}
+	}
+
+	&__hex {
+		grid-area: mq;
+		width: 15rem;
+		height: 18rem;
+		stroke-width: 7%;
+		stroke: $brand--primary;
+		overflow: visible !important;
+		display: none;
+
+		@supports (display: grid) {
+			/* autoprefixer: off */
+			display: grid;
+			grid-template-columns: 1fr auto auto 1fr;
+			grid-template-areas: ".. mq js ..";
+		}
+	}
+
+	&__mq, &__js {
+		margin-top: -7%;
+		align-self: center;
+	}
+
+	&__mq {
+		grid-area: mq;
+		display: block;
+		text-align: center;
+	}
+
+	&__js {
+		grid-area: js;
+		text-align: left;
+		margin-left: 2rem;
+		font-size: 0.8em;
+		&::before {
+			content: '-';
+			margin-left: -2rem;
+
+			@supports (display: grid) {
+				display: none;
+			}
+		}
+	}
+
+	&__version {
+		font-family: $code;
+		color: $brand--secondary;
+		text-align: center;
+		padding-bottom: 0.5em;
+
+		@supports (display: grid) {
+			position: absolute;
+			top: -2.5rem;
+			left: 45.5%;
+			left: calc(50% - 3.5rem);
+			transform: rotate(28deg);
+			transform-origin: bottom left;
+		}
+	}
+}

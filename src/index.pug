@@ -1,15 +1,16 @@
 extends _layouts/base
 
-block append includes
-  include /_modules/demo/demo
-  include /_modules/breakpoints/breakpoints
-
 block content
-  :marked
-    This is a testing/demo site for mq-scss. Full documentation can be found on [GitHub](https://github.com/Dan503/mq-scss) and [npm](https://www.npmjs.com/package/mq-scss).
-
-    This site is best viewed on desktop. Resizing the browser window will cause different media queries to activate at different screen sizes.
-
-  +breakpoints
-
-  include /_modules/tests/tests
+  include ./_sections/intro
+  include ./_sections/quick-start
+  include ./_sections/em-conversions
+  include ./_sections/max
+  include ./_sections/min
+  include ./_sections/inside
+  include ./_sections/outside
+  include ./_sections/mq-variables
+  include ./_sections/pixel-values
+  include ./_sections/window-resize
+  include ./_sections/plugins/_index
+  include ./_sections/unit-tests
+  include ./_sections/repository-details

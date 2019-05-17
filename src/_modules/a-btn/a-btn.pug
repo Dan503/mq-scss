@@ -1,0 +1,35 @@
+mixin a-btn(spec)
+	-
+		spec = spec || {};
+		spec = Object.assign({
+			classes : '',
+			elem : 'button',
+			href : '#',
+			type : 'button',
+			icon: false,
+			arrow: false,
+			download: false,
+			diagArrow: false,
+			text: 'Button text',
+			attr: {}
+		}, spec);
+
+		var elem, attr;
+
+		if (spec.type === 'a'){
+			elem = spec.elem || 'a';
+			attr = {href : spec.href};
+		} else {
+			elem = spec.elem || 'button';
+			attr = {type : spec.type};
+		}
+
+		attr = Object.assign(attr, spec.attr, attributes);
+
+		var hasIconClass = spec.icon ? ' -hasIcon' : '';
+
+	#{elem}.a-btn(class=spec.classes+hasIconClass)&attributes(attr)
+		if block
+			block
+		else
+			=spec.text
