@@ -26,7 +26,7 @@
     "test": "jest",
     "clean-deps": "rimraf node_modules"
   },
-  "homepage": "https://github.com/Dan503/mq-scss#readme",
+  "homepage": "https://dan503.github.io/mq-scss/",
   "devDependencies": {
     "array-from": "^2.1.1",
     "autoprefixer": "^9.5.1",
