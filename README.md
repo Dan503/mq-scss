@@ -4,7 +4,7 @@ An extremely powerful but easy to use Sass media query mixin that allows you to 
 
 This media query mixin is a powerful tool that lets you easily create far more complex media queries than you would have ever attempted to do with plain css. It also makes your code far easier to maintain through it's ability to take simple media query variables.
 
-I've set up a [test/demo site](https://dan503.github.io/mq-scss/). It primarily exists for testing but it does a pretty decent job of demoing what mq-scss can do as well.
+I have set up a [demo site](https://dan503.github.io/mq-scss/) so that you can see some live examples in action.
 
 ## mq-scss family <!-- omit in toc -->
 
