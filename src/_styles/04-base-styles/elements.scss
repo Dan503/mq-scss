@@ -68,7 +68,7 @@ body {
   margin: 0;
   padding-top: 1px;
   font-size: 16px; // This must remain set to 16px or the em based unit tests break
-  line-height: 2;
+  line-height: 1.5;
   color: $CF-body__text;
   font-family: $font-1;
   font-weight: $normal;
